@@ -1,0 +1,14 @@
+C:\Users\galonso\source\repos\BECAS\BECASLC\bin\Debug\net6.0\BECASLC.deps.json
+C:\Users\galonso\source\repos\BECAS\BECASLC\bin\Debug\net6.0\BECASLC.runtimeconfig.json
+C:\Users\galonso\source\repos\BECAS\BECASLC\bin\Debug\net6.0\BECASLC.dll
+C:\Users\galonso\source\repos\BECAS\BECASLC\bin\Debug\net6.0\ref\BECASLC.dll
+C:\Users\galonso\source\repos\BECAS\BECASLC\bin\Debug\net6.0\BECASLC.pdb
+C:\Users\galonso\source\repos\BECAS\BECASLC\obj\Debug\net6.0\BECASLC.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\galonso\source\repos\BECAS\BECASLC\obj\Debug\net6.0\BECASLC.AssemblyInfoInputs.cache
+C:\Users\galonso\source\repos\BECAS\BECASLC\obj\Debug\net6.0\BECASLC.AssemblyInfo.cs
+C:\Users\galonso\source\repos\BECAS\BECASLC\obj\Debug\net6.0\BECASLC.csproj.CoreCompileInputs.cache
+C:\Users\galonso\source\repos\BECAS\BECASLC\obj\Debug\net6.0\BECASLC.dll
+C:\Users\galonso\source\repos\BECAS\BECASLC\obj\Debug\net6.0\ref\BECASLC.dll
+C:\Users\galonso\source\repos\BECAS\BECASLC\obj\Debug\net6.0\BECASLC.pdb
+C:\Users\galonso\source\repos\BECAS\BECASLC\obj\Debug\net6.0\BECASLC.genruntimeconfig.cache
+C:\Users\galonso\source\repos\BECAS\BECASLC\obj\Debug\net6.0\BECASLC.csproj.AssemblyReference.cache

@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- left column -->
+            <div class="col-md-12">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Carga de Datos</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form method="post" enctype="multipart/form-data" asp-controller="CargaDatos" asp-action="Index">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="exampleInputFile">File input</label>
+                                <div class="input-group">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="postedFiles" multiple>
+                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                    </div>
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">Upload</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" value="Upload" class="btn btn-primary">Submit</button>
+                        </div>
+                        @*<span>Select File:</span>
+                        <input type="file" name="postedFiles" multiple />*@
+                        @*<input type="submit" value="Upload" />*@
+                        <br />
+                        <span style="color:green">@Html.Raw(ViewBag.Message)</span>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
+
+@section scripts{
+<script>
+    async function AJAXSubmit (oFormElement) {
+        debugger
+        var resultElement = oFormElement.elements.namedItem("result");
+        const formData = new FormData(oFormElement);
+
+        try {
+        const response = await fetch(oFormElement.action, {
+          method: 'POST',
+          body: formData
+        });
+
+        if (response.ok) {
+          window.location.href = '/';
+        }
+
+        resultElement.value = 'Result: ' + response.status + ' ' +
+          response.statusText;
+        } catch (error) {
+          console.error('Error:', error);
+        }
+      }
+</script>
+}

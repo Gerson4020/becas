@@ -1,0 +1,64 @@
+﻿@model IEnumerable<BECASLC.GradoSede>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Grados | Sedes</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="example1" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IdSede)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Activo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.grado)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.sede.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Activo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.grado.Nombre)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IdGradoSede">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.IdGradoSede">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.IdGradoSede">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@section scripts{
+<script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    });
+</script>
+}

@@ -1,0 +1,893 @@
+﻿@model BECAS.Models.VM.DetallePersonaVM
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@{
+    ViewData["Title"] = "PersonaDetalle";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@{
+    var rol = @HttpContextAccessor.HttpContext.Session.GetInt32("SessionRol");
+}
+@if (rol.Equals(1))
+{
+    @*------------------------------------------Educación-------------------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Educación</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID OIM</th>
+                        <td>Estado</td>
+                        <th>Dias Asistencia Efectivos</th>
+                        <th>Dias Asistencia Establecidos</th>
+                        <th>Modulos Aprobados</th>
+                        <th>Fecha deserción</th>
+                        <th>Fecha Reasignación</th>
+                        <th>Motivo de serción</th>
+                        <th>Motivo de inasistencia</th>
+                        <th>Causa de reprobación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaEducacions)
+                    {
+                        <tr>
+                            <td>@item.PIdOim</td>
+                            <td>@item.DEstado</td>
+                            <td>@item.IDiasAsistenciaEfectivos</td>
+                            <td>@item.IDiasAsistenciaEstablecidos</td>
+                            <td>@item.IModulosAprobados</td>
+                            <td>@item.DFechades</td>
+                            <td>@item.DFechaReasg</td>
+                            <td>@item.DMotivodesercion</td>
+                            <td>@item.IMotivoInasistencia</td>
+                            <td>@item.ICausaReprobacion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+    @*------------------------------------------Estipendios-----------------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Estipendios</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="EstipendioTable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID OIM                                </th>
+                        <th>Alimento Efectivo                       </th>
+                        <th>Alimento Monto Efectivo                  </th>
+                        <th>Alimento Dias Presenciales Efectivo       </th>
+                        <th>Alimento Subtotal Efectivo               </th>
+                        <th>Alimento Transferencia                  </th>
+                        <th>Alimento Monto Transferencia             </th>
+                        <th>Alimento Dias Presenciales Transferencia  </th>
+                        <th>Alimento SubtotalTransferencia          </th>
+                        <th>Alimento Especie                        </th>
+                        <th>Alimento MontoEspecie                   </th>
+                        <th>Alimento Dias Presenciales Especie        </th>
+                        <th>Alimento Subtotal Especie                </th>
+                        <th>Alimento Monto Total                     </th>
+                        <th>Transporte Efectivo                     </th>
+                        <th>Transporte MontoEfectivo                </th>
+                        <th>Transporte Dias Presenciales Efectivo     </th>
+                        <th>Transporte Subtotal Efectivo             </th>
+                        <th>Transporte Transferencia                </th>
+                        <th>Transporte Tarifa Diferenciada           </th>
+                        <th>Transporte Monto Transferencia           </th>
+                        <th>Transporte Dias Presenciales Transferencia</th>
+                        <th>Transporte Subtotal Transferencia        </th>
+                        <th>Transporte Monto Total                   </th>
+                        <th>Conectividad Efectivo                      </th>
+                        <th>Conectividad Monto Efectivo                 </th>
+                        <th>Conectividad Dias Presenciales Efectivo      </th>
+                        <th>Conectividad Subtotal Efectivo              </th>
+                        <th>Conectividad Transferencia                 </th>
+                        <th>Conectividad Monto Transferencia            </th>
+                        <th>Conectividad Dias Presenciales Transferencia </th>
+                        <th>Conectividad Subtotal Transferencia         </th>
+                        <th>Conectividad Monto Total                    </th>
+                        <th>EstipendioTotal                    </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaEstipendio)
+                    {
+                        <tr>
+
+                            <td>@item.PId                                </td>
+                            <td>@item.AlimEfectivo                       </td>
+                            <td>@item.AlimMontoEfectivo                  </td>
+                            <td>@item.AlimDiasPresencialesEfectivo       </td>
+                            <td>@item.AlimSubtotalEfectivo               </td>
+                            <td>@item.AlimTransferencia                  </td>
+                            <td>@item.AlimMontoTransferencia             </td>
+                            <td>@item.AlimDiasPresencialesTransferencia  </td>
+                            <td>@item.AlimSubtotalTransferencia          </td>
+                            <td>@item.AlimEspecie                        </td>
+                            <td>@item.AlimMontoEspecie                   </td>
+                            <td>@item.AlimDiasPresencialesEspecie        </td>
+                            <td>@item.AlimSubtotalEspecie                </td>
+                            <td>@item.AlimMontoTotal                     </td>
+                            <td>@item.TranspEfectivo                     </td>
+                            <td>@item.TranspMontoEfectivo                </td>
+                            <td>@item.TranspDiasPresencialesEfectivo     </td>
+                            <td>@item.TranspSubtotalEfectivo             </td>
+                            <td>@item.TranspTransferencia                </td>
+                            <td>@item.TranspTarifaDiferenciada           </td>
+                            <td>@item.TranspMontoTransferencia           </td>
+                            <td>@item.TranspDiasPresencialesTransferencia</td>
+                            <td>@item.TranspSubtotalTransferencia        </td>
+                            <td>@item.TranspMontoTotal                   </td>
+                            <td>@item.ConecEfectivo                      </td>
+                            <td>@item.ConecMontoEfectivo                 </td>
+                            <td>@item.ConecDiasPresencialesEfectivo      </td>
+                            <td>@item.ConecSubtotalEfectivo              </td>
+                            <td>@item.ConecTransferencia                 </td>
+                            <td>@item.ConecMontoTransferencia            </td>
+                            <td>@item.ConecDiasPresencialesTransferencia </td>
+                            <td>@item.ConecSubtotalTransferencia         </td>
+                            <td>@item.ConecMontoTotal                    </td>
+                            <td>@item.EstipendioTotal                    </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+    @*------------------------------------------Evaluación Psicosocial------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Evaluación Psicosocial</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="EvaluacionPsicosocial" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID OIM</th>
+                        <th>Participacion</th>
+                        <th>Puntaje Pos-Test</th>
+                        <th>Puntaje Pret-Test</th>
+                        <th>Alerta Desercion</th>
+                        <th>Instrumento Riesgo</th>
+                        <th>Vulnerabilidades</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaEvaluacionPsicosocial)
+                    {
+                        <tr>
+                            <td>@item.PId</td>
+                            <td>@item.OvParticipacion</td>
+                            <td>@item.OvPuntajePos</td>
+                            <td>@item.OvPuntajePret</td>
+                            <td>@item.EpAlertaDesercion</td>
+                            <td>@item.EpInstrumentoRiesgo</td>
+                            <td>@item.EpVulnerabilidades</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+    @*------------------------------------------Seguimiento Practicas Profecionales-----------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Seguimiento Practicas Profecionales</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="SeguimientoPracticasPr" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID OIM</th>
+                        <th>Cargo</th>
+                        <th>Docente Asignado</th>
+                        <th>Empresa</th>
+                        <th>Gestion</th>
+                        <th>Monto Remuneracion</th>
+                        <th>Posibilidad Contratacion</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaSeguimientoPracticasPr)
+                    {
+                        <tr>
+                            <td>@item.PId</td>
+                            <td>@item.PpCargo</td>
+                            <td>@item.PpDocenteAsign</td>
+                            <td>@item.PpEmpresa</td>
+                            <td>@item.PpGestion</td>
+                            <td>@item.PpMontoRemuneracion</td>
+                            <td>@item.PpPosibilidadContratacion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+    @*------------------------------------------Seguimiento Psicosocial-----------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Seguimiento Psicosocial</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="SeguimientoPsicosocial" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        .
+                        <th>ID OIM</th>
+                        <th>AlertaDesercion</th>
+                        <th>Estado</th>
+                        <th>Motivo</th>
+                        <th>Medida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaSeguimientoPsicosocial)
+                    {
+                        <tr>
+                            <td>@item.PId</td>
+                            <td>@item.SegAlertaDesercion</td>
+                            <td>@item.SegEstado</td>
+                            <td>@item.SegMotivo</td>
+                            <td>@item.SegMedida</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+    @*------------------------------------------Pasantías-------------------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Pasantías</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="pasantiastable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        .
+                        <th>ID OIM</th>
+                        <th>Empresa</th>
+                        <th>Entrevista</th>
+                        <th>Pruebas</th>
+                        <th>Contratación</th>
+                        <th>Cargo</th>
+                        <th>Fecha Contratación</th>
+                        <th>Monto Remuneración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.pasantias)
+                    {
+                        <tr>
+                            <td>@item.PId</td>
+                            <td>@item.PasEmpresa</td>
+                            <td>@item.PasEntrevista</td>
+                            <td>@item.PasPruebas</td>
+                            <td>@item.PasContratacion</td>
+                            <td>@item.PasCargo</td>
+                            <td>@item.PasFechaContratacion</td>
+                            <td>@item.PasMontoRemuneracion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+
+    @*------------------------------------------Emprendimiento--------------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Emprendimiento</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="Autoempleo" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        .
+                        <th>ID OIM</th>
+                        <th>Empresa</th>
+                        <th>TipoCapital</th>
+                        <th>Estado</th>
+                        <th>Tipo Financiamiento</th>
+                        <th>Tipo Empresa</th>
+                        <th>Tipo EmpresaOtro</th>
+                        <th>Plan Negocios</th>
+                        <th>Registro</th>
+                        <th>Fecha Inicio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.empleo)
+                    {
+                        <tr>
+                            <td>@item.PId</td>
+                            <td>@item.AutoempEmpresa</td>
+                            <td>@item.AutoempTipoCapital</td>
+                            <td>@item.AutoempEstado</td>
+                            <td>@item.AutoempTipoFinanciamiento</td>
+                            <td>@item.AutoempTipoEmpresa</td>
+                            <td>@item.AutoempTipoEmpresaOtro</td>
+                            <td>@item.AutoempPlanNegocios</td>
+                            <td>@item.AutoempRegistro</td>
+                            <td>@item.AutoempFechaInicio</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+}
+
+@if (rol.Equals(2))
+{
+    @*------------------------------------------Evaluación Psicosocial------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Evaluación Psicosocial</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="EvaluacionPsicosocial" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID OIM</th>
+                        <th>Participacion</th>
+                        <th>Puntaje Pos-Test</th>
+                        <th>Puntaje Pret-Test</th>
+                        <th>Alerta Desercion</th>
+                        <th>Instrumento Riesgo</th>
+                        <th>Vulnerabilidades</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaEvaluacionPsicosocial)
+                    {
+                        <tr>
+                            <td>@item.PId</td>
+                            <td>@item.OvParticipacion</td>
+                            <td>@item.OvPuntajePos</td>
+                            <td>@item.OvPuntajePret</td>
+                            <td>@item.EpAlertaDesercion</td>
+                            <td>@item.EpInstrumentoRiesgo</td>
+                            <td>@item.EpVulnerabilidades</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+    @*------------------------------------------Seguimiento Practicas Profecionales-----------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Seguimiento Practicas Profecionales</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="SeguimientoPracticasPr" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID OIM</th>
+                        <th>Cargo</th>
+                        <th>Docente Asignado</th>
+                        <th>Empresa</th>
+                        <th>Gestion</th>
+                        <th>Monto Remuneracion</th>
+                        <th>Posibilidad Contratacion</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaSeguimientoPracticasPr)
+                    {
+                        <tr>
+                            <td>@item.PId</td>
+                            <td>@item.PpCargo</td>
+                            <td>@item.PpDocenteAsign</td>
+                            <td>@item.PpEmpresa</td>
+                            <td>@item.PpGestion</td>
+                            <td>@item.PpMontoRemuneracion</td>
+                            <td>@item.PpPosibilidadContratacion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+    @*------------------------------------------Educación-------------------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Educación</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID OIM</th>
+                        <td>Estado</td>
+                        <th>Dias Asistencia Efectivos</th>
+                        <th>Dias Asistencia Establecidos</th>
+                        <th>Modulos Aprobados</th>
+                        <th>Fecha deserción</th>
+                        <th>Fecha Reasignación</th>
+                        <th>Motivo de serción</th>
+                        <th>Motivo de inasistencia</th>
+                        <th>Causa de reprobación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaEducacions)
+                    {
+                        <tr>
+                            <td>@item.PIdOim</td>
+                            <td>@item.DEstado</td>
+                            <td>@item.IDiasAsistenciaEfectivos</td>
+                            <td>@item.IDiasAsistenciaEstablecidos</td>
+                            <td>@item.IModulosAprobados</td>
+                            <td>@item.DFechades</td>
+                            <td>@item.DFechaReasg</td>
+                            <td>@item.DMotivodesercion</td>
+                            <td>@item.IMotivoInasistencia</td>
+                            <td>@item.ICausaReprobacion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+}
+
+@if (rol.Equals(3))
+{
+    @*------------------------------------------Educación-------------------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Educación</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID OIM</th>
+                        <td>Estado</td>
+                        <th>Dias Asistencia Efectivos</th>
+                        <th>Dias Asistencia Establecidos</th>
+                        <th>Modulos Aprobados</th>
+                        <th>Fecha deserción</th>
+                        <th>Fecha Reasignación</th>
+                        <th>Motivo de serción</th>
+                        <th>Motivo de inasistencia</th>
+                        <th>Causa de reprobación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaEducacions)
+                    {
+                        <tr>
+                            <td>@item.PIdOim</td>
+                            <td>@item.DEstado</td>
+                            <td>@item.IDiasAsistenciaEfectivos</td>
+                            <td>@item.IDiasAsistenciaEstablecidos</td>
+                            <td>@item.IModulosAprobados</td>
+                            <td>@item.DFechades</td>
+                            <td>@item.DFechaReasg</td>
+                            <td>@item.DMotivodesercion</td>
+                            <td>@item.IMotivoInasistencia</td>
+                            <td>@item.ICausaReprobacion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+    @*------------------------------------------Evaluación Psicosocial------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Evaluación Psicosocial</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="EvaluacionPsicosocial" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID OIM</th>
+                        <th>Participacion</th>
+                        <th>Puntaje Pos-Test</th>
+                        <th>Puntaje Pret-Test</th>
+                        <th>Alerta Desercion</th>
+                        <th>Instrumento Riesgo</th>
+                        <th>Vulnerabilidades</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaEvaluacionPsicosocial)
+                    {
+                        <tr>
+                            <td>@item.PId</td>
+                            <td>@item.OvParticipacion</td>
+                            <td>@item.OvPuntajePos</td>
+                            <td>@item.OvPuntajePret</td>
+                            <td>@item.EpAlertaDesercion</td>
+                            <td>@item.EpInstrumentoRiesgo</td>
+                            <td>@item.EpVulnerabilidades</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+    @*------------------------------------------Seguimiento Practicas Profecionales-----------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Seguimiento Practicas Profecionales</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="SeguimientoPracticasPr" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID OIM</th>
+                        <th>Cargo</th>
+                        <th>Docente Asignado</th>
+                        <th>Empresa</th>
+                        <th>Gestion</th>
+                        <th>Monto Remuneracion</th>
+                        <th>Posibilidad Contratacion</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaSeguimientoPracticasPr)
+                    {
+                        <tr>
+                            <td>@item.PId</td>
+                            <td>@item.PpCargo</td>
+                            <td>@item.PpDocenteAsign</td>
+                            <td>@item.PpEmpresa</td>
+                            <td>@item.PpGestion</td>
+                            <td>@item.PpMontoRemuneracion</td>
+                            <td>@item.PpPosibilidadContratacion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+    @*------------------------------------------Seguimiento Psicosocial-----------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Seguimiento Psicosocial</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="SeguimientoPsicosocial" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        .
+                        <th>ID OIM</th>
+                        <th>AlertaDesercion</th>
+                        <th>Estado</th>
+                        <th>Motivo</th>
+                        <th>Medida</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaSeguimientoPsicosocial)
+                    {
+                        <tr>
+                            <td>@item.PId</td>
+                            <td>@item.SegAlertaDesercion</td>
+                            <td>@item.SegEstado</td>
+                            <td>@item.SegMotivo</td>
+                            <td>@item.SegMedida</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+    @*------------------------------------------Pasantías-------------------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Pasantías</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="pasantiastable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        .
+                        <th>ID OIM</th>
+                        <th>Empresa</th>
+                        <th>Entrevista</th>
+                        <th>Pruebas</th>
+                        <th>Contratación</th>
+                        <th>Cargo</th>
+                        <th>Fecha Contratación</th>
+                        <th>Monto Remuneración</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.pasantias)
+                    {
+                        <tr>
+                            <td>@item.PId</td>
+                            <td>@item.PasEmpresa</td>
+                            <td>@item.PasEntrevista</td>
+                            <td>@item.PasPruebas</td>
+                            <td>@item.PasContratacion</td>
+                            <td>@item.PasCargo</td>
+                            <td>@item.PasFechaContratacion</td>
+                            <td>@item.PasMontoRemuneracion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+
+    @*------------------------------------------Emprendimiento--------------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Emprendimiento</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="Autoempleo" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        .
+                        <th>ID OIM</th>
+                        <th>Empresa</th>
+                        <th>TipoCapital</th>
+                        <th>Estado</th>
+                        <th>Tipo Financiamiento</th>
+                        <th>Tipo Empresa</th>
+                        <th>Tipo EmpresaOtro</th>
+                        <th>Plan Negocios</th>
+                        <th>Registro</th>
+                        <th>Fecha Inicio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.empleo)
+                    {
+                        <tr>
+                            <td>@item.PId</td>
+                            <td>@item.AutoempEmpresa</td>
+                            <td>@item.AutoempTipoCapital</td>
+                            <td>@item.AutoempEstado</td>
+                            <td>@item.AutoempTipoFinanciamiento</td>
+                            <td>@item.AutoempTipoEmpresa</td>
+                            <td>@item.AutoempTipoEmpresaOtro</td>
+                            <td>@item.AutoempPlanNegocios</td>
+                            <td>@item.AutoempRegistro</td>
+                            <td>@item.AutoempFechaInicio</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+}
+
+@if (rol.Equals(4))
+{
+    @*------------------------------------------Estipendios-----------------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Estipendios</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="EstipendioTable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID OIM                                </th>
+                        <th>Alimento Efectivo                       </th>
+                        <th>Alimento Monto Efectivo                  </th>
+                        <th>Alimento Dias Presenciales Efectivo       </th>
+                        <th>Alimento Subtotal Efectivo               </th>
+                        <th>Alimento Transferencia                  </th>
+                        <th>Alimento Monto Transferencia             </th>
+                        <th>Alimento Dias Presenciales Transferencia  </th>
+                        <th>Alimento SubtotalTransferencia          </th>
+                        <th>Alimento Especie                        </th>
+                        <th>Alimento MontoEspecie                   </th>
+                        <th>Alimento Dias Presenciales Especie        </th>
+                        <th>Alimento Subtotal Especie                </th>
+                        <th>Alimento Monto Total                     </th>
+                        <th>Transporte Efectivo                     </th>
+                        <th>Transporte MontoEfectivo                </th>
+                        <th>Transporte Dias Presenciales Efectivo     </th>
+                        <th>Transporte Subtotal Efectivo             </th>
+                        <th>Transporte Transferencia                </th>
+                        <th>Transporte Tarifa Diferenciada           </th>
+                        <th>Transporte Monto Transferencia           </th>
+                        <th>Transporte Dias Presenciales Transferencia</th>
+                        <th>Transporte Subtotal Transferencia        </th>
+                        <th>Transporte Monto Total                   </th>
+                        <th>Conectividad Efectivo                      </th>
+                        <th>Conectividad Monto Efectivo                 </th>
+                        <th>Conectividad Dias Presenciales Efectivo      </th>
+                        <th>Conectividad Subtotal Efectivo              </th>
+                        <th>Conectividad Transferencia                 </th>
+                        <th>Conectividad Monto Transferencia            </th>
+                        <th>Conectividad Dias Presenciales Transferencia </th>
+                        <th>Conectividad Subtotal Transferencia         </th>
+                        <th>Conectividad Monto Total                    </th>
+                        <th>EstipendioTotal                    </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaEstipendio)
+                    {
+                        <tr>
+
+                            <td>@item.PId                                </td>
+                            <td>@item.AlimEfectivo                       </td>
+                            <td>@item.AlimMontoEfectivo                  </td>
+                            <td>@item.AlimDiasPresencialesEfectivo       </td>
+                            <td>@item.AlimSubtotalEfectivo               </td>
+                            <td>@item.AlimTransferencia                  </td>
+                            <td>@item.AlimMontoTransferencia             </td>
+                            <td>@item.AlimDiasPresencialesTransferencia  </td>
+                            <td>@item.AlimSubtotalTransferencia          </td>
+                            <td>@item.AlimEspecie                        </td>
+                            <td>@item.AlimMontoEspecie                   </td>
+                            <td>@item.AlimDiasPresencialesEspecie        </td>
+                            <td>@item.AlimSubtotalEspecie                </td>
+                            <td>@item.AlimMontoTotal                     </td>
+                            <td>@item.TranspEfectivo                     </td>
+                            <td>@item.TranspMontoEfectivo                </td>
+                            <td>@item.TranspDiasPresencialesEfectivo     </td>
+                            <td>@item.TranspSubtotalEfectivo             </td>
+                            <td>@item.TranspTransferencia                </td>
+                            <td>@item.TranspTarifaDiferenciada           </td>
+                            <td>@item.TranspMontoTransferencia           </td>
+                            <td>@item.TranspDiasPresencialesTransferencia</td>
+                            <td>@item.TranspSubtotalTransferencia        </td>
+                            <td>@item.TranspMontoTotal                   </td>
+                            <td>@item.ConecEfectivo                      </td>
+                            <td>@item.ConecMontoEfectivo                 </td>
+                            <td>@item.ConecDiasPresencialesEfectivo      </td>
+                            <td>@item.ConecSubtotalEfectivo              </td>
+                            <td>@item.ConecTransferencia                 </td>
+                            <td>@item.ConecMontoTransferencia            </td>
+                            <td>@item.ConecDiasPresencialesTransferencia </td>
+                            <td>@item.ConecSubtotalTransferencia         </td>
+                            <td>@item.ConecMontoTotal                    </td>
+                            <td>@item.EstipendioTotal                    </td>
+
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+    @*------------------------------------------Educación-------------------------------------------*@
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Educación</h3>
+        </div>
+        <!-- /.card-header -->
+    <div class="card-body">
+            <table id="example1" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>ID OIM</th>
+                        <td>Estado</td>
+                        <th>Dias Asistencia Efectivos</th>
+                        <th>Dias Asistencia Establecidos</th>
+                        <th>Modulos Aprobados</th>
+                        <th>Fecha deserción</th>
+                        <th>Fecha Reasignación</th>
+                        <th>Motivo de serción</th>
+                        <th>Motivo de inasistencia</th>
+                        <th>Causa de reprobación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.cargaEducacions)
+                    {
+                        <tr>
+                            <td>@item.PIdOim</td>
+                            <td>@item.DEstado</td>
+                            <td>@item.IDiasAsistenciaEfectivos</td>
+                            <td>@item.IDiasAsistenciaEstablecidos</td>
+                            <td>@item.IModulosAprobados</td>
+                            <td>@item.DFechades</td>
+                            <td>@item.DFechaReasg</td>
+                            <td>@item.DMotivodesercion</td>
+                            <td>@item.IMotivoInasistencia</td>
+                            <td>@item.ICausaReprobacion</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <!-- /.card-body -->
+</div>
+}
+
+@section scripts{
+<script>
+    $(function () {
+    $("#example1").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+    $("#EstipendioTable").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#EstipendioTable_wrapper .col-md-6:eq(0)');
+
+    $("#EvaluacionPsicosocial").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#EvaluacionPsicosocial_wrapper .col-md-6:eq(0)');
+
+    $("#SeguimientoPracticasPr").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#SeguimientoPracticasPr_wrapper .col-md-6:eq(0)');
+
+    $("#SeguimientoPsicosocial").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#SeguimientoPsicosocial_wrapper .col-md-6:eq(0)');
+
+    $("#pasantiastable").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#pasantiastable_wrapper .col-md-6:eq(0)');
+
+    $("#Autoempleo").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#Autoempleo_wrapper .col-md-6:eq(0)');
+    });
+</script>
+
+}

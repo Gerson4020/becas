@@ -1,0 +1,240 @@
+﻿@model IEnumerable<BECASLC.Persona>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaEntrevista)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PIdOim)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NombreCompleto)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UltimoGradoAprobado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono2)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaNacimiento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Edad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Discapacidad)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VictimaViolencia)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MigranteRetornado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PiensaMigrar)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamiliaresMigrantes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FamiliaresRetornados)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Empleo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dui)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Nie)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Correo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Refiere)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Departamento)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cohorte)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zona)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoInscripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoMf)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EstadoPersona)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdCarga)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.programa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sexo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.socio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.matricula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.carrera)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sede)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaEntrevista)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PIdOim)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NombreCompleto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UltimoGradoAprobado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaNacimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Edad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Discapacidad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VictimaViolencia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MigranteRetornado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PiensaMigrar)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FamiliaresMigrantes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FamiliaresRetornados)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Empleo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dui)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Correo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Refiere)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Departamento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cohorte)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zona)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoInscripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoMf)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EstadoPersona)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdCarga)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.programa.IdPrograma)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sexo.IdSexo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.socio.IdImplementador)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.matricula.IdTipoMatricula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.carrera.IdCatCarrera)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sede.IdCatSede)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdPersona">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdPersona">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdPersona">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

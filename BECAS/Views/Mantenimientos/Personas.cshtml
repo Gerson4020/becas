@@ -1,0 +1,227 @@
+﻿@model BECAS.Models.VM.PersonasVM
+@{
+    ViewData["Title"] = "Personas";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Filtros</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <form class="form-inline" method="post" asp-controller="Mantenimientos" asp-action="Personas">
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="socios" id="socios" multiple="multiple" data-placeholder="-- Seleccionar Socio --" style="width:100%">
+                        @foreach (var item in Model.Socios)
+                        {
+                            <option value="@item.IdImplementador">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="dropzona" id="dropzona" multiple="multiple" data-placeholder="-- Seleccionar Zona --" style="width:100%">
+                    </select>
+                </div>
+
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="idprograma" id="idprograma" multiple="multiple" data-placeholder="-- Seleccionar Programa --" style="width:100%">
+                    </select>
+                </div>
+
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="sedes" id="sedes" multiple="multiple" data-placeholder="-- Seleccionar Sede --" style="width:100%">
+                    </select>
+                </div>
+
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="carreras" id="carreras" multiple="multiple" data-placeholder="-- Seleccionar Carrera --" style="width:100%">
+                    </select>
+                </div>
+                <hr align="left" noshade="noshade" size="2" width="100%" />
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="sexos" multiple="multiple" data-placeholder="-- Seleccionar sexo --" style="width:100%">
+                        @foreach (var item in Model.sexos)
+                        {
+                            <option value="@item.IdSexo">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="tipomatricula" multiple="multiple" data-placeholder="-- Seleccionar Tipo Matricula --" style="width:100%">
+                        @foreach (var item in Model.tipomatricula)
+                        {
+                            <option value="@item.IdTipoMatricula">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="departament" multiple="multiple" data-placeholder="-- Seleccionar Departamento --" style="width:100%">
+                        @foreach (var item in Model.departamentos)
+                        {
+                            <option value="@item.IdDepartamento">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="refiere" multiple="multiple" data-placeholder="-- Seleccionar Referido --" style="width:100%">
+                        @foreach (var item in Model.dropRefiereCM)
+                        {
+                            <option value="@item.IdRefiere">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Lista de estudiantes</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Ver</th>
+                    <th>Editar</th>
+                    <th>ID</th>
+                    <th>ID OIM</th>
+                    <th>Nombre</th>
+                    <th>Tipo Matricula</th>
+                    <th>Programa</th>
+                    <th>Sexo</th>
+                    <th>Edad</th>
+                    <th>Zona</th>
+                    <th>Sede</th>
+                    <th>Socio Implementador</th>
+                    <th>Departamentos</th>
+                    <th>Refiere</th>
+                    <th>Carrera/Curso/Grado</th>
+                    <th>Estado Inscripcion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var item in Model.Personas)
+                    {
+                        var socio = item.SocioIm != null ? item.SocioIm.Nombre : "";
+                        var matricula = item.TipoMatricula != null ? item.TipoMatricula.Nombre : "";
+                        var programa = item.Programa != null ? item.Programa.Nombre : "";
+                        var sexo = item.Sexo != null ? item.Sexo.Nombre : "";
+                        var Sede = item.Sede != null ? item.Sede.Nombre : "";
+                        var CarreraCursoGrado = item.CarreraCursoGrado != null ? item.CarreraCursoGrado.Nombre : "";
+                        var departament = item.Departamento != null ? item.Departamento.Nombre : "";
+                        var refiere = item.Refiere != null ? item.Refiere.Nombre : "";
+                        var zona = item.Zona != null ? item.Zona.Nombre : "";
+                        <tr>
+                            <td>@Html.ActionLink("Ver","PersonaDetalle","Mantenimientos",new{ id = @item.PIdOim})</td>
+                            <td><a asp-action="Edit" asp-controller="Personas" asp-route-id="@item.PIdOim">Edit</a></td>
+                            <td>@item.Id</td>
+                            <td>@item.PIdOim</td>
+                            <td>@item.NombreCompleto</td>
+                            <td>@matricula</td>
+                            <td>@programa</td>
+                            <td>@sexo</td>
+                            <td>@item.Edad</td>
+                            <td>@zona</td>
+                            <td>@Sede</td>
+                            <td>@socio </td>
+                            <td>@departament</td>
+                            <td>@refiere</td>
+                            <td>@CarreraCursoGrado</td>
+                            <td>@item.EstadoInscripcion</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+@section scripts{
+<script>
+    $(function () {
+      $("#example1").DataTable({
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+      $('.select2').select2()
+
+    });
+</script>
+
+<script>
+
+    $("#socios").change(function () {
+        var idsocio = $("#socios").val();
+        $.get("/Mantenimientos/GetZona", { id: idsocio[0] }, function (data) {
+            // VACIAMOS EL DropDownList
+            $("#dropzona").empty();
+            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
+            //$("#dropzona").append("<option value> -- Seleccionar Zona " + $("#dropzona option:selected").text() + " --</option>")
+            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
+            $.each(data, function (index, row) {
+                $("#dropzona").append("<option value='" + row.idZona + "'>" + row.nombre + "</option>")
+            });
+        });
+    });
+
+    $("#dropzona").change(function (data) {
+        var idsocio = $("#socios").val();
+        //var idzona = $("#dropzona").val();
+        var idzona = $("#dropzona :selected").map((_, e) => e.value).get();
+        //alert(selected);
+        $.get("/Mantenimientos/GetProgramas", { id: idzona[0] , ids:idsocio[0] }, function (data) {
+            // VACIAMOS EL DropDownList
+            $("#idprograma").empty();
+            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
+            $("#idprograma").append("<option value> -- Seleccionar programa " + $("#idprograma option:selected").text() + " --</option>")
+            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
+            $.each(data, function (index, row) {
+                $("#idprograma").append("<option value='" + row.idPrograma + "'>" + row.nombre + "</option>")
+                //<option value="undefined" data-select2-id="30">Modalidad Flexible Integrada</option>
+            });
+        });
+    });
+
+    $("#idprograma").change(function (data) {
+        var idsocio = $("#socios").val();
+        var pro = $("#idprograma").val();
+        var idzona = $("#dropzona :selected").map((_, e) => e.value).get();
+        var idprograma = $("#idprograma :selected").map((_, e) => e.value).get();
+        //alert(selected);
+        $.get("/Mantenimientos/GetSedes", { id: idzona[0] , ids:idsocio[0] ,idp:idprograma[0] }, function (data) {
+            // VACIAMOS EL DropDownList
+            $("#sedes").empty();
+            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
+            $("#sedes").append("<option value> -- Seleccionar Zona " + $("#sedes option:selected").text() + " --</option>")
+            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
+            $.each(data, function (index, row) {
+                $("#sedes").append("<option value='" + row.idSede + "'>" + row.catsede.nombre + "</option>")
+            });
+        });
+    });
+
+    $("#sedes").change(function (data) {
+        var sedes = $("#sedes :selected").map((_, e) => e.value).get();
+        var idsocio = $("#socios").val();
+        //alert(selected);
+        $.get("/Mantenimientos/GetCarreras", { id: sedes[0],ids:idsocio[0] }, function (data) {
+            // VACIAMOS EL DropDownList
+            $("#carreras").empty();
+            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
+            $("#carreras").append("<option value> -- Seleccionar carrera " + $("#carreras option:selected").text() + " --</option>")
+            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
+            $.each(data, function (index, row) {
+                $("#carreras").append("<option value='" + row.idCarrera + "'>" + row.nombre + "</option>")
+            });
+        });
+    });
+</script>
+}
