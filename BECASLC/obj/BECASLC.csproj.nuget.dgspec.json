@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\galonso\\source\\repos\\BECAS\\BECASLC\\BECASLC.csproj": {}
+    "C:\\Users\\galonso\\source\\repos\\GitHub\\BECASLC\\BECASLC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\galonso\\source\\repos\\BECAS\\BECASLC\\BECASLC.csproj": {
+    "C:\\Users\\galonso\\source\\repos\\GitHub\\BECASLC\\BECASLC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\galonso\\source\\repos\\BECAS\\BECASLC\\BECASLC.csproj",
+        "projectUniqueName": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECASLC\\BECASLC.csproj",
         "projectName": "BECASLC",
-        "projectPath": "C:\\Users\\galonso\\source\\repos\\BECAS\\BECASLC\\BECASLC.csproj",
+        "projectPath": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECASLC\\BECASLC.csproj",
         "packagesPath": "C:\\Users\\galonso\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\galonso\\source\\repos\\BECAS\\BECASLC\\obj\\",
+        "outputPath": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECASLC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

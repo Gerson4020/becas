@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "5AyxsIgsixz65SXIDNbbFo1zO7aYxGV2ORHAhL0Ac/BjH73lQfKoxaKt09TfpI1n99lXeenhcld7NfzlYbSvwA==",
+  "dgSpecHash": "dN5Vm3e4T3xa4xAUGaIjI3zTaA/yCObdZVv87rMmqrW4nP//Fib3Kp78NuAICqrBw3L6C1KpdeEnIOcjlkbA6Q==",
   "success": true,
-  "projectFilePath": "C:\\Users\\galonso\\source\\repos\\BECAS\\BECASLC\\BECASLC.csproj",
+  "projectFilePath": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECASLC\\BECASLC.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\galonso\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\galonso\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",

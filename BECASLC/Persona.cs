@@ -50,6 +50,7 @@ namespace BECASLC
         public int? CarreraCursoGrado { get; set; }
         public string? EstadoPersona { get; set; }
         public int? IdCarga { get; set; }
+        public string? CartaCompromiso { get; set; }
 
         public Programa programa { get; set; }
         public Sexo sexo { get; set; }

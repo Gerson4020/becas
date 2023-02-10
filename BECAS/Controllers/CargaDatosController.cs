@@ -224,7 +224,7 @@ namespace BECAS.Controllers
                                             //p.Cohorte = string.IsNullOrEmpty(item[26].ToString()) ? "" : item[26].ToString();
                                             p.EstadoInscripcion = string.IsNullOrEmpty(item[30].ToString()) ? "" : item[30].ToString();
                                             p.EstadoMf = string.IsNullOrEmpty(item[31].ToString()) ? "" : item[31].ToString();
-
+                                            p.CartaCompromiso = string.IsNullOrEmpty(item[33].ToString()) ? "" : item[33].ToString();
                                             _ctx.Entry(p).State = EntityState.Modified;
                                             await _ctx.SaveChangesAsync();
                                         }
@@ -321,6 +321,7 @@ namespace BECAS.Controllers
                                             persona.Cohorte = string.IsNullOrEmpty(item[26].ToString()) ? "" : item[26].ToString();
                                             persona.EstadoInscripcion = string.IsNullOrEmpty(item[30].ToString()) ? "" : item[30].ToString();
                                             persona.EstadoMf = string.IsNullOrEmpty(item[31].ToString()) ? "" : item[31].ToString();
+                                            persona.CartaCompromiso = string.IsNullOrEmpty(item[33].ToString()) ? "" : item[33].ToString();
                                             persona.IdCarga = carga.IdCarga;
 
                                             _ctx.Entry(persona).State = EntityState.Added;
@@ -340,337 +341,337 @@ namespace BECAS.Controllers
                             }
 
                             // Tabla de educacion
-                            //int loopEd = 0;
-                            //try
-                            //{
-                            //    DataTable tableeducacion = result.Tables[1];
-                            //    foreach (DataRow item in tableeducacion.Rows)
-                            //    {
-                            //        if (loopEd != 0)
-                            //        {
-                            //            //int año = Convert.ToInt32(item[0].ToString());
-                            //            string mes = item[1].ToString();
-                            //            string DFechaReasg = item[11].ToString().Trim();
-                            //            DateTime TimeReasg;
-                            //            string DFechades = item[13].ToString().Trim();
-                            //            DateTime timeFechades;
-                            //            string IModulosInscritos = item[19].ToString().Trim();
-                            //            string IModulosAprobados = item[20].ToString().Trim();
-                            //            string IModulosReprobados = item[22].ToString().Trim();
-                            //            string IDiasAsistenciaEstablecidos = item[15].ToString().Trim();
-                            //            string IMotivoInasistencia = item[18].ToString().Trim();
-                            //            string IDiasAsistenciaEfectivos = item[16].ToString().Trim();
-                            //            string DEstado = string.IsNullOrEmpty(item[12].ToString().Trim()) ? "" : item[12].ToString().Trim();
+                            int loopEd = 0;
+                            try
+                            {
+                                DataTable tableeducacion = result.Tables[1];
+                                foreach (DataRow item in tableeducacion.Rows)
+                                {
+                                    if (loopEd != 0)
+                                    {
+                                        //int año = Convert.ToInt32(item[0].ToString());
+                                        string mes = item[1].ToString();
+                                        string DFechaReasg = item[11].ToString().Trim();
+                                        DateTime TimeReasg;
+                                        string DFechades = item[13].ToString().Trim();
+                                        DateTime timeFechades;
+                                        string IModulosInscritos = item[19].ToString().Trim();
+                                        string IModulosAprobados = item[20].ToString().Trim();
+                                        string IModulosReprobados = item[22].ToString().Trim();
+                                        string IDiasAsistenciaEstablecidos = item[15].ToString().Trim();
+                                        string IMotivoInasistencia = item[18].ToString().Trim();
+                                        string IDiasAsistenciaEfectivos = item[16].ToString().Trim();
+                                        string DEstado = string.IsNullOrEmpty(item[12].ToString().Trim()) ? "" : item[12].ToString().Trim();
 
 
 
-                            //            CargaEducacion ccarga = new CargaEducacion();
-                            //            ccarga.PIdOim = item[6].ToString();
+                                        CargaEducacion ccarga = new CargaEducacion();
+                                        ccarga.PIdOim = item[6].ToString();
 
-                            //            if (!string.IsNullOrEmpty(DFechaReasg))
-                            //            {
-                            //                if (!DFechaReasg.Equals("N/A"))
-                            //                {
-                            //                    bool success = DateTime.TryParse(DFechaReasg, out TimeReasg);
-                            //                    ccarga.DFechaReasg = success == true ? TimeReasg : null;
-                            //                }
-                            //            }
-                            //            ccarga.DEstado = DEstado;
+                                        if (!string.IsNullOrEmpty(DFechaReasg))
+                                        {
+                                            if (!DFechaReasg.Equals("N/A"))
+                                            {
+                                                bool success = DateTime.TryParse(DFechaReasg, out TimeReasg);
+                                                ccarga.DFechaReasg = success == true ? TimeReasg : null;
+                                            }
+                                        }
+                                        ccarga.DEstado = DEstado;
 
-                            //            if (!string.IsNullOrEmpty(DFechades))
-                            //            {
-                            //                if (!DFechades.Equals("N/A"))
-                            //                {
-                            //                    bool success = DateTime.TryParse(DFechades, out timeFechades);
-                            //                    ccarga.DFechades = success == true ? timeFechades : null;
-                            //                }
-                            //            }
+                                        if (!string.IsNullOrEmpty(DFechades))
+                                        {
+                                            if (!DFechades.Equals("N/A"))
+                                            {
+                                                bool success = DateTime.TryParse(DFechades, out timeFechades);
+                                                ccarga.DFechades = success == true ? timeFechades : null;
+                                            }
+                                        }
 
-                            //            ccarga.DMotivodesercion = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
-                            //            ccarga.IDiasAsistenciaEstablecidos = string.IsNullOrEmpty(IDiasAsistenciaEstablecidos) ? 0 : Convert.ToInt32(IDiasAsistenciaEstablecidos);
-                            //            ccarga.IDiasAsistenciaEfectivos = string.IsNullOrEmpty(IDiasAsistenciaEfectivos) ? 0 : Convert.ToInt32(IDiasAsistenciaEfectivos);
-                            //            ccarga.IMotivoInasistencia = string.IsNullOrEmpty(IMotivoInasistencia) ? "" : IMotivoInasistencia;
-                            //            ccarga.IModulosInscritos = string.IsNullOrEmpty(IModulosInscritos) ? 0 : IModulosInscritos.Equals("N/A") ? 0 : Convert.ToInt32(IModulosInscritos);
-                            //            ccarga.IModulosAprobados = string.IsNullOrEmpty(IModulosAprobados) ? 0 : IModulosAprobados.Equals("N/A") ? 0 : Convert.ToInt32(IModulosAprobados);
-                            //            ccarga.IModulosReprobados = string.IsNullOrEmpty(IModulosReprobados) ? 0 : IModulosReprobados.Equals("N/A") ? 0 : Convert.ToInt32(IModulosReprobados);
-                            //            ccarga.ICausaReprobacion = string.IsNullOrEmpty(item[23].ToString()) ? "" : item[23].ToString();
-                            //            ccarga.IdCarga = carga.IdCarga;
-                            //            if (!string.IsNullOrEmpty(item[0].ToString()))
-                            //            {
-                            //                var year = _catalogos.GetYear(item[0].ToString());
-                            //                ccarga.RAño = year != null ? year.IdAño : null;
-                            //            }
-                            //            //ccarga.RAño = año;
-                            //            ccarga.RMes = mes;
-                            //            _ctx.Add(ccarga);
-                            //            await _ctx.SaveChangesAsync();
-                            //        }
-                            //        loopEd++;
-                            //    }
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //    var fila = loopEd;
-                            //    string smn = ex.Message;
-                            //    dbTransaction.Rollback();
-                            //    throw;
-                            //}
+                                        ccarga.DMotivodesercion = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
+                                        ccarga.IDiasAsistenciaEstablecidos = string.IsNullOrEmpty(IDiasAsistenciaEstablecidos) ? 0 : Convert.ToInt32(IDiasAsistenciaEstablecidos);
+                                        ccarga.IDiasAsistenciaEfectivos = string.IsNullOrEmpty(IDiasAsistenciaEfectivos) ? 0 : Convert.ToInt32(IDiasAsistenciaEfectivos);
+                                        ccarga.IMotivoInasistencia = string.IsNullOrEmpty(IMotivoInasistencia) ? "" : IMotivoInasistencia;
+                                        ccarga.IModulosInscritos = string.IsNullOrEmpty(IModulosInscritos) ? 0 : IModulosInscritos.Equals("N/A") ? 0 : Convert.ToInt32(IModulosInscritos);
+                                        ccarga.IModulosAprobados = string.IsNullOrEmpty(IModulosAprobados) ? 0 : IModulosAprobados.Equals("N/A") ? 0 : Convert.ToInt32(IModulosAprobados);
+                                        ccarga.IModulosReprobados = string.IsNullOrEmpty(IModulosReprobados) ? 0 : IModulosReprobados.Equals("N/A") ? 0 : Convert.ToInt32(IModulosReprobados);
+                                        ccarga.ICausaReprobacion = string.IsNullOrEmpty(item[23].ToString()) ? "" : item[23].ToString();
+                                        ccarga.IdCarga = carga.IdCarga;
+                                        if (!string.IsNullOrEmpty(item[0].ToString()))
+                                        {
+                                            var year = _catalogos.GetYear(item[0].ToString());
+                                            ccarga.RAño = year != null ? year.IdAño : null;
+                                        }
+                                        //ccarga.RAño = año;
+                                        ccarga.RMes = mes;
+                                        _ctx.Add(ccarga);
+                                        await _ctx.SaveChangesAsync();
+                                    }
+                                    loopEd++;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                var fila = loopEd;
+                                string smn = ex.Message;
+                                dbTransaction.Rollback();
+                                throw;
+                            }
 
                             //Tabla psicosocial
                             int loopPsi = 0;
-                            //try
-                            //{
-                            //    DataTable tablepsicosocial = result.Tables[2];
-                            //    foreach (DataRow item in tablepsicosocial.Rows)
-                            //    {
-                            //        if (loopPsi != 0)
-                            //        {
+                            try
+                            {
+                                DataTable tablepsicosocial = result.Tables[2];
+                                foreach (DataRow item in tablepsicosocial.Rows)
+                                {
+                                    if (loopPsi != 0)
+                                    {
 
-                            //            CargaEvaluacionPsicosocial cargaEvaluacion = new CargaEvaluacionPsicosocial();
-                            //            int año = Convert.ToInt32(item[0].ToString());
-                            //            string mes = item[1].ToString();
-                            //            cargaEvaluacion.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
-                            //            cargaEvaluacion.OvParticipacion = string.IsNullOrEmpty(item[9].ToString()) ? null : item[9].ToString().Equals("Si") ? true : false;
-                            //            cargaEvaluacion.OvPuntajePret = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
-                            //            cargaEvaluacion.OvPuntajePos = string.IsNullOrEmpty(item[11].ToString()) ? "" : item[11].ToString();
-                            //            cargaEvaluacion.EpInstrumentoRiesgo = string.IsNullOrEmpty(item[12].ToString()) ? "" : item[12].ToString();
-                            //            cargaEvaluacion.EpVulnerabilidades = string.IsNullOrEmpty(item[13].ToString()) ? "" : item[13].ToString();
-                            //            cargaEvaluacion.EpAlertaDesercion = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
-                            //            cargaEvaluacion.IdCarga = carga.IdCarga;
-                            //            cargaEvaluacion.Año = año;
-                            //            cargaEvaluacion.Mes = mes;
-                            //            _ctx.Add(cargaEvaluacion);
-                            //            await _ctx.SaveChangesAsync();
-                            //        }
-                            //        loopPsi++;
-                            //    }
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //    var fila = loopPsi;
-                            //    string msn = ex.Message;
-                            //    dbTransaction.Rollback();
-                            //    throw;
-                            //}
+                                        CargaEvaluacionPsicosocial cargaEvaluacion = new CargaEvaluacionPsicosocial();
+                                        int año = Convert.ToInt32(item[0].ToString());
+                                        string mes = item[1].ToString();
+                                        cargaEvaluacion.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
+                                        cargaEvaluacion.OvParticipacion = string.IsNullOrEmpty(item[9].ToString()) ? null : item[9].ToString().Equals("Si") ? true : false;
+                                        cargaEvaluacion.OvPuntajePret = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
+                                        cargaEvaluacion.OvPuntajePos = string.IsNullOrEmpty(item[11].ToString()) ? "" : item[11].ToString();
+                                        cargaEvaluacion.EpInstrumentoRiesgo = string.IsNullOrEmpty(item[12].ToString()) ? "" : item[12].ToString();
+                                        cargaEvaluacion.EpVulnerabilidades = string.IsNullOrEmpty(item[13].ToString()) ? "" : item[13].ToString();
+                                        cargaEvaluacion.EpAlertaDesercion = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
+                                        cargaEvaluacion.IdCarga = carga.IdCarga;
+                                        cargaEvaluacion.Año = año;
+                                        cargaEvaluacion.Mes = mes;
+                                        _ctx.Add(cargaEvaluacion);
+                                        await _ctx.SaveChangesAsync();
+                                    }
+                                    loopPsi++;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                var fila = loopPsi;
+                                string msn = ex.Message;
+                                dbTransaction.Rollback();
+                                throw;
+                            }
 
                             //Tabla seguimiento psicosocial
                             int loopSegPsi = 0;
-                            //try
-                            //{
-                            //    DataTable tableSeguimientoPsicosocial = result.Tables[3];
-                            //    foreach (DataRow item in tableSeguimientoPsicosocial.Rows)
-                            //    {
-                            //        if (loopSegPsi != 0)
-                            //        {
+                            try
+                            {
+                                DataTable tableSeguimientoPsicosocial = result.Tables[3];
+                                foreach (DataRow item in tableSeguimientoPsicosocial.Rows)
+                                {
+                                    if (loopSegPsi != 0)
+                                    {
 
-                            //            CargaSeguimientoPsicosocial ee = new CargaSeguimientoPsicosocial();
-                            //            int año = Convert.ToInt32(item[0].ToString());
-                            //            string mes = item[1].ToString();
-                            //            ee.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
-                            //            ee.SegMotivo = string.IsNullOrEmpty(item[9].ToString()) ? "" : item[9].ToString();
-                            //            ee.SegEstado = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
-                            //            ee.SegMedida = string.IsNullOrEmpty(item[11].ToString()) ? "" : item[11].ToString();
-                            //            ee.SegAlertaDesercion = string.IsNullOrEmpty(item[12].ToString()) ? "" : item[12].ToString();
-                            //            ee.IdCarga = carga.IdCarga;
-                            //            ee.Año = año;
-                            //            ee.Mes = mes;
-                            //            _ctx.Add(ee);
-                            //            await _ctx.SaveChangesAsync();
+                                        CargaSeguimientoPsicosocial ee = new CargaSeguimientoPsicosocial();
+                                        int año = Convert.ToInt32(item[0].ToString());
+                                        string mes = item[1].ToString();
+                                        ee.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
+                                        ee.SegMotivo = string.IsNullOrEmpty(item[9].ToString()) ? "" : item[9].ToString();
+                                        ee.SegEstado = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
+                                        ee.SegMedida = string.IsNullOrEmpty(item[11].ToString()) ? "" : item[11].ToString();
+                                        ee.SegAlertaDesercion = string.IsNullOrEmpty(item[12].ToString()) ? "" : item[12].ToString();
+                                        ee.IdCarga = carga.IdCarga;
+                                        ee.Año = año;
+                                        ee.Mes = mes;
+                                        _ctx.Add(ee);
+                                        await _ctx.SaveChangesAsync();
 
 
-                            //        }
-                            //        loopSegPsi++;
+                                    }
+                                    loopSegPsi++;
 
-                            //    }
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //    var linea = loopSegPsi;
-                            //    string msn = ex.ToString();
-                            //    dbTransaction.Rollback();
-                            //    throw;
-                            //}
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                var linea = loopSegPsi;
+                                string msn = ex.ToString();
+                                dbTransaction.Rollback();
+                                throw;
+                            }
 
                             //Tabla practicas Pr
                             int loopSegPra = 0;
-                            //try
-                            //{
-                            //    DataTable tableSeguimientosPr = result.Tables[4];
-                            //    foreach (DataRow item in tableSeguimientosPr.Rows)
-                            //    {
-                            //        if (loopSegPra != 0)
-                            //        {
+                            try
+                            {
+                                DataTable tableSeguimientosPr = result.Tables[4];
+                                foreach (DataRow item in tableSeguimientosPr.Rows)
+                                {
+                                    if (loopSegPra != 0)
+                                    {
 
-                            //            CargaSeguimientoPracticasPr ee = new CargaSeguimientoPracticasPr();
-                            //            int año = Convert.ToInt32(item[0].ToString());
-                            //            string mes = item[1].ToString();
-                            //            ee.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
-                            //            ee.PpEmpresa = string.IsNullOrEmpty(item[9].ToString()) ? "" : item[9].ToString();
-                            //            ee.PpCargo = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
-                            //            ee.PpDocenteAsign = string.IsNullOrEmpty(item[11].ToString()) ? "" : item[11].ToString();
-                            //            ee.PpGestion = string.IsNullOrEmpty(item[12].ToString()) ? "" : item[12].ToString();
-                            //            ee.PpMontoRemuneracion = string.IsNullOrEmpty(item[13].ToString()) ? "" : item[13].ToString();
-                            //            ee.PpPosibilidadContratacion = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
-                            //            ee.IdCarga = carga.IdCarga;
-                            //            ee.Año = año;
-                            //            ee.Mes = mes;
-                            //            _ctx.Add(ee);
-                            //            await _ctx.SaveChangesAsync();
+                                        CargaSeguimientoPracticasPr ee = new CargaSeguimientoPracticasPr();
+                                        int año = Convert.ToInt32(item[0].ToString());
+                                        string mes = item[1].ToString();
+                                        ee.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
+                                        ee.PpEmpresa = string.IsNullOrEmpty(item[9].ToString()) ? "" : item[9].ToString();
+                                        ee.PpCargo = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
+                                        ee.PpDocenteAsign = string.IsNullOrEmpty(item[11].ToString()) ? "" : item[11].ToString();
+                                        ee.PpGestion = string.IsNullOrEmpty(item[12].ToString()) ? "" : item[12].ToString();
+                                        ee.PpMontoRemuneracion = string.IsNullOrEmpty(item[13].ToString()) ? "" : item[13].ToString();
+                                        ee.PpPosibilidadContratacion = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
+                                        ee.IdCarga = carga.IdCarga;
+                                        ee.Año = año;
+                                        ee.Mes = mes;
+                                        _ctx.Add(ee);
+                                        await _ctx.SaveChangesAsync();
 
-                            //        }
-                            //        loopSegPra++;
-                            //    }
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //    var linea = loopSegPra;
-                            //    string msg = ex.Message;
-                            //    dbTransaction.Rollback();
-                            //    throw;
-                            //}
+                                    }
+                                    loopSegPra++;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                var linea = loopSegPra;
+                                string msg = ex.Message;
+                                dbTransaction.Rollback();
+                                throw;
+                            }
                             //Seguimiento Pasantillas
                             int loopsegPasantillas = 0;
-                            //try
-                            //{
-                            //    DataTable tableSeguimientPsicosocial = result.Tables[5];
-                            //    foreach (DataRow item in tableSeguimientPsicosocial.Rows)
-                            //    {
-                            //        if (loopsegPasantillas != 0)
-                            //        {
-                            //            CargaSeguimientoPasantia e = new CargaSeguimientoPasantia();
-                            //            int año = Convert.ToInt32(item[0].ToString());
-                            //            string mes = item[1].ToString();
-                            //            e.PId = item[5].ToString();
-                            //            e.PasEmpresa = item[9].ToString();
-                            //            e.PasEntrevista = item[10].ToString();
-                            //            e.PasPruebas = item[11].ToString();
-                            //            e.PasContratacion = item[12].ToString();
-                            //            e.PasCargo = item[13].ToString();
-                            //            e.PasFechaContratacion = item[14].ToString();
-                            //            e.PasMontoRemuneracion = item[15].ToString();
-                            //            e.Año = año;
-                            //            e.Mes = mes;
-                            //            _ctx.Add(e);
-                            //            await _ctx.SaveChangesAsync();
-                            //        }
-                            //        loopsegPasantillas++;
-                            //    }
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //    var linea = loopsegPasantillas;
-                            //    string msg = ex.Message;
-                            //    dbTransaction.Rollback();
-                            //    throw;
-                            //}
+                            try
+                            {
+                                DataTable tableSeguimientPsicosocial = result.Tables[5];
+                                foreach (DataRow item in tableSeguimientPsicosocial.Rows)
+                                {
+                                    if (loopsegPasantillas != 0)
+                                    {
+                                        CargaSeguimientoPasantia e = new CargaSeguimientoPasantia();
+                                        int año = Convert.ToInt32(item[0].ToString());
+                                        string mes = item[1].ToString();
+                                        e.PId = item[5].ToString();
+                                        e.PasEmpresa = item[9].ToString();
+                                        e.PasEntrevista = item[10].ToString();
+                                        e.PasPruebas = item[11].ToString();
+                                        e.PasContratacion = item[12].ToString();
+                                        e.PasCargo = item[13].ToString();
+                                        e.PasFechaContratacion = item[14].ToString();
+                                        e.PasMontoRemuneracion = item[15].ToString();
+                                        e.Año = año;
+                                        e.Mes = mes;
+                                        _ctx.Add(e);
+                                        await _ctx.SaveChangesAsync();
+                                    }
+                                    loopsegPasantillas++;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                var linea = loopsegPasantillas;
+                                string msg = ex.Message;
+                                dbTransaction.Rollback();
+                                throw;
+                            }
 
                             //Tabla SeguimientoAutoempleo
                             int loopSegAut = 0;
-                            //try
-                            //{
-                            //    DataTable SeguimientoAutoempleo = result.Tables[6];
-                            //    foreach (DataRow item in SeguimientoAutoempleo.Rows)
-                            //    {
-                            //        if (loopSegAut != 0)
-                            //        {
+                            try
+                            {
+                                DataTable SeguimientoAutoempleo = result.Tables[6];
+                                foreach (DataRow item in SeguimientoAutoempleo.Rows)
+                                {
+                                    if (loopSegAut != 0)
+                                    {
 
-                            //            CargaSeguimientoAutoempleo ee = new CargaSeguimientoAutoempleo();
-                            //            int año = Convert.ToInt32(item[0].ToString());
-                            //            string mes = item[1].ToString();
-                            //            ee.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
-                            //            ee.AutoempEmpresa = string.IsNullOrEmpty(item[9].ToString()) ? "" : item[9].ToString();
-                            //            ee.AutoempTipoCapital = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
-                            //            ee.AutoempEstado = string.IsNullOrEmpty(item[11].ToString()) ? "" : item[11].ToString();
-                            //            ee.AutoempTipoFinanciamiento = string.IsNullOrEmpty(item[12].ToString()) ? "" : item[12].ToString();
-                            //            ee.AutoempTipoEmpresa = string.IsNullOrEmpty(item[13].ToString()) ? "" : item[13].ToString();
-                            //            ee.AutoempTipoEmpresaOtro = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
-                            //            ee.AutoempPlanNegocios = string.IsNullOrEmpty(item[15].ToString()) ? "" : item[15].ToString();
-                            //            ee.AutoempRegistro = string.IsNullOrEmpty(item[16].ToString()) ? "" : item[16].ToString();
-                            //            ee.AutoempFechaInicio = string.IsNullOrEmpty(item[17].ToString()) ? null : Convert.ToDateTime(item[17].ToString());
-                            //            ee.IdCarga = carga.IdCarga;
-                            //            ee.Año = año;
-                            //            ee.Mes = mes;
-                            //            _ctx.Add(ee);
-                            //            await _ctx.SaveChangesAsync();
+                                        CargaSeguimientoAutoempleo ee = new CargaSeguimientoAutoempleo();
+                                        int año = Convert.ToInt32(item[0].ToString());
+                                        string mes = item[1].ToString();
+                                        ee.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
+                                        ee.AutoempEmpresa = string.IsNullOrEmpty(item[9].ToString()) ? "" : item[9].ToString();
+                                        ee.AutoempTipoCapital = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
+                                        ee.AutoempEstado = string.IsNullOrEmpty(item[11].ToString()) ? "" : item[11].ToString();
+                                        ee.AutoempTipoFinanciamiento = string.IsNullOrEmpty(item[12].ToString()) ? "" : item[12].ToString();
+                                        ee.AutoempTipoEmpresa = string.IsNullOrEmpty(item[13].ToString()) ? "" : item[13].ToString();
+                                        ee.AutoempTipoEmpresaOtro = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
+                                        ee.AutoempPlanNegocios = string.IsNullOrEmpty(item[15].ToString()) ? "" : item[15].ToString();
+                                        ee.AutoempRegistro = string.IsNullOrEmpty(item[16].ToString()) ? "" : item[16].ToString();
+                                        ee.AutoempFechaInicio = string.IsNullOrEmpty(item[17].ToString()) ? null : Convert.ToDateTime(item[17].ToString());
+                                        ee.IdCarga = carga.IdCarga;
+                                        ee.Año = año;
+                                        ee.Mes = mes;
+                                        _ctx.Add(ee);
+                                        await _ctx.SaveChangesAsync();
 
 
-                            //        }
-                            //        loopSegAut++;
+                                    }
+                                    loopSegAut++;
 
-                            //    }
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //    var linea = loopSegAut;
-                            //    string msn = ex.Message;
-                            //    dbTransaction.Rollback();
-                            //    throw;
-                            //}
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                var linea = loopSegAut;
+                                string msn = ex.Message;
+                                dbTransaction.Rollback();
+                                throw;
+                            }
 
                             //Tabla estipendios
                             int loopEst = 0;
-                            //try
-                            //{
-                            //    DataTable tableEstipendios = result.Tables[7];
-                            //    foreach (DataRow item in tableEstipendios.Rows)
-                            //    {
-                            //        if (loopEst != 0)
-                            //        {
-                            //            CargaEstipendio ee = new CargaEstipendio();
-                            //            int año = Convert.ToInt32(item[0].ToString());
-                            //            string mes = item[1].ToString();
-                            //            ee.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
-                            //            ee.AlimEfectivo = string.IsNullOrEmpty(item[10].ToString()) ? 0 : Convert.ToDecimal(item[10].ToString());
-                            //            ee.AlimMontoEfectivo = string.IsNullOrEmpty(item[10].ToString()) ? 0 : Convert.ToDecimal(item[11].ToString());
-                            //            ee.AlimDiasPresencialesEfectivo = string.IsNullOrEmpty(item[12].ToString()) ? 0 : Convert.ToDecimal(item[12].ToString());
-                            //            ee.AlimSubtotalEfectivo = string.IsNullOrEmpty(item[13].ToString()) ? 0 : Convert.ToDecimal(item[13].ToString());
-                            //            ee.AlimTransferencia = string.IsNullOrEmpty(item[14].ToString()) ? 0 : Convert.ToDecimal(item[14].ToString());
-                            //            ee.AlimMontoTransferencia = string.IsNullOrEmpty(item[15].ToString()) ? 0 : Convert.ToDecimal(item[15].ToString());
-                            //            ee.AlimDiasPresencialesTransferencia = string.IsNullOrEmpty(item[16].ToString()) ? 0 : Convert.ToDecimal(item[16].ToString());
-                            //            ee.AlimSubtotalTransferencia = string.IsNullOrEmpty(item[17].ToString()) ? 0 : Convert.ToDecimal(item[17].ToString());
-                            //            ee.AlimEspecie = string.IsNullOrEmpty(item[18].ToString()) ? 0 : Convert.ToDecimal(item[18].ToString());
-                            //            ee.AlimMontoEspecie = string.IsNullOrEmpty(item[19].ToString()) ? 0 : Convert.ToDecimal(item[19].ToString());
-                            //            ee.AlimDiasPresencialesEspecie = string.IsNullOrEmpty(item[20].ToString()) ? 0 : Convert.ToDecimal(item[20].ToString());
-                            //            ee.AlimSubtotalEspecie = string.IsNullOrEmpty(item[21].ToString()) ? 0 : Convert.ToDecimal(item[21].ToString());
-                            //            ee.AlimMontoTotal = string.IsNullOrEmpty(item[22].ToString()) ? 0 : Convert.ToDecimal(item[22].ToString());
+                            try
+                            {
+                                DataTable tableEstipendios = result.Tables[7];
+                                foreach (DataRow item in tableEstipendios.Rows)
+                                {
+                                    if (loopEst != 0)
+                                    {
+                                        CargaEstipendio ee = new CargaEstipendio();
+                                        int año = Convert.ToInt32(item[0].ToString());
+                                        string mes = item[1].ToString();
+                                        ee.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
+                                        ee.AlimEfectivo = string.IsNullOrEmpty(item[10].ToString()) ? 0 : Convert.ToDecimal(item[10].ToString());
+                                        ee.AlimMontoEfectivo = string.IsNullOrEmpty(item[10].ToString()) ? 0 : Convert.ToDecimal(item[11].ToString());
+                                        ee.AlimDiasPresencialesEfectivo = string.IsNullOrEmpty(item[12].ToString()) ? 0 : Convert.ToDecimal(item[12].ToString());
+                                        ee.AlimSubtotalEfectivo = string.IsNullOrEmpty(item[13].ToString()) ? 0 : Convert.ToDecimal(item[13].ToString());
+                                        ee.AlimTransferencia = string.IsNullOrEmpty(item[14].ToString()) ? 0 : Convert.ToDecimal(item[14].ToString());
+                                        ee.AlimMontoTransferencia = string.IsNullOrEmpty(item[15].ToString()) ? 0 : Convert.ToDecimal(item[15].ToString());
+                                        ee.AlimDiasPresencialesTransferencia = string.IsNullOrEmpty(item[16].ToString()) ? 0 : Convert.ToDecimal(item[16].ToString());
+                                        ee.AlimSubtotalTransferencia = string.IsNullOrEmpty(item[17].ToString()) ? 0 : Convert.ToDecimal(item[17].ToString());
+                                        ee.AlimEspecie = string.IsNullOrEmpty(item[18].ToString()) ? 0 : Convert.ToDecimal(item[18].ToString());
+                                        ee.AlimMontoEspecie = string.IsNullOrEmpty(item[19].ToString()) ? 0 : Convert.ToDecimal(item[19].ToString());
+                                        ee.AlimDiasPresencialesEspecie = string.IsNullOrEmpty(item[20].ToString()) ? 0 : Convert.ToDecimal(item[20].ToString());
+                                        ee.AlimSubtotalEspecie = string.IsNullOrEmpty(item[21].ToString()) ? 0 : Convert.ToDecimal(item[21].ToString());
+                                        ee.AlimMontoTotal = string.IsNullOrEmpty(item[22].ToString()) ? 0 : Convert.ToDecimal(item[22].ToString());
 
-                            //            ee.TranspEfectivo = string.IsNullOrEmpty(item[23].ToString()) ? 0 : Convert.ToDecimal(item[23].ToString());
-                            //            ee.TranspMontoEfectivo = string.IsNullOrEmpty(item[24].ToString()) ? 0 : Convert.ToDecimal(item[24].ToString());
-                            //            ee.TranspDiasPresencialesEfectivo = string.IsNullOrEmpty(item[25].ToString()) ? 0 : Convert.ToDecimal(item[25].ToString());
-                            //            ee.TranspSubtotalEfectivo = string.IsNullOrEmpty(item[26].ToString()) ? 0 : Convert.ToDecimal(item[26].ToString());
-                            //            ee.TranspTransferencia = string.IsNullOrEmpty(item[27].ToString()) ? 0 : Convert.ToDecimal(item[27].ToString());
-                            //            ee.TranspTarifaDiferenciada = string.IsNullOrEmpty(item[28].ToString()) ? 0 : Convert.ToDecimal(item[28].ToString());
-                            //            ee.TranspMontoTransferencia = string.IsNullOrEmpty(item[29].ToString()) ? 0 : Convert.ToDecimal(item[29].ToString());
-                            //            ee.TranspDiasPresencialesTransferencia = string.IsNullOrEmpty(item[30].ToString()) ? 0 : Convert.ToDecimal(item[30].ToString());
-                            //            ee.TranspSubtotalTransferencia = string.IsNullOrEmpty(item[31].ToString()) ? 0 : Convert.ToDecimal(item[31].ToString());
-                            //            ee.TranspMontoTotal = string.IsNullOrEmpty(item[32].ToString()) ? 0 : Convert.ToDecimal(item[32].ToString());
+                                        ee.TranspEfectivo = string.IsNullOrEmpty(item[23].ToString()) ? 0 : Convert.ToDecimal(item[23].ToString());
+                                        ee.TranspMontoEfectivo = string.IsNullOrEmpty(item[24].ToString()) ? 0 : Convert.ToDecimal(item[24].ToString());
+                                        ee.TranspDiasPresencialesEfectivo = string.IsNullOrEmpty(item[25].ToString()) ? 0 : Convert.ToDecimal(item[25].ToString());
+                                        ee.TranspSubtotalEfectivo = string.IsNullOrEmpty(item[26].ToString()) ? 0 : Convert.ToDecimal(item[26].ToString());
+                                        ee.TranspTransferencia = string.IsNullOrEmpty(item[27].ToString()) ? 0 : Convert.ToDecimal(item[27].ToString());
+                                        ee.TranspTarifaDiferenciada = string.IsNullOrEmpty(item[28].ToString()) ? 0 : Convert.ToDecimal(item[28].ToString());
+                                        ee.TranspMontoTransferencia = string.IsNullOrEmpty(item[29].ToString()) ? 0 : Convert.ToDecimal(item[29].ToString());
+                                        ee.TranspDiasPresencialesTransferencia = string.IsNullOrEmpty(item[30].ToString()) ? 0 : Convert.ToDecimal(item[30].ToString());
+                                        ee.TranspSubtotalTransferencia = string.IsNullOrEmpty(item[31].ToString()) ? 0 : Convert.ToDecimal(item[31].ToString());
+                                        ee.TranspMontoTotal = string.IsNullOrEmpty(item[32].ToString()) ? 0 : Convert.ToDecimal(item[32].ToString());
 
-                            //            ee.ConecEfectivo = string.IsNullOrEmpty(item[33].ToString()) ? 0 : Convert.ToDecimal(item[33].ToString());
-                            //            ee.ConecMontoEfectivo = string.IsNullOrEmpty(item[34].ToString()) ? 0 : Convert.ToDecimal(item[34].ToString());
-                            //            ee.ConecDiasPresencialesEfectivo = string.IsNullOrEmpty(item[35].ToString()) ? 0 : Convert.ToDecimal(item[35].ToString());
-                            //            ee.ConecSubtotalEfectivo = string.IsNullOrEmpty(item[36].ToString()) ? 0 : Convert.ToDecimal(item[36].ToString());
-                            //            ee.ConecTransferencia = string.IsNullOrEmpty(item[37].ToString()) ? 0 : Convert.ToDecimal(item[37].ToString());
-                            //            ee.ConecMontoTransferencia = string.IsNullOrEmpty(item[38].ToString()) ? 0 : Convert.ToDecimal(item[38].ToString());
-                            //            ee.ConecDiasPresencialesTransferencia = string.IsNullOrEmpty(item[39].ToString()) ? 0 : Convert.ToDecimal(item[39].ToString());
-                            //            ee.ConecSubtotalTransferencia = string.IsNullOrEmpty(item[40].ToString()) ? 0 : Convert.ToDecimal(item[40].ToString());
-                            //            ee.ConecMontoTotal = string.IsNullOrEmpty(item[41].ToString()) ? 0 : Convert.ToDecimal(item[41].ToString());
-                            //            ee.IdCarga = carga.IdCarga;
+                                        ee.ConecEfectivo = string.IsNullOrEmpty(item[33].ToString()) ? 0 : Convert.ToDecimal(item[33].ToString());
+                                        ee.ConecMontoEfectivo = string.IsNullOrEmpty(item[34].ToString()) ? 0 : Convert.ToDecimal(item[34].ToString());
+                                        ee.ConecDiasPresencialesEfectivo = string.IsNullOrEmpty(item[35].ToString()) ? 0 : Convert.ToDecimal(item[35].ToString());
+                                        ee.ConecSubtotalEfectivo = string.IsNullOrEmpty(item[36].ToString()) ? 0 : Convert.ToDecimal(item[36].ToString());
+                                        ee.ConecTransferencia = string.IsNullOrEmpty(item[37].ToString()) ? 0 : Convert.ToDecimal(item[37].ToString());
+                                        ee.ConecMontoTransferencia = string.IsNullOrEmpty(item[38].ToString()) ? 0 : Convert.ToDecimal(item[38].ToString());
+                                        ee.ConecDiasPresencialesTransferencia = string.IsNullOrEmpty(item[39].ToString()) ? 0 : Convert.ToDecimal(item[39].ToString());
+                                        ee.ConecSubtotalTransferencia = string.IsNullOrEmpty(item[40].ToString()) ? 0 : Convert.ToDecimal(item[40].ToString());
+                                        ee.ConecMontoTotal = string.IsNullOrEmpty(item[41].ToString()) ? 0 : Convert.ToDecimal(item[41].ToString());
+                                        ee.IdCarga = carga.IdCarga;
 
-                            //            ee.Año = año;
-                            //            ee.Mes = mes;
-                            //            _ctx.Add(ee);
-                            //            await _ctx.SaveChangesAsync();
-                            //        }
-                            //        loopEst++;
-                            //    }
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //    var linea = loopEst;
-                            //    string msg = ex.Message;
-                            //    dbTransaction.Rollback();
-                            //    throw;
-                            //}
+                                        ee.Año = año;
+                                        ee.Mes = mes;
+                                        _ctx.Add(ee);
+                                        await _ctx.SaveChangesAsync();
+                                    }
+                                    loopEst++;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                var linea = loopEst;
+                                string msg = ex.Message;
+                                dbTransaction.Rollback();
+                                throw;
+                            }
                             //_ctx.SaveChanges();
                             dbTransaction.Commit();
                         }

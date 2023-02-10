@@ -686,6 +686,8 @@ namespace BECASLC
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.CartaCompromiso).HasMaxLength(100);
+
                 entity.Property(e => e.Discapacidad)
                     .HasMaxLength(50)
                     .IsUnicode(false);
