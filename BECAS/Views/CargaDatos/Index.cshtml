@@ -21,7 +21,7 @@
                                 <label for="exampleInputFile">File input</label>
                                 <div class="input-group">
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="postedFiles" multiple>
+                                        <input type="file" class="custom-file-input" id="exampleInputFile" name="postedFiles" accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" multiple>
                                         <label class="custom-file-label" for="exampleInputFile">Choose file</label>
                                     </div>
                                     <div class="input-group-append">
@@ -29,17 +29,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                            </div>
                         </div>
                         <div class="card-footer">
                             <button type="submit" value="Upload" class="btn btn-primary">Submit</button>
                         </div>
-                        @*<span>Select File:</span>
-                        <input type="file" name="postedFiles" multiple />*@
-                        @*<input type="submit" value="Upload" />*@
                         <br />
                         <span style="color:green">@Html.Raw(ViewBag.Message)</span>
                     </form>

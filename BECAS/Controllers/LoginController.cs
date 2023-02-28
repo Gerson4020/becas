@@ -32,30 +32,15 @@ namespace BECAS.Controllers
                         HttpContext.Session.SetInt32("SessionRol", (int)user.IdRol);
                         HttpContext.Session.SetInt32("SessionId", (int)user.IdUsuario);
                     }
-                    else
-                    {
-                        //ViewBag.Message += string.Format("<b>{0}</b> Nombre o contraseña incorrectos<br />");
-                    }
                 }
             }
-            //if (email.Equals("galonso@iom.int"))
-            //{
-            //    estado = password.Equals("123") ? true : false;
-            //}
-            //if (email.Equals("gamaya@iom.int"))
-            //{
-            //    estado = password.Equals("123") ? true : false;
-            //}
-            //if (email.Equals("anrodriguez@iom.int"))
-            //{
-            //    estado = password.Equals("123") ? true : false;
-            //}
             if (estado)
             {
                 return RedirectToAction("index", "Home");
             }
             else
             {
+                ViewBag.Message += string.Format("<b> Nombre o contraseña incorrectos<br />");
                 return RedirectToAction("index", "Login");
             }
         }
