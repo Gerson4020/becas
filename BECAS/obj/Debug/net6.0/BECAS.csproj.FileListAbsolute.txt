@@ -565,3 +565,9 @@ C:\Users\galonso\source\repos\GitHub\BECAS\bin\Debug\net6.0\System.Text.Encoding
 C:\Users\galonso\source\repos\GitHub\BECAS\bin\Debug\net6.0\System.Text.Json.dll
 C:\Users\galonso\source\repos\GitHub\BECAS\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 C:\Users\galonso\source\repos\GitHub\BECAS\bin\Debug\net6.0\Microsoft.Extensions.Configuration.Binder.dll
+C:\Users\galonso\source\repos\GitHub\BECAS\bin\Debug\net6.0\Azure.Core.dll
+C:\Users\galonso\source\repos\GitHub\BECAS\bin\Debug\net6.0\Azure.Extensions.AspNetCore.Configuration.Secrets.dll
+C:\Users\galonso\source\repos\GitHub\BECAS\bin\Debug\net6.0\Azure.Identity.dll
+C:\Users\galonso\source\repos\GitHub\BECAS\bin\Debug\net6.0\Azure.Security.KeyVault.Secrets.dll
+C:\Users\galonso\source\repos\GitHub\BECAS\bin\Debug\net6.0\Microsoft.Identity.Client.Extensions.Msal.dll
+C:\Users\galonso\source\repos\GitHub\BECAS\bin\Debug\net6.0\System.Memory.Data.dll

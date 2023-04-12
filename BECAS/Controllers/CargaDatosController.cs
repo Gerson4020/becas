@@ -199,7 +199,7 @@ namespace BECAS.Controllers
                                             {
                                                 //p.Cohorte = string.IsNullOrEmpty(item[26].ToString()) ? "" : item[26].ToString();
                                                 var cohorte = _catalogos.GetCohorte(item[26].ToString());
-                                                //p.Cohorte = cohorte != null ? cohorte.IdCohorte : null;
+                                                p.Cohorte = cohorte != null ? cohorte.IdCohorte : null;
                                             }
 
                                             p.FechaEntrevista = string.IsNullOrEmpty(item[0].ToString()) ? null : Convert.ToDateTime(item[0].ToString());
@@ -294,7 +294,7 @@ namespace BECAS.Controllers
                                             {
                                                 //p.Cohorte = string.IsNullOrEmpty(item[26].ToString()) ? "" : item[26].ToString();
                                                 var cohorte = _catalogos.GetCohorte(item[26].ToString());
-                                                //persona.Cohorte = cohorte != null ? cohorte.IdCohorte : null;
+                                                persona.Cohorte = cohorte != null ? cohorte.IdCohorte : null;
                                             }
 
                                             persona.FechaEntrevista = string.IsNullOrEmpty(item[0].ToString()) ? null : Convert.ToDateTime(item[0].ToString());
@@ -318,7 +318,7 @@ namespace BECAS.Controllers
                                             persona.Dui = string.IsNullOrEmpty(item[20].ToString()) ? "" : item[20].ToString();
                                             persona.Nie = string.IsNullOrEmpty(item[21].ToString()) ? "" : item[21].ToString();
                                             persona.Correo = string.IsNullOrEmpty(item[22].ToString()) ? "" : item[22].ToString();
-                                            persona.Cohorte = string.IsNullOrEmpty(item[26].ToString()) ? "" : item[26].ToString();
+                                            //persona.Cohorte = string.IsNullOrEmpty(item[26].ToString()) ? "" : item[26].ToString();
                                             persona.EstadoInscripcion = string.IsNullOrEmpty(item[30].ToString()) ? "" : item[30].ToString();
                                             persona.EstadoMf = string.IsNullOrEmpty(item[31].ToString()) ? "" : item[31].ToString();
                                             persona.CartaCompromiso = string.IsNullOrEmpty(item[33].ToString()) ? "" : item[33].ToString();

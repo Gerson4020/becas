@@ -20,8 +20,11 @@ namespace BECASLC
         public int? IModulosReprobados { get; set; }
         public string? ICausaReprobacion { get; set; }
         public int? IdCarga { get; set; }
+        [ForeignKey("catAño")]
         public int? RAño { get; set; }
         public string? RMes { get; set; }
+
+        public CatAño? catAño { get; set; }
 
     }
 }

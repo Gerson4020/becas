@@ -18,5 +18,6 @@
     <WebStackScaffolding_DbContextTypeFullName>BECASLC.MEOBContext</WebStackScaffolding_DbContextTypeFullName>
     <WebStackScaffolding_IsAsyncSelected>False</WebStackScaffolding_IsAsyncSelected>
     <WebStackScaffolding_IsViewGenerationSelected>True</WebStackScaffolding_IsViewGenerationSelected>
+    <NameOfLastUsedPublishProfile>C:\Users\galonso\source\repos\GitHub\BECAS\Properties\PublishProfiles\iom-d-we-sms-webapp-001 - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>

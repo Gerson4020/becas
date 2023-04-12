@@ -25,4 +25,3 @@ C:\Users\galonso\source\repos\GitHub\BECASLC\obj\Debug\net6.0\BECASLC.dll
 C:\Users\galonso\source\repos\GitHub\BECASLC\obj\Debug\net6.0\ref\BECASLC.dll
 C:\Users\galonso\source\repos\GitHub\BECASLC\obj\Debug\net6.0\BECASLC.pdb
 C:\Users\galonso\source\repos\GitHub\BECASLC\obj\Debug\net6.0\BECASLC.genruntimeconfig.cache
-C:\Users\galonso\source\repos\GitHub\BECASLC\obj\Debug\net6.0\BECASLC.csproj.AssemblyReference.cache

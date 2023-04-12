@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "ikBYxShfjhZhnZUEjI3EL1/MPRbYiT56lPYOCKv3Y4U=",
+  "Hash": "1zb2IEMshEEsxyWthh00OeLYvZzWtI/UGZHsuWKyqow=",
   "Source": "BECAS",
   "BasePath": "_content/BECAS",
   "Mode": "Default",
@@ -1664,6 +1664,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\bootstrap\\LICENSE"
+    },
+    {
+      "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\lib\\datatables\\jquery.dataTables.min.js",
+      "SourceId": "BECAS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\",
+      "BasePath": "_content/BECAS",
+      "RelativePath": "lib/datatables/jquery.dataTables.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\datatables\\jquery.dataTables.min.js"
     },
     {
       "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\lib\\datatables-bs4\\css\\dataTables.bootstrap4.css",

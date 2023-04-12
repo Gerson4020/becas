@@ -30,7 +30,7 @@ namespace BECAS.Models.VM
         public Refiere? Refiere { get; set; }
         public Departamento? Departamento { get; set; }
         public Programa? Programa { get; set; }
-        public string? Cohorte { get; set; }
+        public int? Cohorte { get; set; }
         public CatSede? Sede { get; set; }
         public SocioImplementador? SocioIm { get; set; }
         public Zona? Zona { get; set; }

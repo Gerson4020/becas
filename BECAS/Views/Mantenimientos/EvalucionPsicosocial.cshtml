@@ -87,6 +87,30 @@
                         }
                     </select>
                 </div>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="year1" multiple="multiple" data-placeholder="-- Seleccionar año --" style="width:100%">
+                        @foreach (var item in Model.catAños)
+                        {
+                            <option value="@item.Nombre">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="mes" multiple="multiple" data-placeholder="-- Seleccionar mes --" style="width:100%">
+                        @foreach (var item in Model.mes)
+                        {
+                            <option value="@item.Nombre">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="cohorte1" multiple="multiple" data-placeholder="-- Seleccionar Cohorte --" style="width:100%">
+                        @foreach (var item in Model.cohorte)
+                        {
+                            <option value="@item.IdCohorte">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary mb-2">Buscar</button>
             </form>
         </div>
@@ -102,7 +126,7 @@
         <table id="example1" class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>PId</th>
+                    <th>ID</th>
                     <th>Año</th>
                     <th>Mes</th>
                     <th>Nombre</th>
@@ -182,7 +206,11 @@
                                 {
                                     @if (@item.persona != null)
                                     {
-                                        @item.persona.Cohorte
+                                        @if (item.persona.cohorte != null)
+                                        {
+                                            @item.persona.cohorte.Nombre
+                                            ;
+                                        }
                                     }
                                 }
                             </td>

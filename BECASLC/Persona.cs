@@ -37,7 +37,8 @@ namespace BECASLC
         public int? Departamento { get; set; }
         [ForeignKey("programa")]
         public int? Programa { get; set; }
-        public string? Cohorte { get; set; }
+        [ForeignKey("cohorte")]
+        public int? Cohorte { get; set; }
         [ForeignKey("sede")]
         public int? Sede { get; set; }
         [ForeignKey("socio")]
@@ -60,5 +61,6 @@ namespace BECASLC
         public CatSede sede { get; set; }
         public Refiere refiere { get; set; }
         public Zona zona { get; set; }
+        public Cohorte cohorte { get; set; }
     }
 }

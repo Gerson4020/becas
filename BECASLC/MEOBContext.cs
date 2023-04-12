@@ -680,9 +680,9 @@ namespace BECASLC
 
                 entity.Property(e => e.Apellido).HasMaxLength(100);
 
-                entity.Property(e => e.Cohorte)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                //entity.Property(e => e.Cohorte)
+                //    .HasMaxLength(50)
+                //    .IsUnicode(false);
 
                 entity.Property(e => e.Correo)
                     .HasMaxLength(50)
