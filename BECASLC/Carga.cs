@@ -18,5 +18,8 @@ namespace BECASLC
         public int? TotalSeguimientoPracticasPr { get; set; }
         public int? TotalSeguimientoPasantias { get; set; }
         public int? TotalSeguimientoAutoempleo { get; set; }
+        public int? TotalInscripcion { get; set; }
+        public int? TotalPsicosocial { get; set; }
+        public int? TotalEstipendios { get; set; }
     }
 }

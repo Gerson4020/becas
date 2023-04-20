@@ -12,6 +12,7 @@ namespace BECAS.Interfaces
         public SocioImplementador GetSocioImplementador(string nombre);
         public Sexo GetSexo(string nombre);
         public Departamento GetDepartamento(string nombre);
+        public Municipio GetMunicipio(string nombre);
         public Refiere GetReferencias(string nombre);
         public Zona GetZona(string nombre);
         public CatAño GetYear(string nombre);
@@ -130,6 +131,12 @@ namespace BECAS.Interfaces
         {
             Cohorte cohorte = _context.Cohortes.FirstOrDefault(x => x.Nombre.Equals(nombre));
             return cohorte;
+        }
+
+        public Municipio GetMunicipio(string nombre)
+        {
+            Municipio municipio = _context.Municipios.FirstOrDefault(x => x.Nombre.Equals(nombre));
+            return municipio;
         }
     }
 }

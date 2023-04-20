@@ -32,4 +32,8 @@
     <ProjectReference Include="..\BECASLC\BECASLC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Uploads\" />
+  </ItemGroup>
+
 </Project>

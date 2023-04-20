@@ -13,10 +13,10 @@ namespace BECAS.Controllers
     public class HomeController : Controller
     {
         // GET: HomeController
-        private readonly MEOBContext _ctx;
+        //private readonly MEOBContext _ctx;
         public HomeController(MEOBContext ctx)
         {
-            _ctx = ctx;
+            //_ctx = ctx;
         }
         public ActionResult Index()
         {
@@ -25,14 +25,14 @@ namespace BECAS.Controllers
                 DateTime fecha = DateTime.Now;
                 string mes = fecha.AddMonths(-3).ToString("MMMM", CultureInfo.CreateSpecificCulture("es-ES"));
                 HomeVM vM = new HomeVM();
-                vM.CountUsuario = _ctx.Personas.Count().ToString();
-                vM.CountEstipendios = _ctx.CargaEstipendios.Count().ToString();
-                vM.CountEducacion = _ctx.CargaEducacions.Where(x => x.DEstado.Equals("Activo") && x.RMes.Contains(mes)).Count().ToString();
-                vM.CountEvPsicosocial = _ctx.CargaEvaluacionPsicosocials.Count().ToString();
-                vM.CountSegPsicosocial = _ctx.CargaSeguimientoPsicosocials.Count().ToString();
-                vM.CountPasantillas = _ctx.CargaSeguimientoPasantias.Count().ToString();
-                vM.CountAuto = _ctx.CargaSeguimientoAutoempleos.Count().ToString();
-                vM.CountPracticas = _ctx.CargaSeguimientoPracticasPrs.Count().ToString();
+                //vM.CountUsuario = _ctx.Personas.Count().ToString();
+                //vM.CountEstipendios = _ctx.CargaEstipendios.Count().ToString();
+                //vM.CountEducacion = _ctx.CargaEducacions.Where(x => x.DEstado.Equals("Activo") && x.RMes.Contains(mes)).Count().ToString();
+                //vM.CountEvPsicosocial = _ctx.CargaEvaluacionPsicosocials.Count().ToString();
+                //vM.CountSegPsicosocial = _ctx.CargaSeguimientoPsicosocials.Count().ToString();
+                //vM.CountPasantillas = _ctx.CargaSeguimientoPasantias.Count().ToString();
+                //vM.CountAuto = _ctx.CargaSeguimientoAutoempleos.Count().ToString();
+                //vM.CountPracticas = _ctx.CargaSeguimientoPracticasPrs.Count().ToString();
                 return View(vM);
             }
             catch (Exception)

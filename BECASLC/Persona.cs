@@ -16,6 +16,7 @@ namespace BECASLC
         public string? Apellido { get; set; }
         public string? NombreCompleto { get; set; }
         public string? UltimoGradoAprobado { get; set; }
+        public string? NivelAcademico { get; set; } 
         public string? Telefono1 { get; set; }
         public string? Telefono2 { get; set; }
         [ForeignKey("sexo")]
@@ -35,8 +36,11 @@ namespace BECASLC
         [ForeignKey("refiere")]
         public int? Refiere { get; set; }
         public int? Departamento { get; set; }
+        public int? Municipio { get; set; }
         [ForeignKey("programa")]
         public int? Programa { get; set; }
+        public string? CohorteYear { get; set; }
+        public int? Year { get; set; }
         [ForeignKey("cohorte")]
         public int? Cohorte { get; set; }
         [ForeignKey("sede")]
@@ -49,6 +53,7 @@ namespace BECASLC
         public string? EstadoMf { get; set; }
         [ForeignKey("carrera")]
         public int? CarreraCursoGrado { get; set; }
+        public string? Sector { get; set; }
         public string? EstadoPersona { get; set; }
         public int? IdCarga { get; set; }
         public string? CartaCompromiso { get; set; }

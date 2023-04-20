@@ -15,7 +15,7 @@
                     </div>
                     <!-- /.card-header -->
                     <!-- form start -->
-                    <form method="post" enctype="multipart/form-data" asp-controller="CargaDatos" asp-action="Index">
+                    <form id="frmCarga" method="post" enctype="multipart/form-data" asp-controller="CargaDatos" asp-action="Index">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputFile">File input</label>
@@ -31,10 +31,14 @@
                             </div>
                         </div>
                         <div class="card-footer">
-                            <button type="submit" value="Upload" class="btn btn-primary">Submit</button>
+                            <button id="btnLoad" type="submit" value="Upload" class="btn btn-primary">
+                                Submit
+                            </button>
                         </div>
                         <br />
-                        <span style="color:green">@Html.Raw(ViewBag.Message)</span>
+                        <div style="text-align:center;width:100%">
+                            <span style="color:green">@Html.Raw(ViewBag.Message)</span>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -45,26 +49,35 @@
 
 @section scripts{
 <script>
-    async function AJAXSubmit (oFormElement) {
-        debugger
-        var resultElement = oFormElement.elements.namedItem("result");
-        const formData = new FormData(oFormElement);
+    $('#frmCarga').submit(function(event) {
+            // disable button
+          $('#btnLoad').prop("disabled", true);
+          // add spinner to button
+          $('#btnLoad').html(
+            `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Loading...`
+          );
+    });
+        //async function AJAXSubmit (oFormElement) {
+        //    debugger
+        //    var resultElement = oFormElement.elements.namedItem("result");
+        //    const formData = new FormData(oFormElement);
 
-        try {
-        const response = await fetch(oFormElement.action, {
-          method: 'POST',
-          body: formData
-        });
+        //    try {
+        //    const response = await fetch(oFormElement.action, {
+        //      method: 'POST',
+        //      body: formData
+        //    });
 
-        if (response.ok) {
-          window.location.href = '/';
-        }
+        //    if (response.ok) {
+        //      window.location.href = '/';
+        //    }
 
-        resultElement.value = 'Result: ' + response.status + ' ' +
-          response.statusText;
-        } catch (error) {
-          console.error('Error:', error);
-        }
-      }
+        //    resultElement.value = 'Result: ' + response.status + ' ' +
+        //      response.statusText;
+        //    } catch (error) {
+        //      console.error('Error:', error);
+        //    }
+        //  }
+
 </script>
 }
