@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "BMdMlA8o7G2tFWOnkt8fDlOOi0ymtGuuxG9Nn3vDO0E=",
+  "Hash": "YkDBPvhANLFib5NbrxJpwFnchn14FD4DVHjyf+euJPw=",
   "Source": "BECAS",
   "BasePath": "_content/BECAS",
   "Mode": "Default",
@@ -3381,40 +3381,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\lib\\select2\\js\\select2.min.js"
-    },
-    {
-      "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Uploads\\CargaEducacion.xlsx",
-      "SourceId": "BECAS",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\",
-      "BasePath": "_content/BECAS",
-      "RelativePath": "Uploads/CargaEducacion.xlsx",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Uploads\\CargaEducacion.xlsx"
-    },
-    {
-      "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Uploads\\EDUCACARGA.xlsx",
-      "SourceId": "BECAS",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\",
-      "BasePath": "_content/BECAS",
-      "RelativePath": "Uploads/EDUCACARGA.xlsx",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Uploads\\EDUCACARGA.xlsx"
     }
   ]
 }
