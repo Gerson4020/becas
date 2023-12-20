@@ -69,9 +69,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     @if (rol.Equals(1))
                     {
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <!-- Add icons to the links using the .nav-icon class
-                                 with font-awesome or any other icon font library -->
-                        <li class="nav-item">
+                            <li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
@@ -128,7 +126,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                             <p>Estipendios</p>
                                         </a>
                                     </li>
-
                                 </ul>
                             </li>
 
@@ -207,13 +204,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     @if (rol.Equals(2))
                     {
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                            <!-- Add icons to the links using the .nav-icon class
-                                 with font-awesome or any other icon font library -->
-                        <li class="nav-item menu-open">
+                            <li class="nav-item menu-open">
                                 <a href="#" class="nav-link">
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
-                                        Cargaas
+                                        Bases de datos
                                         <i class="right fas fa-angle-left"></i>
                                     </p>
                                 </a>
@@ -237,12 +232,35 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                         </a>
                                     </li>
                                     <li class="nav-item">
+                                        <a href="@Url.Action("SeguimientoAutoempleo","Mantenimientos")" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Emprendimiento</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("SeguimientoPracticasPr","Mantenimientos")" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Practicas</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("pasantias","Mantenimientos")" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>pasantías</p>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
                                         <a href="@Url.Action("Educacion","Mantenimientos")" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
                                             <p>Educación</p>
                                         </a>
                                     </li>
-
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Estipendios","Mantenimientos")" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Estipendios</p>
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
@@ -435,6 +453,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="~/lib/select2/js/select2.full.min.js"></script>
 
     <script src="~/js/adminlte.js"></script>
+    <script>
+        function alertSession(){
+            alert('Su sesión ha expirado, su navegador será recargado')
+            location.reload();
+        }
+        setTimeout(alertSession,18000000)
+    </script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

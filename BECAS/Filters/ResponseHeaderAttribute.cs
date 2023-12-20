@@ -9,18 +9,32 @@ namespace BECAS.Filters
 
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            string name = context.HttpContext.Session.GetString("SessionKeyName");
-            if (string.IsNullOrEmpty(name))
+            try
+            {
+                string name = context.HttpContext.Session.GetString("SessionKeyName");
+                if (string.IsNullOrEmpty(name))
+                {
+                    context.Result = new RedirectToRouteResult(
+                        new RouteValueDictionary
+                        {
+                            {"controller", "Home"},
+                            {"action", "Index" }
+                        }
+                        );
+
+                }
+            }
+            catch (Exception)
             {
                 context.Result = new RedirectToRouteResult(
                     new RouteValueDictionary
                     {
-                            {"controller", "Login"},
+                            {"controller", "Home"},
                             {"action", "Index" }
                     }
                     );
-
             }
+
         }
           
     }

@@ -119,6 +119,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcR3JhZG9TZWRlc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/galonso/source/repos/GitHub/BECAS/Views/Home/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxFcnJvci5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/galonso/source/repos/GitHub/BECAS/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -165,26 +169,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/galonso/source/repos/GitHub/BECAS/Views/Mantenimientos/SeguimientoPsicosocial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudGVuaW1pZW50b3NcU2VndWltaWVudG9Qc2ljb3NvY2lhbC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/galonso/source/repos/GitHub/BECAS/Views/Personas/Create.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uYXNcQ3JlYXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/galonso/source/repos/GitHub/BECAS/Views/Personas/Delete.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uYXNcRGVsZXRlLmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/galonso/source/repos/GitHub/BECAS/Views/Personas/Details.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uYXNcRGV0YWlscy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/galonso/source/repos/GitHub/BECAS/Views/Personas/Edit.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uYXNcRWRpdC5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/galonso/source/repos/GitHub/BECAS/Views/Personas/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGVyc29uYXNcSW5kZXguY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/galonso/source/repos/GitHub/BECAS/Views/Programas/Create.cshtml]

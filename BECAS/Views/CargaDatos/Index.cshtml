@@ -29,6 +29,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group mb-2">
+                                <select class="form-control select2" name="Anexo" data-placeholder="-- Anexo --" style="width:100%">
+                                    <option value="0">Seleccione Anexo</option>
+                                    <option value="1">Incripcion</option>
+                                    <option value="2">Educación</option>
+                                    <option value="3">Psocosocial</option>
+                                    <option value="4">Seguimiento Psicosocial</option>
+                                    <option value="5">Practicas Profecionales</option>
+                                    <option value="6">Seguimiento Pasantillas</option>
+                                    <option value="7">Seguimiento Autoempleo</option>
+                                    <option value="8">Estipendios</option>
+                                </select>
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button id="btnLoad" type="submit" value="Upload" class="btn btn-primary">
@@ -40,6 +53,63 @@
                             <span style="color:green">@Html.Raw(ViewBag.Message)</span>
                         </div>
                     </form>
+                </div>
+                <div class="card">
+                    <div class="card-header border-0">
+                        <h3 class="card-title">Plantillas</h3>
+                        <div class="card-tools">
+                            <a href="#" class="btn btn-tool btn-sm">
+                                <i class="fas fa-download"></i>
+                            </a>
+                            <a href="#" class="btn btn-tool btn-sm">
+                                <i class="fas fa-bars"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-striped table-valign-middle">
+                            <thead>
+                                <tr>
+                                    <th>Anexo</th>
+                                    <th>URL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th>Inscripciones</th>
+                                    <th>@Html.ActionLink("Descarga","Plantillas",new { @anexo = 1})</th>
+                                </tr>
+                                <tr>
+                                    <th>Evaluacion Psicosocial</th>
+                                    <th>@Html.ActionLink("Descarga","Plantillas",new { @anexo = 2})</th>
+                                </tr>
+                                <tr>
+                                    <th>Seguimiento Psicosocial</th>
+                                    <th>@Html.ActionLink("Descarga","Plantillas",new { @anexo = 3})</th>
+                                </tr>
+                                <tr>
+                                    <th>Educacion</th>
+                                    <th>@Html.ActionLink("Descarga","Plantillas",new { @anexo = 4})</th>
+                                </tr>
+                                <tr>
+                                    <th>Seguimiento en Pasantías</th>
+                                    <th>@Html.ActionLink("Descarga","Plantillas",new { @anexo = 5})</th>
+                                </tr>
+                                <tr>
+                                    <th>Seguimiento en Prácticas Pr</th>
+                                    <th>@Html.ActionLink("Descarga","Plantillas",new { @anexo = 6})</th>
+                                </tr>
+                                <tr>
+                                    <th>Seguimiento en Autoempleo</th>
+                                    <th>@Html.ActionLink("Descarga","Plantillas",new { @anexo = 7})</th>
+                                </tr>
+                                <tr>
+                                    <th>Estipendios</th>
+                                    <th>@Html.ActionLink("Descarga","Plantillas",new { @anexo = 8})</th>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

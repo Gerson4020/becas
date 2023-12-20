@@ -14,5 +14,8 @@ namespace BECASLC
         public int? IdCarga { get; set; }
         public int? Año { get; set; }
         public string? Mes { get; set; }
+        public DateTime? r_fechaini { get; set; }
+        public DateTime? r_fechafin { get; set; }
+        public DateTime? fecha_atencion { get; set; }
     }
 }

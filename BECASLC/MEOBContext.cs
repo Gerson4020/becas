@@ -48,12 +48,14 @@ namespace BECASLC
         public virtual DbSet<TipoMatricula> TipoMatriculas { get; set; } = null!;
         public virtual DbSet<Usuario> Usuarios { get; set; } = null!;
         public virtual DbSet<Zona> Zonas { get; set; } = null!;
+        public virtual DbSet<Sector> Sectors { get; set; } = null!;
+        public virtual DbSet<Proyectos> Proyectos { get; set;} = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 string con = ClassConnection.Connectionstring();
                 optionsBuilder.UseSqlServer(con);
             }
@@ -93,6 +95,10 @@ namespace BECASLC
             modelBuilder.Entity<CargaEducacion>(entity =>
             {
                 entity.HasKey(e => e.IdCargaEducacion);
+
+                //entity.HasOne(e => e.Persona) // Relación uno a uno o uno a muchos, según tus necesidades
+                //    .WithMany(p => p.CargaEducacions)
+                //    .HasForeignKey(e => e.PIdOim);
 
                 entity.ToTable("CargaEducacion");
 
@@ -683,12 +689,15 @@ namespace BECASLC
                 //entity.Property(e => e.Cohorte)
                 //    .HasMaxLength(50)
                 //    .IsUnicode(false);
+                //entity.HasMany(persona => persona.CargaEducacions) // Una persona tiene muchas CargaEducacions
+                //    .WithOne(carga => carga.Persona) // Una CargaEducacion pertenece a una persona
+                //    .HasForeignKey(carga => carga.PIdOim); // Clave foránea
 
                 entity.Property(e => e.Correo)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.CartaCompromiso).HasMaxLength(100);
+                //entity.Property(e => e.CartaCompromiso).HasMaxLength(100);
 
                 entity.Property(e => e.Discapacidad)
                     .HasMaxLength(50)
@@ -706,13 +715,13 @@ namespace BECASLC
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
-                entity.Property(e => e.EstadoMf)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                //entity.Property(e => e.EstadoMf)
+                //    .HasMaxLength(100)
+                //    .IsUnicode(false);
 
-                entity.Property(e => e.EstadoPersona)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                //entity.Property(e => e.EstadoPersona)
+                //    .HasMaxLength(50)
+                //    .IsUnicode(false);
 
                 entity.Property(e => e.FamiliaresMigrantes)
                     .HasMaxLength(50)
@@ -746,14 +755,14 @@ namespace BECASLC
 
                 entity.Property(e => e.PIdOim)
                     .HasMaxLength(50)
-                    .IsUnicode(false)
-                    .HasColumnName("p_id_oim");
+                    .IsUnicode(false);
+                //.HasColumnName("p_id_oim");
 
                 entity.Property(e => e.PiensaMigrar)
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.SocioIm).HasColumnName("socio_im");
+                //entity.Property(e => e.SocioIm).HasColumnName("socio_im");
 
                 entity.Property(e => e.Telefono1)
                     .HasMaxLength(50)
@@ -841,6 +850,11 @@ namespace BECASLC
                 entity.Property(e => e.Nombre).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<Proyectos>(entity =>
+            {
+                entity.HasKey(e=> e.IdProyecto);
+            });
+
             modelBuilder.Entity<Usuario>(entity =>
             {
                 entity.HasKey(e => e.IdUsuario);
@@ -862,6 +876,16 @@ namespace BECASLC
 
                 entity.ToTable("Zona");
 
+                entity.Property(e => e.Nombre)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Sector>(entity =>
+            {
+                entity.HasKey(e => e.IdSector);
+
+                entity.ToTable("Sector");
                 entity.Property(e => e.Nombre)
                     .HasMaxLength(100)
                     .IsUnicode(false);

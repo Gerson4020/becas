@@ -13,6 +13,9 @@ namespace BECAS.Models.VM
         public List<Departamento>? departamentos { get; set; }
         public List<Refiere>? dropRefiereCM { get; set; }
         public List<Cohorte>? cohorte { get; set;}
+        public List<Sector>? Sectors { get; set; }
+        public List<EstadoPersona>? estadoPersona { get; set; }
+        public List<CatAño> catAños { get; set; }
 
     }
 }

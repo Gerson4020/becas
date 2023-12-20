@@ -17,5 +17,6 @@ namespace BECAS.Models.VM
         public List<CatAño>? catAños { get; set; }
         public List<CatMe>? mes { get; set; }
         public List<Cohorte>? cohorte { get; set;}
+        public List<EstadoPersona>? EstadoPersonas { get; set; }
     }
 }

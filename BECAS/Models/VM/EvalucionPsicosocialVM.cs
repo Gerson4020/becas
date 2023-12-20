@@ -3,7 +3,7 @@ namespace BECAS.Models.VM
 {
     public class EvalucionPsicosocialVM
     {
-        public List<EvaluscionPsicosicialTable> ListaEvaPsicosocial { get; set; }
+        public List<EvaluscionPsicosicialTable>? ListaEvaPsicosocial { get; set; }
 
         public List<Programa>? Programa { get; set; }
         public List<SocioImplementador>? Socios { get; set; }

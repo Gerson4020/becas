@@ -8,7 +8,7 @@ namespace BECAS.Interfaces
         public TipoMatricula GetTipoMatricula(string nombre);
         public Programa GetPrograma(string nombre);
         public CatSede GetSede(string nombre);
-        public CatCarrera GetCarrera(string nombre);
+        public CatCarrera GetCarrera(string nombre, int idprograma);
         public SocioImplementador GetSocioImplementador(string nombre);
         public Sexo GetSexo(string nombre);
         public Departamento GetDepartamento(string nombre);
@@ -18,6 +18,9 @@ namespace BECAS.Interfaces
         public CatAño GetYear(string nombre);
         public CatMe GetMes(string nombre);
         public Cohorte GetCohorte(string nombre);
+        public Sector GetSector(string nombre);
+        public EstadoPersona GetEstadoPersona(string nombre);
+        public Proyectos GetProyectos(string nombre);
     }
 
     public class CatalogosRepository : ICatalogos
@@ -27,41 +30,32 @@ namespace BECAS.Interfaces
         {
             _context = context;
         }
-        public CatCarrera GetCarrera(string nombre)
+        public CatCarrera GetCarrera(string nombre, int idprograma)
         {
             try
             {
-
-                var catCarrera = _context.Grados.Where(x => x.Nombre.Equals(nombre)).Select(x => new CatCarrera
+                CatCarrera carrera = new CatCarrera();
+                if (idprograma == 3 || idprograma == 2)
                 {
-                    Nombre = x.Nombre,
-                    IdCatCarrera = x.IdGrado
-                }).FirstOrDefault();
-
-                CatCarrera carrera = _context.CatCarreras.FirstOrDefault(x => x.Nombre.Equals(nombre));
-                
-                if (carrera != null)
-                {
-                    return carrera;
-                }
-
-
-                if (catCarrera != null)
-                {
-                    return catCarrera;
+                    var grado = _context.Grados.SingleOrDefault(x => x.Nombre.Equals(nombre));
+                    if (grado != null)
+                    {
+                        carrera.Nombre = grado.Nombre;
+                        carrera.IdCatCarrera = grado.IdGrado;
+                    }
                 }
                 else
                 {
-                    return null;
+                    carrera = _context.CatCarreras.SingleOrDefault(x => x.Nombre.Equals(nombre));
+
                 }
+                return carrera;
             }
             catch (Exception ex)
             {
                 var message = ex.Message;
                 throw;
             }
-
-
         }
 
         public Programa GetPrograma(string nombre)
@@ -100,7 +94,8 @@ namespace BECAS.Interfaces
 
         public Departamento GetDepartamento(string nombre)
         {
-            Departamento departamento = _context.Departamentos.FirstOrDefault(x => x.Nombre2.Equals(nombre));
+            var depar = nombre.Trim();
+            Departamento departamento = _context.Departamentos.FirstOrDefault(x => x.Nombre.Equals(depar));
             return departamento;
         }
 
@@ -137,6 +132,22 @@ namespace BECAS.Interfaces
         {
             Municipio municipio = _context.Municipios.FirstOrDefault(x => x.Nombre.Equals(nombre));
             return municipio;
+        }
+        public Sector GetSector(string nombre)
+        {
+            Sector sector = _context.Sectors.FirstOrDefault(x => x.Nombre.Equals(nombre));
+            return sector;
+        }
+        public EstadoPersona GetEstadoPersona(string nombre)
+        {
+            EstadoPersona estado = _context.EstadoPersonas.FirstOrDefault(x => x.Nombre.Equals(nombre));
+            return estado;
+        }
+
+        public Proyectos GetProyectos(string nombre)
+        {
+            Proyectos proyectos = _context.Proyectos.FirstOrDefault(x => x.Nombre.Equals(nombre));
+            return proyectos;
         }
     }
 }

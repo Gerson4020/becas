@@ -1,5 +1,4 @@
 ﻿using BECASLC;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BECAS.Controllers
@@ -7,6 +6,7 @@ namespace BECAS.Controllers
     public class LoginController : Controller
     {
         private readonly MEOBContext _ctx;
+
         public LoginController(MEOBContext ctx)
         {
             _ctx = ctx;
@@ -14,6 +14,16 @@ namespace BECAS.Controllers
         // GET: LoginController
         public ActionResult Index()
         {
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                var msn = e.Message;
+                throw;
+            }
+
             return View();
         }
         [HttpPost]

@@ -56,7 +56,7 @@
                 </div>
                 <hr align="left" noshade="noshade" size="2" width="100%" />
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="sexos" multiple="multiple" data-placeholder="-- Seleccionar sexo --" style="width:100%">
+                    <select class="form-control select2" name="sexos" multiple="multiple" data-placeholder="-- Sexo --" style="width:100%">
                         @foreach (var item in Model.sexos)
                         {
                             <option value="@item.IdSexo">@item.Nombre</option>
@@ -64,7 +64,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="tipomatricula" multiple="multiple" data-placeholder="-- Seleccionar Tipo Matricula --" style="width:100%">
+                    <select class="form-control select2" name="tipomatricula" multiple="multiple" data-placeholder="-- Tipo Matrícula --" style="width:100%">
                         @foreach (var item in Model.tipomatricula)
                         {
                             <option value="@item.IdTipoMatricula">@item.Nombre</option>
@@ -72,7 +72,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="departament" multiple="multiple" data-placeholder="-- Seleccionar Departamento --" style="width:100%">
+                    <select class="form-control select2" name="departament" multiple="multiple" data-placeholder="-- Departamento de residencia --" style="width:100%">
                         @foreach (var item in Model.departamentos)
                         {
                             <option value="@item.IdDepartamento">@item.Nombre</option>
@@ -80,7 +80,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="refiere" multiple="multiple" data-placeholder="-- Seleccionar Referido --" style="width:100%">
+                    <select class="form-control select2" name="refiere" multiple="multiple" data-placeholder="-- Institución que refiere --" style="width:100%">
                         @foreach (var item in Model.dropRefiereCM)
                         {
                             <option value="@item.IdRefiere">@item.Nombre</option>
@@ -88,15 +88,15 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="year1" multiple="multiple" data-placeholder="-- Seleccionar año --" style="width:100%">
+                    <select class="form-control select2" name="year1" multiple="multiple" data-placeholder="-- Año de reporte --" style="width:100%">
                         @foreach (var item in Model.catAños)
                         {
-                            <option value="@item.IdAño">@item.Nombre</option>
+                            <option value="@item.Nombre">@item.Nombre</option>
                         }
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="mes" multiple="multiple" data-placeholder="-- Seleccionar mes --" style="width:100%">
+                    <select class="form-control select2" name="mes" multiple="multiple" data-placeholder="-- Mes de reporte --" style="width:100%">
                         @foreach (var item in Model.mes)
                         {
                             <option value="@item.Nombre">@item.Nombre</option>
@@ -104,12 +104,23 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="cohorte1" multiple="multiple" data-placeholder="-- Seleccionar Cohorte --" style="width:100%">
+                    <select class="form-control select2" name="cohorte1" multiple="multiple" data-placeholder="-- Cohorte de estudios --" style="width:100%">
                         @foreach (var item in Model.cohorte)
                         {
                             <option value="@item.IdCohorte">@item.Nombre</option>
                         }
                     </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="aEstudio" multiple="multiple" data-placeholder="-- Año de Educación --" style="width:100%">
+                        @foreach (var item in Model.catAños)
+                        {
+                            <option value="@item.Nombre">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="ePersona" asp-items="ViewBag.EstadoPersona" multiple="multiple" data-placeholder="-- Estado Educación --" style="width:100%"></select>
                 </div>
                 <button type="submit" class="btn btn-primary mb-2">Buscar</button>
             </form>
@@ -127,21 +138,24 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Año</th>
-                    <th>Mes</th>
+                    <th>Año de reporte</th>
+                    <th>Mes de reporte</th>
                     <th>Nombre</th>
-                    <th>Tipo Matricula</th>
-                    <th>Programa</th>
-                    <th>Carrera/Curso/Grado</th>
+                    <th>Socio</th>
                     <th>Sede</th>
+                    <th>Programa</th>
+                    <th>Año de estudio</th>
                     <th>Cohorte</th>
+                    <th>Carrera</th>
+                    <th>Tipo de matricula</th>
                     <th>Sexo</th>
-                    <th>Socio implementador</th>
                     <th>Fecha Reasignacion</th>
                     <th>Estado</th>
-                    <th>Fechades</th>
+                    <th>Fecha de deserción</th>
+                    <th>Motivo de deserción</th>
                     <th>Dias de Asistencia Establecidos</th>
                     <th>Dias de Asistencia Efectivos</th>
+                    <th>Porcentaje de asistencia</th>
                     <th>Motivo de Inasistencia</th>
                     <th>Modulos Inscritos</th>
                     <th>Modulos Aprobados</th>
@@ -153,92 +167,26 @@
                 @{
                     foreach (var item in Model.EducacionTable)
                     {
-                        //var año = item.carga != null ? item.carga.RAño : 0;
-                        //var mes = item.carga != null ? item.carga.RMes : "";
-                        //var sexo = item.Sexo != null ? item.Sexo.Nombre : "";
-                        //var Sede = item.Sede != null ? item.Sede.Nombre : "";
-                        //var CarreraCursoGrado = item.CarreraCursoGrado != null ? item.CarreraCursoGrado.Nombre : "";
                         <tr>
                             <td>@item.PIdOim</td>
                             <td>@item.RAño</td>
                             <td>@item.RMes</td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    @item.persona.Nombre
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    if (@item.persona.matricula != null)
-                                    {
-                                        @item.persona.matricula.Nombre
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    if (@item.persona.programa != null)
-                                    {
-                                        @item.persona.programa.Nombre
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    @if (item.persona.carrera != null)
-                                    {
-                                        @item.persona.carrera.Nombre
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    if (@item.persona.sede != null)
-                                    {
-                                        @item.persona.sede.Nombre
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    @if (@item.persona != null)
-                                    {
-                                        @if (item.persona.cohorte != null)
-                                        {
-                                            @item.persona.cohorte.Nombre
-                                        }
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    @if (@item.persona.sexo != null)
-                                    {
-                                        @item.persona.sexo.Nombre
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    @if (item.persona.socio != null)
-                                    {
-                                        @item.persona.socio.Nombre
-                                    }
-                                }
-                            </td>
+                            <td>@item.nombre</td>
+                            <td>@item.socio</td>
+                            <td>@item.sede</td>
+                            <td>@item.programaNombre</td>
+                            <td>@item.year</td>
+                            <td>@item.CohorteNombre</td>
+                            <td>@item.carrera</td>
+                            <td>@item.tipoMatricula</td>
+                            <td>@item.sexoNombre</td>
                             <td>@item.DFechaReasg</td>
                             <td>@item.DEstado</td>
                             <td>@item.DFechades</td>
+                            <td>@item.motivodesercion</td>
                             <td>@item.IDiasAsistenciaEstablecidos</td>
                             <td>@item.IDiasAsistenciaEfectivos</td>
+                            <td>@item.pocentajeasistencia</td>
                             <td>@item.IMotivoInasistencia</td>
                             <td>@item.IModulosInscritos</td>
                             <td>@item.IModulosAprobados</td>
@@ -313,7 +261,7 @@
             $("#sedes").append("<option value> -- Seleccionar Zona " + $("#sedes option:selected").text() + " --</option>")
             // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
             $.each(data, function (index, row) {
-                $("#sedes").append("<option value='" + row.idCatSede + "'>" + row.catsede.nombre + "</option>")
+                $("#sedes").append("<option value='" + row.idSede + "'>" + row.catsede.nombre + "</option>")
             });
         });
     });

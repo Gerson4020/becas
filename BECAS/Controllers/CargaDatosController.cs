@@ -18,12 +18,14 @@ namespace BECAS.Controllers
         private IHostingEnvironment Environment;
         private readonly MEOBContext _ctx;
         private readonly ICatalogos _catalogos;
+        private readonly IWebHostEnvironment _env;
 
-        public CargaDatosController(IHostingEnvironment _environment, MEOBContext ctx, ICatalogos catalogos)
+        public CargaDatosController(IHostingEnvironment _environment, MEOBContext ctx, ICatalogos catalogos, IWebHostEnvironment env)
         {
             Environment = _environment;
             _ctx = ctx;
             _catalogos = catalogos;
+            _env = env;
         }
 
         public IActionResult Index()
@@ -32,18 +34,63 @@ namespace BECAS.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(List<IFormFile> postedFiles)
+        public async Task<IActionResult> Index(List<IFormFile> postedFiles, int Anexo)
         {
             try
             {
+
                 //GUARDAR ARCHIVO EN UNA CARPETA DEL SERVIDOR
                 string path = Path.Combine(this.Environment.WebRootPath, "Uploads");
                 var SFile = SaveFile(postedFiles, path);
 
-                //EJECUTAR LA CARGA DE DATOS A LA BASE DE DATOS
-                var PersonasAsync = LoadPersonasAsync(path, SFile.FileName);
-                await Task.WhenAll(PersonasAsync);
-                ViewBag.Message += string.Format("{0}", PersonasAsync.Result);
+                if (Anexo == 1)
+                {
+                    var PersonasAsync = LoadPersonasAsync(path, SFile.FileName);
+                    await Task.WhenAll(PersonasAsync);
+                    ViewBag.Message += string.Format("{0}", PersonasAsync.Result);
+                }
+                if (Anexo == 2)
+                {
+                    var EducacionAsync = LoadEducacionAsync(path, SFile.FileName);
+                    await Task.WhenAll(EducacionAsync);
+                    ViewBag.Message += string.Format("{0}", EducacionAsync.Result);
+                }
+                if (Anexo == 3)
+                {
+                    var PsocosocialAsync = LoadPsocosocialAsync(path, SFile.FileName);
+                    await Task.WhenAll(PsocosocialAsync);
+                    ViewBag.Message += string.Format("{0}", PsocosocialAsync.Result);
+                }
+                if (Anexo == 4)
+                {
+                    var SeguimientoPsicosocialAsync = LoadSeguimientoPsicosocialAsync(path, SFile.FileName);
+                    await Task.WhenAll(SeguimientoPsicosocialAsync);
+                    ViewBag.Message += string.Format("{0}", SeguimientoPsicosocialAsync.Result);
+                }
+                if (Anexo == 5)
+                {
+                    var PracticasAsync = LoadPracticasAsync(path, SFile.FileName);
+                    await Task.WhenAll(PracticasAsync);
+                    ViewBag.Message += string.Format("{0}", PracticasAsync.Result);
+                }
+                if (Anexo == 6)
+                {
+                    var PasantillasAsync = LoadPasantillasAsync(path, SFile.FileName);
+                    await Task.WhenAll(PasantillasAsync);
+                    ViewBag.Message += string.Format("{0}", PasantillasAsync.Result);
+                }
+                if (Anexo == 7)
+                {
+                    var AutoempleoAsync = LoadAutoempleoAsync(path, SFile.FileName);
+                    await Task.WhenAll(AutoempleoAsync);
+                    ViewBag.Message += string.Format("{0}", AutoempleoAsync.Result);
+                }
+                if (Anexo == 8)
+                {
+                    var EstipendiosAsync = LoadEstipendiosAsync(path, SFile.FileName);
+                    await Task.WhenAll(EstipendiosAsync);
+                    ViewBag.Message += string.Format("{0}", EstipendiosAsync.Result);
+                }
             }
             catch (Exception e)
             {
@@ -86,6 +133,51 @@ namespace BECAS.Controllers
             return vM;
         }
 
+        public FileResult Plantillas(int anexo)
+        {
+            if (anexo == 1)
+            {
+                return File("/Plantillas/Inscripciones.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+            }
+            if (anexo == 2)
+            {
+                //var filePath = Path.Combine(_env.ContentRootPath, "Plantillas", "Evaluacion_Psicosocial.xlsx");
+                return File("/Plantillas/Evaluacion_Psicosocial.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            }
+            if (anexo == 3)
+            {
+                //var filePath = Path.Combine(_env.ContentRootPath, "Plantillas", "Seguimiento_Psicosocial.xlsx");
+                return File("/Plantillas/Seguimiento_Psicosocial.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            }
+            if (anexo == 4)
+            {
+                //var filePath = Path.Combine(_env.ContentRootPath, "Plantillas", "Educacion.xlsx");
+                return File("/Plantillas/Educacion.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            }
+            if (anexo == 5)
+            {
+                //var filePath = Path.Combine(_env.ContentRootPath, "Plantillas", "Seguimiento_en_Pasantías.xlsx");
+                return File("/Plantillas/Seguimiento_en_Pasantías.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            }
+            if (anexo == 6)
+            {
+                //var filePath = Path.Combine(_env.ContentRootPath, "Plantillas", "Seguimiento_en_Prácticas_Pr.xlsx");
+                return File("/Plantillas/Seguimiento_en_Prácticas_Pr.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            }
+            if (anexo == 7)
+            {
+                //var filePath = Path.Combine(_env.ContentRootPath, "Plantillas", "Seguimiento_en_Autoempleo.xlsx");
+                return File("/Plantillas/Seguimiento_en_Autoempleo.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            }
+            if (anexo == 8)
+            {
+                //var filePath = Path.Combine(_env.ContentRootPath, "Plantillas", "Estipendios.xlsx");
+                return File("/Plantillas/Estipendios.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+            }
+            var fileDefaul = Path.Combine(_env.ContentRootPath, "Plantillas", "Inscripciones.xlsx");
+            return PhysicalFile(fileDefaul, "application/vnd.ms-excel");
+        }
         public async Task<string> LoadPersonasAsync(string path, string fileName)
         {
             try
@@ -103,23 +195,8 @@ namespace BECAS.Controllers
                         try
                         {
                             DataTable tablepersonas = result.Tables[0];
-                            DataTable tableeducacion = result.Tables[1];
-                            DataTable tablepsicosocial = result.Tables[2];
-                            DataTable tableSeguimientoPsicosocial = result.Tables[3];
-                            DataTable tableSeguimientosPr = result.Tables[4];
-                            DataTable tableSeguimientPasantillas = result.Tables[5];
-                            DataTable SeguimientoAutoempleo = result.Tables[6];
-                            DataTable tableEstipendios = result.Tables[7];
-
 
                             carga.TotalInscripcion = tablepersonas.Rows.Count;
-                            carga.TotalEducacion = tableeducacion.Rows.Count;
-                            carga.TotalPsicosocial = tablepsicosocial.Rows.Count;
-                            carga.TotalSegPsicosocial = tableSeguimientoPsicosocial.Rows.Count;
-                            carga.TotalSeguimientoPracticasPr = tableSeguimientosPr.Rows.Count;
-                            carga.TotalSeguimientoPasantias = tableSeguimientPasantillas.Rows.Count;
-                            carga.TotalSeguimientoAutoempleo = SeguimientoAutoempleo.Rows.Count;
-                            carga.TotalEstipendios = tableEstipendios.Rows.Count;
 
                             carga.FechaCarga = DateTime.Today;
                             _ctx.Add(carga);
@@ -134,6 +211,7 @@ namespace BECAS.Controllers
 
                         //Carga persona
                         int loopPer = 0;
+                        int columnaPer = 1;
                         try
                         {
 
@@ -143,189 +221,293 @@ namespace BECAS.Controllers
                             {
                                 if (loopPer != 0)
                                 {
-
                                     Persona p = new Persona();
                                     p = _ctx.Personas.FirstOrDefault(x => x.PIdOim.Equals(item[2].ToString()));
                                     if (p != null)
                                     {
-                                        if (!string.IsNullOrEmpty(item[3].ToString()))
-                                        {
-                                            var matricula = _catalogos.GetTipoMatricula(item[3].ToString());
-                                            p.TipoMatricula = matricula != null ? matricula.IdTipoMatricula : null;
-                                        }
-                                        p.Nombre = string.IsNullOrEmpty(item[4].ToString()) ? "" : item[4].ToString();
-                                        p.Apellido = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
-                                        p.NombreCompleto = string.IsNullOrEmpty(item[6].ToString()) ? "" : item[6].ToString();
-                                        p.UltimoGradoAprobado = string.IsNullOrEmpty(item[7].ToString()) ? "" : item[7].ToString();
-                                        p.NivelAcademico = string.IsNullOrEmpty(item[8].ToString()) ? "" : item[8].ToString();
-                                        p.Telefono1 = string.IsNullOrEmpty(item[9].ToString()) ? "" : item[9].ToString();
-                                        p.Telefono2 = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
+                                        p.Nombre = string.IsNullOrEmpty(item[4].ToString()) ? string.Empty : item[4].ToString();
+                                        columnaPer++;
+                                        p.Apellido = string.IsNullOrEmpty(item[5].ToString()) ? string.Empty : item[5].ToString();
+                                        columnaPer++;
+                                        p.NombreCompleto = string.IsNullOrEmpty(item[6].ToString()) ? string.Empty : item[6].ToString();
+                                        columnaPer++;
+                                        p.UltimoGradoAprobado = string.IsNullOrEmpty(item[7].ToString()) ? string.Empty : item[7].ToString();
+                                        columnaPer++;
+                                        p.NivelAcademico = string.IsNullOrEmpty(item[8].ToString()) ? string.Empty : item[8].ToString();
+                                        columnaPer++;
+                                        p.Telefono1 = string.IsNullOrEmpty(item[9].ToString()) ? string.Empty : item[9].ToString();
+                                        columnaPer++;
+                                        p.Telefono2 = string.IsNullOrEmpty(item[10].ToString()) ? string.Empty : item[10].ToString();
+                                        columnaPer++;
                                         if (!string.IsNullOrEmpty(item[11].ToString()))
                                         {
                                             var sexo = _catalogos.GetSexo(item[11].ToString());
                                             p.Sexo = sexo != null ? sexo.IdSexo : null;
                                         }
-                                        p.FechaNacimiento = string.IsNullOrEmpty(item[12].ToString()) ? null : Convert.ToDateTime(item[12].ToString());
-                                        p.Edad = string.IsNullOrEmpty(item[13].ToString()) ? 0 : Convert.ToInt32(item[13].ToString());
-                                        p.Discapacidad = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
-                                        p.VictimaViolencia = string.IsNullOrEmpty(item[15].ToString()) ? "" : item[15].ToString();
-                                        p.MigranteRetornado = string.IsNullOrEmpty(item[16].ToString()) ? "" : item[16].ToString();
-                                        p.PiensaMigrar = string.IsNullOrEmpty(item[17].ToString()) ? "" : item[17].ToString();
-                                        p.FamiliaresMigrantes = string.IsNullOrEmpty(item[18].ToString()) ? "" : item[18].ToString();
-                                        p.FamiliaresRetornados = string.IsNullOrEmpty(item[19].ToString()) ? "" : item[19].ToString();
-                                        p.Empleo = string.IsNullOrEmpty(item[20].ToString()) ? "" : item[20].ToString();
-                                        p.Dui = string.IsNullOrEmpty(item[21].ToString()) ? "" : item[21].ToString();
-                                        p.Nie = string.IsNullOrEmpty(item[22].ToString()) ? "" : item[22].ToString();
-                                        p.Correo = string.IsNullOrEmpty(item[23].ToString()) ? "" : item[23].ToString();
-                                        if (!string.IsNullOrEmpty(item[24].ToString()))
+                                        columnaPer++;
+                                        if (!string.IsNullOrEmpty(item[12].ToString()))
                                         {
-                                            var refiere = _catalogos.GetReferencias(item[24].ToString());
-                                            p.Refiere = refiere != null ? refiere.IdRefiere : null;
+                                            p.LGBTIQ = item[12].ToString() == "Sí" ? true : false;
                                         }
+                                        columnaPer++;
+                                        p.FechaNacimiento = string.IsNullOrEmpty(item[13].ToString()) ? null : Convert.ToDateTime(item[13].ToString());
+                                        columnaPer++;
+                                        p.Edad = string.IsNullOrEmpty(item[14].ToString()) ? 0 : Convert.ToInt32(item[14].ToString().Trim());
+                                        columnaPer++;
+                                        p.Discapacidad = string.IsNullOrEmpty(item[15].ToString()) ? string.Empty : item[15].ToString();
+                                        columnaPer++;
+                                        p.VictimaViolencia = string.IsNullOrEmpty(item[16].ToString()) ? string.Empty : item[16].ToString();
+                                        columnaPer++;
+                                        //p.MigranteRetornado = string.IsNullOrEmpty(item[17].ToString()) ? string.Empty : item[17].ToString();
+                                        if (!string.IsNullOrEmpty(item[17].ToString()))
+                                        {
+                                            p.MigranteRetornado = item[17].ToString().Equals("Sí") ? 1 : 2;
+                                        }
+                                        columnaPer++;
+                                        p.PiensaMigrar = string.IsNullOrEmpty(item[18].ToString()) ? string.Empty : item[18].ToString();
+                                        columnaPer++;
+                                        p.FamiliaresMigrantes = string.IsNullOrEmpty(item[19].ToString()) ? string.Empty : item[19].ToString();
+                                        columnaPer++;
+                                        p.FamiliaresRetornados = string.IsNullOrEmpty(item[20].ToString()) ? string.Empty : item[20].ToString();
+                                        columnaPer++;
+                                        p.Empleo = string.IsNullOrEmpty(item[21].ToString()) ? string.Empty : item[21].ToString();
+                                        columnaPer++;
+                                        p.Dui = string.IsNullOrEmpty(item[22].ToString()) ? string.Empty : item[22].ToString();
+                                        columnaPer++;
+                                        p.Nie = string.IsNullOrEmpty(item[23].ToString()) ? string.Empty : item[23].ToString();
+                                        columnaPer++;
+                                        p.Correo = string.IsNullOrEmpty(item[24].ToString()) ? string.Empty : item[24].ToString();
+                                        columnaPer++;
                                         if (!string.IsNullOrEmpty(item[25].ToString()))
                                         {
-                                            var departamento = _catalogos.GetDepartamento(item[25].ToString());
-                                            p.Departamento = departamento != null ? departamento.IdDepartamento : null;
+                                            var refiere = _catalogos.GetReferencias(item[25].ToString());
+                                            p.Refiere = refiere != null ? refiere.IdRefiere : null;
                                         }
+                                        columnaPer++;
                                         if (!string.IsNullOrEmpty(item[26].ToString()))
                                         {
-                                            var municipio = _catalogos.GetMunicipio(item[26].ToString());
-                                            p.Municipio = municipio != null ? municipio.IdMunicipio : null;
+                                            var departamento = _catalogos.GetDepartamento(item[26].ToString());
+                                            p.Departamento = departamento != null ? departamento.IdDepartamento : null;
                                         }
+                                        columnaPer++;
                                         if (!string.IsNullOrEmpty(item[27].ToString()))
                                         {
-                                            var programa = _catalogos.GetPrograma(item[27].ToString());
-                                            p.Programa = programa != null ? programa.IdPrograma : null;
+                                            var municipio = _catalogos.GetMunicipio(item[27].ToString());
+                                            p.Municipio = municipio != null ? municipio.IdMunicipio : null;
                                         }
-                                        p.CohorteYear = string.IsNullOrEmpty(item[28].ToString()) ? "" : item[28].ToString();
-                                        p.Year = string.IsNullOrEmpty(item[29].ToString()) ? 0 : int.Parse(item[29].ToString());
-                                        if (!string.IsNullOrEmpty(item[30].ToString()))
+                                        columnaPer++;
+                                        //programa = item 28
+                                        if (!string.IsNullOrEmpty(item[28].ToString()))
                                         {
-                                            var cohorte = _catalogos.GetCohorte(item[30].ToString());
-                                            p.Cohorte = cohorte != null ? cohorte.IdCohorte : null;
+                                            var tipomatricula = _catalogos.GetTipoMatricula(item[28].ToString());
+                                            p.IdTipoMatricula = tipomatricula != null ? tipomatricula.IdTipoMatricula : 0;
+
                                         }
+                                        columnaPer++;
+                                        if (!string.IsNullOrEmpty(item[29].ToString()))
+                                        {
+                                            var programa = _catalogos.GetPrograma(item[29].ToString());
+                                            p.IdPrograma = programa != null ? programa.IdPrograma : 0;
+
+                                        }
+                                        columnaPer++;
+                                        //AÑO = item 29
+                                        p.Year = string.IsNullOrEmpty(item[30].ToString()) ? 0 : int.Parse(item[30].ToString());
+                                        //Cohorte 30
                                         if (!string.IsNullOrEmpty(item[31].ToString()))
                                         {
-                                            var sede = _catalogos.GetSede(item[31].ToString());
-                                            p.Sede = sede != null ? sede.IdCatSede : null;
+                                            var cohorte = _catalogos.GetCohorte(item[31].ToString());
+                                            p.Cohorte = cohorte != null ? cohorte.IdCohorte : 0;
+
                                         }
+                                        columnaPer++;
+                                        //Sede 31
                                         if (!string.IsNullOrEmpty(item[32].ToString()))
                                         {
-                                            var socio = _catalogos.GetSocioImplementador(item[32].ToString());
-                                            p.SocioIm = socio != null ? socio.IdImplementador : null;
+                                            var Catsede = _catalogos.GetSede(item[32].ToString());
+                                            if (Catsede != null)
+                                            {
+                                                var sede = _ctx.Sedes.FirstOrDefault(x => x.IdCatSede.Equals(Catsede.IdCatSede));
+                                                p.p_socio = sede.IdSocio;
+                                                p.IdZona = sede.IdZona;
+                                            }
+                                            p.p_sede = Catsede != null ? Catsede.IdCatSede : 0;
+
                                         }
+                                        columnaPer++;
+
                                         if (!string.IsNullOrEmpty(item[33].ToString()))
                                         {
-                                            var zona = _catalogos.GetZona(item[33].ToString());
-                                            p.Zona = zona != null ? zona.IdZona : null;
+                                            var carrera = _catalogos.GetCarrera(item[33].ToString(), (int)p.IdPrograma);
+                                            p.CarreraCursoGrado = carrera != null ? carrera.IdCatCarrera : 0;
                                         }
-                                        p.EstadoInscripcion = string.IsNullOrEmpty(item[34].ToString()) ? "" : item[34].ToString();
-                                        p.EstadoMf = string.IsNullOrEmpty(item[35].ToString()) ? "" : item[35].ToString();
-                                        if (string.IsNullOrEmpty(item[36].ToString()))
-                                        {
-                                            var carrera = _catalogos.GetCarrera(item[36].ToString());
-                                            p.CarreraCursoGrado = carrera != null ? carrera.IdCatCarrera : null;
-                                        }
-                                        p.Sector = string.IsNullOrEmpty(item[37].ToString()) ? "" : item[37].ToString();
-                                        p.CartaCompromiso = string.IsNullOrEmpty(item[38].ToString()) ? "" : item[38].ToString();
-                                        p.EstadoPersona = string.IsNullOrEmpty(item[39].ToString()) ? "" : item[39].ToString();
+                                        columnaPer++;
 
+                                        if (!string.IsNullOrEmpty(item[34].ToString()))
+                                        {
+                                            var sector = _catalogos.GetSector(item[34].ToString());
+                                            p.Sector = sector != null ? sector.IdSector : 0;
+                                        }
+                                        columnaPer++;
+                                        p.MedioVerificacion = string.IsNullOrEmpty(item[35].ToString()) ? "" : item[35].ToString();
+                                        columnaPer++;
+                                        if (!string.IsNullOrEmpty(item[36].ToString()))
+                                        {
+                                            var proyecto = _catalogos.GetProyectos(item[36].ToString());
+                                            p.IdProyecto = proyecto != null ? proyecto.IdProyecto : 0;
+                                        }
+                                        columnaPer++;
                                         _ctx.Entry(p).State = EntityState.Modified;
-                                        //await _ctx.SaveChangesAsync();
+                                        columnaPer = 1;
                                     }
                                     else
                                     {
                                         Persona persona = new Persona();
-                                        persona.FechaEntrevista = string.IsNullOrEmpty(item[0].ToString()) ? null : Convert.ToDateTime(item[0].ToString());
-                                        persona.Id = string.IsNullOrEmpty(item[1].ToString()) ? "" : item[1].ToString();
-                                        persona.PIdOim = string.IsNullOrEmpty(item[2].ToString()) ? "" : item[2].ToString();
-                                        if (!string.IsNullOrEmpty(item[3].ToString()))
-                                        {
-                                            var matricula = _catalogos.GetTipoMatricula(item[3].ToString());
-                                            persona.TipoMatricula = matricula != null ? matricula.IdTipoMatricula : null;
-                                        }
-                                        persona.Nombre = string.IsNullOrEmpty(item[4].ToString()) ? "" : item[4].ToString();
-                                        persona.Apellido = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
-                                        persona.NombreCompleto = string.IsNullOrEmpty(item[6].ToString()) ? "" : item[6].ToString();
-                                        persona.UltimoGradoAprobado = string.IsNullOrEmpty(item[7].ToString()) ? "" : item[7].ToString();
-                                        persona.NivelAcademico = string.IsNullOrEmpty(item[8].ToString()) ? "" : item[8].ToString();
-                                        persona.Telefono1 = string.IsNullOrEmpty(item[9].ToString()) ? "" : item[9].ToString();
-                                        persona.Telefono2 = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
+                                        persona.FechaEntrevista = string.IsNullOrEmpty(item[0].ToString()) ? null : DateTime.Parse(item[0].ToString());
+                                        columnaPer++;
+                                        persona.Id = string.IsNullOrEmpty(item[1].ToString()) ? string.Empty : item[1].ToString();
+                                        columnaPer++;
+                                        persona.NumeroInscripciones = string.IsNullOrEmpty(item[3].ToString()) ? 0 : int.Parse(item[3].ToString());
+                                        columnaPer++;
+                                        persona.PIdOim = string.IsNullOrEmpty(item[2].ToString()) ? string.Empty : item[2].ToString();
+                                        columnaPer++;
+                                        persona.Nombre = string.IsNullOrEmpty(item[4].ToString()) ? string.Empty : item[4].ToString();
+                                        columnaPer++;
+                                        persona.Apellido = string.IsNullOrEmpty(item[5].ToString()) ? string.Empty : item[5].ToString();
+                                        columnaPer++;
+                                        persona.NombreCompleto = string.IsNullOrEmpty(item[6].ToString()) ? string.Empty : item[6].ToString();
+                                        columnaPer++;
+                                        persona.UltimoGradoAprobado = string.IsNullOrEmpty(item[7].ToString()) ? string.Empty : item[7].ToString();
+                                        columnaPer++;
+                                        persona.NivelAcademico = string.IsNullOrEmpty(item[8].ToString()) ? string.Empty : item[8].ToString();
+                                        columnaPer++;
+                                        persona.Telefono1 = string.IsNullOrEmpty(item[9].ToString()) ? string.Empty : item[9].ToString();
+                                        columnaPer++;
+                                        persona.Telefono2 = string.IsNullOrEmpty(item[10].ToString()) ? string.Empty : item[10].ToString();
+                                        columnaPer++;
                                         if (!string.IsNullOrEmpty(item[11].ToString()))
                                         {
                                             var sexo = _catalogos.GetSexo(item[11].ToString());
                                             persona.Sexo = sexo != null ? sexo.IdSexo : null;
                                         }
-                                        persona.FechaNacimiento = string.IsNullOrEmpty(item[12].ToString()) ? null : Convert.ToDateTime(item[12].ToString());
-                                        persona.Edad = string.IsNullOrEmpty(item[13].ToString()) ? 0 : Convert.ToInt32(item[13].ToString());
-                                        persona.Discapacidad = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
-                                        persona.VictimaViolencia = string.IsNullOrEmpty(item[15].ToString()) ? "" : item[15].ToString();
-                                        persona.MigranteRetornado = string.IsNullOrEmpty(item[16].ToString()) ? "" : item[16].ToString();
-                                        persona.PiensaMigrar = string.IsNullOrEmpty(item[17].ToString()) ? "" : item[17].ToString();
-                                        persona.FamiliaresMigrantes = string.IsNullOrEmpty(item[18].ToString()) ? "" : item[18].ToString();
-                                        persona.FamiliaresRetornados = string.IsNullOrEmpty(item[19].ToString()) ? "" : item[19].ToString();
-                                        persona.Empleo = string.IsNullOrEmpty(item[20].ToString()) ? "" : item[20].ToString();
-                                        persona.Dui = string.IsNullOrEmpty(item[21].ToString()) ? "" : item[21].ToString();
-                                        persona.Nie = string.IsNullOrEmpty(item[22].ToString()) ? "" : item[22].ToString();
-                                        persona.Correo = string.IsNullOrEmpty(item[23].ToString()) ? "" : item[23].ToString();
-                                        if (!string.IsNullOrEmpty(item[24].ToString()))
+                                        columnaPer++;
+                                        if (!string.IsNullOrEmpty(item[12].ToString()))
                                         {
-                                            var refiere = _catalogos.GetReferencias(item[24].ToString());
-                                            persona.Refiere = refiere != null ? refiere.IdRefiere : null;
+                                            persona.LGBTIQ = item[12].ToString() == "Sí" ? true : false;
                                         }
+                                        columnaPer++;
+                                        persona.FechaNacimiento = string.IsNullOrEmpty(item[13].ToString()) ? null : Convert.ToDateTime(item[13].ToString());
+                                        columnaPer++;
+                                        persona.Edad = string.IsNullOrEmpty(item[14].ToString()) ? 0 : Convert.ToInt32(item[14].ToString().Trim());
+                                        columnaPer++;
+                                        persona.Discapacidad = string.IsNullOrEmpty(item[15].ToString()) ? string.Empty : item[15].ToString();
+                                        columnaPer++;
+                                        persona.VictimaViolencia = string.IsNullOrEmpty(item[16].ToString()) ? string.Empty : item[16].ToString();
+                                        columnaPer++;
+                                        //p.MigranteRetornado = string.IsNullOrEmpty(item[17].ToString()) ? string.Empty : item[17].ToString();
+                                        if (!string.IsNullOrEmpty(item[17].ToString()))
+                                        {
+                                            persona.MigranteRetornado = item[17].ToString().Equals("Sí") ? 1 : 2;
+                                        }
+                                        columnaPer++;
+                                        persona.PiensaMigrar = string.IsNullOrEmpty(item[18].ToString()) ? string.Empty : item[18].ToString();
+                                        columnaPer++;
+                                        persona.FamiliaresMigrantes = string.IsNullOrEmpty(item[19].ToString()) ? string.Empty : item[19].ToString();
+                                        columnaPer++;
+                                        persona.FamiliaresRetornados = string.IsNullOrEmpty(item[20].ToString()) ? string.Empty : item[20].ToString();
+                                        columnaPer++;
+                                        persona.Empleo = string.IsNullOrEmpty(item[21].ToString()) ? string.Empty : item[21].ToString();
+                                        columnaPer++;
+                                        persona.Dui = string.IsNullOrEmpty(item[22].ToString()) ? string.Empty : item[22].ToString();
+                                        columnaPer++;
+                                        persona.Nie = string.IsNullOrEmpty(item[23].ToString()) ? string.Empty : item[23].ToString();
+                                        columnaPer++;
+                                        persona.Correo = string.IsNullOrEmpty(item[24].ToString()) ? string.Empty : item[24].ToString();
+                                        columnaPer++;
                                         if (!string.IsNullOrEmpty(item[25].ToString()))
                                         {
-                                            var departamento = _catalogos.GetDepartamento(item[25].ToString());
-                                            persona.Departamento = departamento != null ? departamento.IdDepartamento : null;
+                                            var refiere = _catalogos.GetReferencias(item[25].ToString());
+                                            persona.Refiere = refiere != null ? refiere.IdRefiere : null;
                                         }
+                                        columnaPer++;
                                         if (!string.IsNullOrEmpty(item[26].ToString()))
                                         {
-                                            var municipio = _catalogos.GetMunicipio(item[26].ToString());
-                                            persona.Municipio = municipio != null ? municipio.IdMunicipio : null;
+                                            var departamento = _catalogos.GetDepartamento(item[26].ToString());
+                                            persona.Departamento = departamento != null ? departamento.IdDepartamento : null;
                                         }
+                                        columnaPer++;
                                         if (!string.IsNullOrEmpty(item[27].ToString()))
                                         {
-                                            var programa = _catalogos.GetPrograma(item[27].ToString());
-                                            persona.Programa = programa != null ? programa.IdPrograma : null;
+                                            var municipio = _catalogos.GetMunicipio(item[27].ToString());
+                                            persona.Municipio = municipio != null ? municipio.IdMunicipio : null;
                                         }
-                                        persona.CohorteYear = string.IsNullOrEmpty(item[28].ToString()) ? "" : item[28].ToString();
-                                        persona.Year = string.IsNullOrEmpty(item[29].ToString()) ? 0 : int.Parse(item[29].ToString());
-                                        if (!string.IsNullOrEmpty(item[30].ToString()))
+                                        columnaPer++;
+
+                                        if (!string.IsNullOrEmpty(item[28].ToString()))
                                         {
-                                            var cohorte = _catalogos.GetCohorte(item[30].ToString());
-                                            persona.Cohorte = cohorte != null ? cohorte.IdCohorte : null;
+                                            var tipomatricula = _catalogos.GetTipoMatricula(item[28].ToString());
+                                            persona.IdTipoMatricula = tipomatricula != null ? tipomatricula.IdTipoMatricula : 0;
+
                                         }
+                                        columnaPer++;
+                                        if (!string.IsNullOrEmpty(item[29].ToString()))
+                                        {
+                                            var programa = _catalogos.GetPrograma(item[29].ToString());
+                                            persona.IdPrograma = programa != null ? programa.IdPrograma : 0;
+
+                                        }
+                                        columnaPer++;
+
+                                        persona.Year = string.IsNullOrEmpty(item[30].ToString()) ? 0 : int.Parse(item[30].ToString());
+
                                         if (!string.IsNullOrEmpty(item[31].ToString()))
                                         {
-                                            var sede = _catalogos.GetSede(item[31].ToString());
-                                            persona.Sede = sede != null ? sede.IdCatSede : null;
+                                            var cohorte = _catalogos.GetCohorte(item[31].ToString());
+                                            persona.Cohorte = cohorte != null ? cohorte.IdCohorte : 0;
+
                                         }
+                                        columnaPer++;
+
                                         if (!string.IsNullOrEmpty(item[32].ToString()))
                                         {
-                                            var socio = _catalogos.GetSocioImplementador(item[32].ToString());
-                                            persona.SocioIm = socio != null ? socio.IdImplementador : null;
+                                            var Catsede = _catalogos.GetSede(item[32].ToString());
+                                            if (Catsede != null)
+                                            {
+                                                var sede = _ctx.Sedes.FirstOrDefault(x => x.IdCatSede.Equals(Catsede.IdCatSede));
+                                                persona.p_socio = sede.IdSocio;
+                                                persona.IdZona = sede.IdZona;
+                                            }
+                                            persona.p_sede = Catsede != null ? Catsede.IdCatSede : 0;
+
                                         }
+                                        columnaPer++;
                                         if (!string.IsNullOrEmpty(item[33].ToString()))
                                         {
-                                            var zona = _catalogos.GetZona(item[33].ToString());
-                                            persona.Zona = zona != null ? zona.IdZona : null;
+                                            var carrera = _catalogos.GetCarrera(item[33].ToString(), (int)persona.IdPrograma);
+                                            persona.CarreraCursoGrado = carrera != null ? carrera.IdCatCarrera : 0;
+
                                         }
-                                        persona.EstadoInscripcion = string.IsNullOrEmpty(item[34].ToString()) ? "" : item[34].ToString();
-                                        persona.EstadoMf = string.IsNullOrEmpty(item[35].ToString()) ? "" : item[35].ToString();
-                                        if (string.IsNullOrEmpty(item[36].ToString()))
+                                        columnaPer++;
+                                        //sector34
+                                        if (!string.IsNullOrEmpty(item[34].ToString()))
                                         {
-                                            var carrera = _catalogos.GetCarrera(item[36].ToString());
-                                            persona.CarreraCursoGrado = carrera != null ? carrera.IdCatCarrera : null;
+                                            var sector = _catalogos.GetSector(item[34].ToString());
+                                            persona.Sector = sector != null ? sector.IdSector : 0;
                                         }
-                                        persona.Sector = string.IsNullOrEmpty(item[37].ToString()) ? "" : item[37].ToString();
-                                        persona.CartaCompromiso = string.IsNullOrEmpty(item[38].ToString()) ? "" : item[38].ToString();
-                                        persona.EstadoPersona = string.IsNullOrEmpty(item[39].ToString()) ? "" : item[39].ToString();
+                                        columnaPer++;
+                                        persona.MedioVerificacion = string.IsNullOrEmpty(item[35].ToString()) ? "" : item[35].ToString();
+                                        columnaPer++;
+                                        if (!string.IsNullOrEmpty(item[36].ToString()))
+                                        {
+                                            var proyecto = _catalogos.GetProyectos(item[36].ToString());
+                                            persona.IdProyecto = proyecto != null ? proyecto.IdProyecto : 0;
+                                        }
+                                        columnaPer++;
                                         persona.IdCarga = carga.IdCarga;
 
                                         _ctx.Entry(persona).State = EntityState.Added;
-                                        //await _ctx.SaveChangesAsync();
+                                        columnaPer = 1;
                                     }
-
                                 }
                                 loopPer++;
                             }
@@ -333,76 +515,260 @@ namespace BECAS.Controllers
                         }
                         catch (Exception ex)
                         {
-                            var linea = loopPer;
-                            string msn = ex.Message;
+                            var fila = loopPer + 1;
+                            var colum = columnaPer;
+                            string smn = ex.Message;
                             dbTransaction.Rollback();
-                            throw new Exception(string.Format("Error al cargar datos en la tabla Inscripciones verificar el número de fila {0}", linea));
+                            throw new Exception(string.Format("Error al cargar datos en la tabla Inscripción verificar el número de fila {0} columna {1}", fila, colum));
+                        }
+
+                        dbTransaction.Commit();
+                    }
+                }
+                System.IO.File.Delete(Path.Combine(path, fileName));
+            }
+            catch (Exception e)
+            {
+                var msn = e.Message;
+                throw;
+            }
+            return "Datos cargados conexito";
+
+        }
+        public async Task<string> LoadEducacionAsync(string path, string fileName)
+        {
+            try
+            {
+
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (var stream = System.IO.File.Open(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read))
+                {
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        var dbTransaction = _ctx.Database.BeginTransaction();
+                        Carga carga = new Carga();
+                        var result = reader.AsDataSet();
+                        //Control de carga
+                        try
+                        {
+                            DataTable tableeducacion = result.Tables[0];
+                            carga.TotalEducacion = tableeducacion.Rows.Count;
+
+                            carga.FechaCarga = DateTime.Today;
+                            _ctx.Add(carga);
+                            await _ctx.SaveChangesAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            string message = ex.Message;
+                            dbTransaction.Rollback();
+                            throw;
                         }
 
                         // Tabla de educacion
                         int loopEd = 0;
+                        int columnaEd = 1;
                         try
                         {
-                            DataTable tableeducacion = result.Tables[1];
+                            DataTable tableeducacion = result.Tables[0];
                             foreach (DataRow item in tableeducacion.Rows)
                             {
                                 if (loopEd != 0)
                                 {
-                                    //int año = Convert.ToInt32(item[0].ToString());
-                                    string mes = item[1].ToString();
-                                    string DFechaReasg = item[11].ToString().Trim();
-                                    DateTime TimeReasg;
-                                    string DFechades = item[13].ToString().Trim();
-                                    DateTime timeFechades;
-                                    string IModulosInscritos = item[19].ToString().Trim();
-                                    string IModulosAprobados = item[20].ToString().Trim();
-                                    string IModulosReprobados = item[22].ToString().Trim();
-                                    string IDiasAsistenciaEstablecidos = item[15].ToString().Trim();
-                                    string IMotivoInasistencia = item[18].ToString().Trim();
-                                    string IDiasAsistenciaEfectivos = item[16].ToString().Trim();
-                                    string DEstado = string.IsNullOrEmpty(item[12].ToString().Trim()) ? "" : item[12].ToString().Trim();
-
-
-
-                                    CargaEducacion ccarga = new CargaEducacion();
-                                    ccarga.PIdOim = item[6].ToString();
-
-                                    if (!string.IsNullOrEmpty(DFechaReasg))
+                                    var ed = _ctx.CargaEducacions.FirstOrDefault(x => x.PIdOim.Equals(item[5].ToString()) && x.RAño.Equals(item[0].ToString()) && x.RMes.Equals(item[0].ToString()));
+                                    if (ed == null)
                                     {
-                                        if (!DFechaReasg.Equals("N/A"))
+                                        CargaEducacion ccarga = new CargaEducacion();
+                                        ccarga.RAño = string.IsNullOrEmpty(item[0].ToString()) ? 0 : Convert.ToInt32(item[0].ToString());
+                                        columnaEd++;
+                                        ccarga.RMes = string.IsNullOrEmpty(item[1].ToString()) ? string.Empty : item[1].ToString();
+                                        columnaEd++;
+                                        ccarga.r_fechaini = string.IsNullOrEmpty(item[2].ToString()) ? null : DateTime.TryParse(item[2].ToString(), out DateTime resultf1) == true ? DateTime.Parse(item[2].ToString()) : null;
+                                        columnaEd++;
+                                        ccarga.r_fechafin = string.IsNullOrEmpty(item[3].ToString()) ? null : DateTime.TryParse(item[3].ToString(), out DateTime resultf2) == true ? DateTime.Parse(item[3].ToString()) : null;
+                                        columnaEd++;
+                                        if (!string.IsNullOrEmpty(item[4].ToString()))
                                         {
-                                            bool success = DateTime.TryParse(DFechaReasg, out TimeReasg);
-                                            ccarga.DFechaReasg = success == true ? TimeReasg : null;
-                                        }
-                                    }
-                                    ccarga.DEstado = DEstado;
+                                            var Catsede = _catalogos.GetSede(item[4].ToString());
+                                            if (Catsede != null)
+                                            {
+                                                var sede = _ctx.Sedes.FirstOrDefault(x => x.IdCatSede.Equals(Catsede.IdCatSede));
+                                                ccarga.p_socio = sede.IdSocio;
+                                                ccarga.IdZona = sede.IdZona;
+                                            }
+                                            ccarga.p_sede = Catsede != null ? Catsede.IdCatSede : 0;
 
-                                    if (!string.IsNullOrEmpty(DFechades))
-                                    {
-                                        if (!DFechades.Equals("N/A"))
+                                        }
+                                        columnaEd++;
+                                        ccarga.PIdOim = item[5].ToString();
+                                        columnaEd++;
+                                        if (!string.IsNullOrEmpty(item[6].ToString()))
                                         {
-                                            bool success = DateTime.TryParse(DFechades, out timeFechades);
-                                            ccarga.DFechades = success == true ? timeFechades : null;
-                                        }
-                                    }
+                                            var tipobeca = _catalogos.GetPrograma(item[6].ToString());
+                                            ccarga.p_tipobeca = tipobeca != null ? tipobeca.IdPrograma : 0;
 
-                                    ccarga.DMotivodesercion = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
-                                    ccarga.IDiasAsistenciaEstablecidos = string.IsNullOrEmpty(IDiasAsistenciaEstablecidos) ? 0 : Convert.ToInt32(IDiasAsistenciaEstablecidos);
-                                    ccarga.IDiasAsistenciaEfectivos = string.IsNullOrEmpty(IDiasAsistenciaEfectivos) ? 0 : Convert.ToInt32(IDiasAsistenciaEfectivos);
-                                    ccarga.IMotivoInasistencia = string.IsNullOrEmpty(IMotivoInasistencia) ? "" : IMotivoInasistencia;
-                                    ccarga.IModulosInscritos = string.IsNullOrEmpty(IModulosInscritos) ? 0 : IModulosInscritos.Equals("N/A") ? 0 : Convert.ToInt32(IModulosInscritos);
-                                    ccarga.IModulosAprobados = string.IsNullOrEmpty(IModulosAprobados) ? 0 : IModulosAprobados.Equals("N/A") ? 0 : Convert.ToInt32(IModulosAprobados);
-                                    ccarga.IModulosReprobados = string.IsNullOrEmpty(IModulosReprobados) ? 0 : IModulosReprobados.Equals("N/A") ? 0 : Convert.ToInt32(IModulosReprobados);
-                                    ccarga.ICausaReprobacion = string.IsNullOrEmpty(item[23].ToString()) ? "" : item[23].ToString();
-                                    ccarga.IdCarga = carga.IdCarga;
-                                    if (!string.IsNullOrEmpty(item[0].ToString()))
-                                    {
-                                        var year = _catalogos.GetYear(item[0].ToString());
-                                        ccarga.RAño = year != null ? year.IdAño : null;
+                                        }
+                                        columnaEd++;
+                                        if (!string.IsNullOrEmpty(item[7].ToString()))
+                                        {
+                                            var carrera = _catalogos.GetCarrera(item[7].ToString(), (int)ccarga.p_tipobeca);
+                                            ccarga.CarreraCursoGrado = carrera != null ? carrera.IdCatCarrera : 0;
+
+                                        }
+                                        columnaEd++;
+                                        if (!string.IsNullOrEmpty(item[8].ToString()))
+                                        {
+                                            var matricula = _catalogos.GetTipoMatricula(item[8].ToString());
+                                            ccarga.p_matricula = matricula != null ? matricula.IdTipoMatricula : 0;
+
+                                        }
+                                        columnaEd++;
+                                        ccarga.Year = string.IsNullOrEmpty(item[9].ToString()) ? 0 : int.Parse(item[9].ToString());
+                                        columnaEd++;
+                                        if (!string.IsNullOrEmpty(item[10].ToString()))
+                                        {
+                                            var cohorte = _catalogos.GetCohorte(item[10].ToString());
+                                            ccarga.Cohorte = cohorte != null ? cohorte.IdCohorte : 0;
+
+                                        }
+                                        columnaEd++;
+                                        if (!string.IsNullOrEmpty(item[11].ToString()))
+                                        {
+                                            var sector = _catalogos.GetSector(item[11].ToString());
+                                            ccarga.Sector = sector != null ? sector.IdSector : 0;
+                                        }
+                                        columnaEd++;
+                                        ccarga.DFechaReasg = string.IsNullOrEmpty(item[12].ToString()) ? null : DateTime.Parse(item[12].ToString());
+                                        columnaEd++;
+
+                                        if (!string.IsNullOrEmpty(item[13].ToString()))
+                                        {
+                                            var estado = _catalogos.GetEstadoPersona(item[13].ToString());
+                                            ccarga.DEstado = estado != null ? estado.IdEstadoPersona : 0;
+                                        }
+                                        columnaEd++;
+                                        ccarga.DFechades = string.IsNullOrEmpty(item[14].ToString()) ? null : DateTime.Parse(item[14].ToString());
+                                        columnaEd++;
+                                        ccarga.DMotivodesercion = string.IsNullOrEmpty(item[15].ToString()) ? string.Empty : item[15].ToString();
+                                        columnaEd++;
+                                        ccarga.IDiasAsistenciaEstablecidos = string.IsNullOrEmpty(item[16].ToString()) ? 0 : int.Parse(item[16].ToString());
+                                        columnaEd++;
+                                        ccarga.IDiasAsistenciaEfectivos = string.IsNullOrEmpty(item[17].ToString()) ? 0 : int.Parse(item[17].ToString());
+                                        columnaEd++;
+                                        ccarga.i_proc_asistencia = string.IsNullOrEmpty(item[18].ToString()) ? string.Empty : item[18].ToString();
+                                        columnaEd++;
+                                        ccarga.IMotivoInasistencia = string.IsNullOrEmpty(item[19].ToString()) ? string.Empty : item[19].ToString();
+                                        columnaEd++;
+                                        ccarga.IModulosInscritos = string.IsNullOrEmpty(item[20].ToString()) ? 0 : int.Parse(item[20].ToString());
+                                        columnaEd++;
+                                        ccarga.IModulosAprobados = string.IsNullOrEmpty(item[21].ToString()) ? 0 : int.Parse(item[21].ToString());
+                                        columnaEd++;
+                                        ccarga.prueba_realizada = string.IsNullOrEmpty(item[22].ToString()) ? string.Empty : item[22].ToString();
+                                        columnaEd++;
+                                        ccarga.IModulosReprobados = string.IsNullOrEmpty(item[23].ToString()) ? 0 : int.Parse(item[23].ToString());
+                                        columnaEd++;
+                                        ccarga.ICausaReprobacion = string.IsNullOrEmpty(item[24].ToString()) ? string.Empty : item[24].ToString();
+                                        columnaEd++;
+                                        ccarga.IdCarga = carga.IdCarga;
+                                        _ctx.Add(ccarga);
+                                        columnaEd = 1;
                                     }
-                                    //ccarga.RAño = año;
-                                    ccarga.RMes = mes;
-                                    _ctx.Add(ccarga);
+                                    else
+                                    {
+                                        ed.RAño = string.IsNullOrEmpty(item[0].ToString()) ? 0 : Convert.ToInt32(item[0].ToString());
+                                        columnaEd++;
+                                        ed.RMes = string.IsNullOrEmpty(item[1].ToString()) ? string.Empty : item[1].ToString();
+                                        columnaEd++;
+                                        ed.r_fechaini = string.IsNullOrEmpty(item[2].ToString()) ? null : DateTime.TryParse(item[2].ToString(), out DateTime resultf1) == true ? DateTime.Parse(item[2].ToString()) : null;
+                                        columnaEd++;
+                                        ed.r_fechafin = string.IsNullOrEmpty(item[3].ToString()) ? null : DateTime.TryParse(item[3].ToString(), out DateTime resultf2) == true ? DateTime.Parse(item[3].ToString()) : null;
+                                        columnaEd++;
+                                        if (!string.IsNullOrEmpty(item[4].ToString()))
+                                        {
+                                            var Catsede = _catalogos.GetSede(item[4].ToString());
+                                            if (Catsede != null)
+                                            {
+                                                var sede = _ctx.Sedes.FirstOrDefault(x => x.IdCatSede.Equals(Catsede.IdCatSede));
+                                                ed.p_socio = sede.IdSocio;
+                                                ed.IdZona = sede.IdZona;
+                                            }
+                                            ed.p_sede = Catsede != null ? Catsede.IdCatSede : 0;
+
+                                        }
+                                        columnaEd++;
+                                        ed.PIdOim = item[5].ToString();
+                                        columnaEd++;
+                                        if (!string.IsNullOrEmpty(item[6].ToString()))
+                                        {
+                                            var tipobeca = _catalogos.GetPrograma(item[6].ToString());
+                                            ed.p_tipobeca = tipobeca != null ? tipobeca.IdPrograma : 0;
+
+                                        }
+                                        columnaEd++;
+                                        if (!string.IsNullOrEmpty(item[7].ToString()))
+                                        {
+                                            var carrera = _catalogos.GetCarrera(item[7].ToString(), (int)ed.p_tipobeca);
+                                            ed.CarreraCursoGrado = carrera != null ? carrera.IdCatCarrera : 0;
+
+                                        }
+                                        columnaEd++;
+                                        if (!string.IsNullOrEmpty(item[8].ToString()))
+                                        {
+                                            var matricula = _catalogos.GetTipoMatricula(item[8].ToString());
+                                            ed.p_matricula = matricula != null ? matricula.IdTipoMatricula : 0;
+
+                                        }
+                                        columnaEd++;
+                                        ed.Year = string.IsNullOrEmpty(item[9].ToString()) ? 0 : int.Parse(item[9].ToString());
+                                        columnaEd++;
+                                        if (!string.IsNullOrEmpty(item[10].ToString()))
+                                        {
+                                            var cohorte = _catalogos.GetCohorte(item[10].ToString());
+                                            ed.Cohorte = cohorte != null ? cohorte.IdCohorte : 0;
+
+                                        }
+                                        columnaEd++;
+                                        if (!string.IsNullOrEmpty(item[11].ToString()))
+                                        {
+                                            var sector = _catalogos.GetSector(item[11].ToString());
+                                            ed.Sector = sector != null ? sector.IdSector : 0;
+                                        }
+                                        columnaEd++;
+                                        ed.DFechaReasg = string.IsNullOrEmpty(item[12].ToString()) ? null : DateTime.Parse(item[12].ToString());
+                                        columnaEd++;
+
+                                        if (!string.IsNullOrEmpty(item[13].ToString()))
+                                        {
+                                            var estado = _catalogos.GetEstadoPersona(item[13].ToString());
+                                            ed.DEstado = estado != null ? estado.IdEstadoPersona : 0;
+                                        }
+                                        columnaEd++;
+                                        ed.DFechades = string.IsNullOrEmpty(item[14].ToString()) ? null : DateTime.Parse(item[14].ToString());
+                                        columnaEd++;
+                                        ed.DMotivodesercion = string.IsNullOrEmpty(item[15].ToString()) ? string.Empty : item[15].ToString();
+                                        columnaEd++;
+                                        ed.IDiasAsistenciaEstablecidos = string.IsNullOrEmpty(item[16].ToString()) ? 0 : int.Parse(item[16].ToString());
+                                        columnaEd++;
+                                        ed.IDiasAsistenciaEfectivos = string.IsNullOrEmpty(item[17].ToString()) ? 0 : int.Parse(item[17].ToString());
+                                        columnaEd++;
+                                        ed.i_proc_asistencia = string.IsNullOrEmpty(item[18].ToString()) ? string.Empty : item[18].ToString();
+                                        columnaEd++;
+                                        ed.IMotivoInasistencia = string.IsNullOrEmpty(item[19].ToString()) ? string.Empty : item[19].ToString();
+                                        columnaEd++;
+                                        ed.IModulosInscritos = string.IsNullOrEmpty(item[20].ToString()) ? 0 : int.Parse(item[20].ToString());
+                                        columnaEd++;
+                                        ed.IModulosAprobados = string.IsNullOrEmpty(item[21].ToString()) ? 0 : int.Parse(item[21].ToString());
+                                        columnaEd++;
+                                        ed.prueba_realizada = string.IsNullOrEmpty(item[22].ToString()) ? string.Empty : item[22].ToString();
+                                        columnaEd++;
+                                        ed.IModulosReprobados = string.IsNullOrEmpty(item[23].ToString()) ? 0 : int.Parse(item[23].ToString());
+                                        columnaEd++;
+                                        ed.ICausaReprobacion = string.IsNullOrEmpty(item[24].ToString()) ? string.Empty : item[24].ToString();
+                                        columnaEd++;
+                                        ed.IdCarga = carga.IdCarga;
+                                        _ctx.Update(ed);
+                                        columnaEd = 1;
+                                    }
 
                                 }
                                 loopEd++;
@@ -411,17 +777,62 @@ namespace BECAS.Controllers
                         }
                         catch (Exception ex)
                         {
-                            var fila = loopEd;
+                            var fila = loopEd + 1;
+                            var colum = columnaEd;
                             string smn = ex.Message;
                             dbTransaction.Rollback();
-                            throw new Exception(string.Format("Error al cargar datos en la tabla Educación verificar el número de fila {0}", fila));
+                            throw new Exception(string.Format("Error al cargar datos en la tabla Educación verificar el número de fila {0} columna {1}", fila, colum));
+                        }
+
+                        dbTransaction.Commit();
+                    }
+                }
+                System.IO.File.Delete(Path.Combine(path, fileName));
+            }
+            catch (Exception e)
+            {
+                var msn = e.Message;
+                throw;
+            }
+            return "Datos cargados conexito";
+
+        }
+        public async Task<string> LoadPsocosocialAsync(string path, string fileName)
+        {
+            try
+            {
+
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (var stream = System.IO.File.Open(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read))
+                {
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        var dbTransaction = _ctx.Database.BeginTransaction();
+                        Carga carga = new Carga();
+                        var result = reader.AsDataSet();
+                        //Control de carga
+                        try
+                        {
+                            DataTable tablepsicosocial = result.Tables[0];
+
+                            carga.TotalPsicosocial = tablepsicosocial.Rows.Count;
+
+                            carga.FechaCarga = DateTime.Today;
+                            _ctx.Add(carga);
+                            await _ctx.SaveChangesAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            string message = ex.Message;
+                            dbTransaction.Rollback();
+                            throw;
                         }
 
                         //Tabla psicosocial
                         int loopPsi = 0;
                         try
                         {
-                            DataTable tablepsicosocial = result.Tables[2];
+                            DataTable tablepsicosocial = result.Tables[0];
                             foreach (DataRow item in tablepsicosocial.Rows)
                             {
                                 if (loopPsi != 0)
@@ -430,13 +841,15 @@ namespace BECAS.Controllers
                                     CargaEvaluacionPsicosocial cargaEvaluacion = new CargaEvaluacionPsicosocial();
                                     int año = Convert.ToInt32(item[0].ToString());
                                     string mes = item[1].ToString();
+                                    cargaEvaluacion.r_fechaini = string.IsNullOrEmpty(item[2].ToString()) ? null : DateTime.TryParse(item[2].ToString(), out DateTime resultf1) == true ? DateTime.Parse(item[2].ToString()) : null;
+                                    cargaEvaluacion.r_fechafin = string.IsNullOrEmpty(item[3].ToString()) ? null : DateTime.TryParse(item[3].ToString(), out DateTime resultf2) == true ? DateTime.Parse(item[3].ToString()) : null;
                                     cargaEvaluacion.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
-                                    cargaEvaluacion.OvParticipacion = string.IsNullOrEmpty(item[9].ToString()) ? null : item[9].ToString().Equals("Si") ? true : false;
-                                    cargaEvaluacion.OvPuntajePret = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
-                                    cargaEvaluacion.OvPuntajePos = string.IsNullOrEmpty(item[11].ToString()) ? "" : item[11].ToString();
-                                    cargaEvaluacion.EpInstrumentoRiesgo = string.IsNullOrEmpty(item[12].ToString()) ? "" : item[12].ToString();
-                                    cargaEvaluacion.EpVulnerabilidades = string.IsNullOrEmpty(item[13].ToString()) ? "" : item[13].ToString();
-                                    cargaEvaluacion.EpAlertaDesercion = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
+                                    cargaEvaluacion.OvParticipacion = string.IsNullOrEmpty(item[8].ToString()) ? null : item[8].ToString().Equals("Si") ? true : false;
+                                    cargaEvaluacion.OvPuntajePret = string.IsNullOrEmpty(item[9].ToString()) ? "" : item[9].ToString();
+                                    cargaEvaluacion.OvPuntajePos = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
+                                    cargaEvaluacion.EpInstrumentoRiesgo = string.IsNullOrEmpty(item[11].ToString()) ? "" : item[11].ToString();
+                                    cargaEvaluacion.EpVulnerabilidades = string.IsNullOrEmpty(item[12].ToString()) ? "" : item[12].ToString();
+                                    cargaEvaluacion.EpAlertaDesercion = string.IsNullOrEmpty(item[13].ToString()) ? "" : item[13].ToString();
                                     cargaEvaluacion.IdCarga = carga.IdCarga;
                                     cargaEvaluacion.Año = año;
                                     cargaEvaluacion.Mes = mes;
@@ -455,23 +868,72 @@ namespace BECAS.Controllers
                             throw new Exception(string.Format("Error al cargar datos en la tabla Psicosocial verificar el número de fila {0}", fila));
                         }
 
+
+                        dbTransaction.Commit();
+                    }
+                }
+                System.IO.File.Delete(Path.Combine(path, fileName));
+            }
+            catch (Exception e)
+            {
+                var msn = e.Message;
+                throw;
+            }
+            return "Datos cargados conexito";
+
+        }
+        public async Task<string> LoadSeguimientoPsicosocialAsync(string path, string fileName)
+        {
+            try
+            {
+
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (var stream = System.IO.File.Open(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read))
+                {
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        var dbTransaction = _ctx.Database.BeginTransaction();
+                        Carga carga = new Carga();
+                        var result = reader.AsDataSet();
+                        //Control de carga
+                        try
+                        {
+                            DataTable tableSeguimientoPsicosocial = result.Tables[0];
+
+
+                            carga.TotalSegPsicosocial = tableSeguimientoPsicosocial.Rows.Count;
+
+                            carga.FechaCarga = DateTime.Today;
+                            _ctx.Add(carga);
+                            await _ctx.SaveChangesAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            string message = ex.Message;
+                            dbTransaction.Rollback();
+                            throw;
+                        }
+
+
                         //Tabla seguimiento psicosocial
                         int loopSegPsi = 0;
                         try
                         {
-                            DataTable tableSeguimientoPsicosocial = result.Tables[3];
+                            DataTable tableSeguimientoPsicosocial = result.Tables[0];
                             foreach (DataRow item in tableSeguimientoPsicosocial.Rows)
                             {
                                 if (loopSegPsi != 0)
                                 {
-
                                     CargaSeguimientoPsicosocial ee = new CargaSeguimientoPsicosocial();
                                     int año = Convert.ToInt32(item[0].ToString());
                                     string mes = item[1].ToString();
+                                    ee.r_fechaini = string.IsNullOrEmpty(item[2].ToString()) ? null : DateTime.TryParse(item[2].ToString(), out DateTime resultf1) == true ? DateTime.Parse(item[2].ToString()) : null;
+                                    ee.r_fechafin = string.IsNullOrEmpty(item[3].ToString()) ? null : DateTime.TryParse(item[3].ToString(), out DateTime resultf2) == true ? DateTime.Parse(item[3].ToString()) : null;
                                     ee.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
-                                    ee.SegMotivo = string.IsNullOrEmpty(item[9].ToString()) ? "" : item[9].ToString();
-                                    ee.SegEstado = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
-                                    ee.SegMedida = string.IsNullOrEmpty(item[11].ToString()) ? "" : item[11].ToString();
+                                    ee.SegMotivo = string.IsNullOrEmpty(item[8].ToString()) ? "" : item[8].ToString();
+                                    ee.SegEstado = string.IsNullOrEmpty(item[9].ToString()) ? "" : item[9].ToString();
+                                    ee.SegMedida = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
+                                    ee.fecha_atencion = string.IsNullOrEmpty(item[11].ToString()) ? null : DateTime.TryParse(item[11].ToString(), out DateTime resultf3) == true ? DateTime.Parse(item[11].ToString()) : null;
                                     ee.SegAlertaDesercion = string.IsNullOrEmpty(item[12].ToString()) ? "" : item[12].ToString();
                                     ee.IdCarga = carga.IdCarga;
                                     ee.Año = año;
@@ -490,11 +952,55 @@ namespace BECAS.Controllers
                             throw new Exception(string.Format("Error al cargar datos en la tabla Seguimiento Psicosocial verificar el número de fila {0}", fila));
                         }
 
+                        dbTransaction.Commit();
+                    }
+                }
+                System.IO.File.Delete(Path.Combine(path, fileName));
+            }
+            catch (Exception e)
+            {
+                var msn = e.Message;
+                throw;
+            }
+            return "Datos cargados conexito";
+
+        }
+        public async Task<string> LoadPracticasAsync(string path, string fileName)
+        {
+            try
+            {
+
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (var stream = System.IO.File.Open(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read))
+                {
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        var dbTransaction = _ctx.Database.BeginTransaction();
+                        Carga carga = new Carga();
+                        var result = reader.AsDataSet();
+                        //Control de carga
+                        try
+                        {
+                            DataTable tableSeguimientosPr = result.Tables[0];
+
+                            carga.TotalSeguimientoPracticasPr = tableSeguimientosPr.Rows.Count;
+
+                            carga.FechaCarga = DateTime.Today;
+                            _ctx.Add(carga);
+                            await _ctx.SaveChangesAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            string message = ex.Message;
+                            dbTransaction.Rollback();
+                            throw;
+                        }
+
                         //Tabla practicas Pr
                         int loopSegPra = 0;
                         try
                         {
-                            DataTable tableSeguimientosPr = result.Tables[4];
+                            DataTable tableSeguimientosPr = result.Tables[0];
                             foreach (DataRow item in tableSeguimientosPr.Rows)
                             {
                                 if (loopSegPra != 0)
@@ -514,8 +1020,6 @@ namespace BECAS.Controllers
                                     ee.Año = año;
                                     ee.Mes = mes;
                                     _ctx.Add(ee);
-
-
                                 }
                                 loopSegPra++;
                             }
@@ -528,11 +1032,55 @@ namespace BECAS.Controllers
                             dbTransaction.Rollback();
                             throw new Exception(string.Format("Error al cargar datos en la tabla Prácticas Profesionales verificar el número de fila {0}", fila));
                         }
+
+                        dbTransaction.Commit();
+                    }
+                }
+                System.IO.File.Delete(Path.Combine(path, fileName));
+            }
+            catch (Exception e)
+            {
+                var msn = e.Message;
+                throw;
+            }
+            return "Datos cargados conexito";
+
+        }
+        public async Task<string> LoadPasantillasAsync(string path, string fileName)
+        {
+            try
+            {
+
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (var stream = System.IO.File.Open(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read))
+                {
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        var dbTransaction = _ctx.Database.BeginTransaction();
+                        Carga carga = new Carga();
+                        var result = reader.AsDataSet();
+                        //Control de carga
+                        try
+                        {
+                            DataTable tableSeguimientPasantillas = result.Tables[0];
+                            carga.TotalSeguimientoPasantias = tableSeguimientPasantillas.Rows.Count;
+
+                            carga.FechaCarga = DateTime.Today;
+                            _ctx.Add(carga);
+                            await _ctx.SaveChangesAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            string message = ex.Message;
+                            dbTransaction.Rollback();
+                            throw;
+                        }
+
                         //Seguimiento Pasantillas
                         int loopsegPasantillas = 0;
                         try
                         {
-                            DataTable tableSeguimientPsicosocial = result.Tables[5];
+                            DataTable tableSeguimientPsicosocial = result.Tables[0];
                             foreach (DataRow item in tableSeguimientPsicosocial.Rows)
                             {
                                 if (loopsegPasantillas != 0)
@@ -564,11 +1112,57 @@ namespace BECAS.Controllers
                             throw new Exception(string.Format("Error al cargar datos en la tabla Seguimiento Pasantillas verificar el número de fila {0}", fila));
                         }
 
+                        dbTransaction.Commit();
+                    }
+                }
+                System.IO.File.Delete(Path.Combine(path, fileName));
+            }
+            catch (Exception e)
+            {
+                var msn = e.Message;
+                throw;
+            }
+            return "Datos cargados conexito";
+
+        }
+        public async Task<string> LoadAutoempleoAsync(string path, string fileName)
+        {
+            try
+            {
+
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (var stream = System.IO.File.Open(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read))
+                {
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        var dbTransaction = _ctx.Database.BeginTransaction();
+                        Carga carga = new Carga();
+                        var result = reader.AsDataSet();
+                        //Control de carga
+                        try
+                        {
+                            DataTable SeguimientoAutoempleo = result.Tables[0];
+
+
+                            carga.TotalSeguimientoAutoempleo = SeguimientoAutoempleo.Rows.Count;
+
+
+                            carga.FechaCarga = DateTime.Today;
+                            _ctx.Add(carga);
+                            await _ctx.SaveChangesAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            string message = ex.Message;
+                            dbTransaction.Rollback();
+                            throw;
+                        }
+
                         //Tabla SeguimientoAutoempleo
                         int loopSegAut = 0;
                         try
                         {
-                            DataTable SeguimientoAutoempleo = result.Tables[6];
+                            DataTable SeguimientoAutoempleo = result.Tables[0];
                             foreach (DataRow item in SeguimientoAutoempleo.Rows)
                             {
                                 if (loopSegAut != 0)
@@ -606,11 +1200,55 @@ namespace BECAS.Controllers
                             throw new Exception(string.Format("Error al cargar datos en la tabla Seguimiento Autoempleo verificar el número de fila {0}", fila));
                         }
 
+                        dbTransaction.Commit();
+                    }
+                }
+                System.IO.File.Delete(Path.Combine(path, fileName));
+            }
+            catch (Exception e)
+            {
+                var msn = e.Message;
+                throw;
+            }
+            return "Datos cargados conexito";
+
+        }
+        public async Task<string> LoadEstipendiosAsync(string path, string fileName)
+        {
+            try
+            {
+
+                System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+                using (var stream = System.IO.File.Open(Path.Combine(path, fileName), FileMode.Open, FileAccess.Read))
+                {
+                    using (var reader = ExcelReaderFactory.CreateReader(stream))
+                    {
+                        var dbTransaction = _ctx.Database.BeginTransaction();
+                        Carga carga = new Carga();
+                        var result = reader.AsDataSet();
+                        //Control de carga
+                        try
+                        {
+                            DataTable tableEstipendios = result.Tables[0];
+
+                            carga.TotalEstipendios = tableEstipendios.Rows.Count;
+
+                            carga.FechaCarga = DateTime.Today;
+                            _ctx.Add(carga);
+                            await _ctx.SaveChangesAsync();
+                        }
+                        catch (Exception ex)
+                        {
+                            string message = ex.Message;
+                            dbTransaction.Rollback();
+                            throw;
+                        }
+
                         //Tabla estipendios
                         int loopEst = 0;
                         try
                         {
-                            DataTable tableEstipendios = result.Tables[7];
+                            DataTable tableEstipendios = result.Tables[0];
                             foreach (DataRow item in tableEstipendios.Rows)
                             {
                                 if (loopEst != 0)
@@ -684,8 +1322,6 @@ namespace BECAS.Controllers
             return "Datos cargados conexito";
 
         }
-
-
     }
 
 }

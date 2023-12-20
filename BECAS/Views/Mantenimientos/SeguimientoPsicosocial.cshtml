@@ -10,7 +10,7 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <form class="form-inline" method="post" asp-controller="Mantenimientos" asp-action="Educacion">
+            <form class="form-inline">
                 <div class="form-group mb-2">
                     <select class="form-control select2" name="socios" id="socios" multiple="multiple" data-placeholder="-- Seleccionar Socio --" style="width:100%">
                         @foreach (var item in Model.Socios)
@@ -56,7 +56,7 @@
                 </div>
                 <hr align="left" noshade="noshade" size="2" width="100%" />
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="sexos" multiple="multiple" data-placeholder="-- Seleccionar sexo --" style="width:100%">
+                    <select class="form-control select2" name="sexos" id="sexos" multiple="multiple" data-placeholder="-- Seleccionar sexo --" style="width:100%">
                         @foreach (var item in Model.sexos)
                         {
                             <option value="@item.IdSexo">@item.Nombre</option>
@@ -64,7 +64,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="tipomatricula" multiple="multiple" data-placeholder="-- Seleccionar Tipo Matricula --" style="width:100%">
+                    <select class="form-control select2" name="tipomatricula" id="tipomatricula" multiple="multiple" data-placeholder="-- Seleccionar Tipo Matricula --" style="width:100%">
                         @foreach (var item in Model.tipomatricula)
                         {
                             <option value="@item.IdTipoMatricula">@item.Nombre</option>
@@ -72,7 +72,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="departament" multiple="multiple" data-placeholder="-- Seleccionar Departamento --" style="width:100%">
+                    <select class="form-control select2" name="departament" id="departament" multiple="multiple" data-placeholder="-- Seleccionar Departamento --" style="width:100%">
                         @foreach (var item in Model.departamentos)
                         {
                             <option value="@item.IdDepartamento">@item.Nombre</option>
@@ -80,14 +80,46 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="refiere" multiple="multiple" data-placeholder="-- Seleccionar Referido --" style="width:100%">
+                    <select class="form-control select2" name="refiere" id="refiere" multiple="multiple" data-placeholder="-- Seleccionar Referido --" style="width:100%">
                         @foreach (var item in Model.dropRefiereCM)
                         {
                             <option value="@item.IdRefiere">@item.Nombre</option>
                         }
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="year1" id="year1" multiple="multiple" data-placeholder="-- Seleccionar año --" style="width:100%">
+                        @foreach (var item in Model.catAños)
+                        {
+                            <option value="@item.Nombre">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="mes" id="mes" multiple="multiple" data-placeholder="-- Seleccionar mes --" style="width:100%">
+                        @foreach (var item in Model.mes)
+                        {
+                            <option value="@item.Nombre">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="aEstudio" id="aEstudio" multiple="multiple" data-placeholder="-- Año de Educación --" style="width:100%">
+                        @foreach (var item in Model.catAños)
+                        {
+                            <option value="@item.Nombre">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select class="form-control select2" name="cohorte1" id="cohorte1" multiple="multiple" data-placeholder="-- Cohorte de estudios --" style="width:100%">
+                        @foreach (var item in Model.cohorte)
+                        {
+                            <option value="@item.IdCohorte">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <button type="submit" id="btnFilters" class="btn btn-primary mb-2">Buscar</button>
             </form>
         </div>
     </div>
@@ -102,112 +134,25 @@
         <table id="example1" class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>PId</th>
+                    <th>Id</th>
                     <th>Año</th>
                     <th>Mes</th>
                     <th>Nombre</th>
-                    <th>Tipo Matricula</th>
-                    <th>Programa</th>
+                    <th>Nombre Socio</th>
+                    <th>Nombre Sede</th>
                     <th>Carrera/Curso/Grado</th>
-                    <th>Sede</th>
-                    <th>Cohorte</th>
-                    <th>Sexo</th>
-                    <th>Socio implementador</th>
+                    <th>Tipo Matricula</th>
+                    <th>Año de estudio</th>
+                    <th>Nombre Cohorte</th>
                     <th>Motivo</th>
                     <th>Estado</th>
                     <th>Medida</th>
-                    <th>Alerta Desercion</th>
+                    <th>Fecha Atención</th>
+                    <th>Alerta Deserción</th>
+                    <th>Alerta Deserción</th>
                 </tr>
             </thead>
             <tbody>
-                @{
-                    foreach (var item in Model.seguimientoPsicosocials)
-                    {
-                        //var año = item.carga != null ? item.carga.RAño : 0;
-                        //var mes = item.carga != null ? item.carga.RMes : "";
-                        //var sexo = item.Sexo != null ? item.Sexo.Nombre : "";
-                        //var Sede = item.Sede != null ? item.Sede.Nombre : "";
-                        //var CarreraCursoGrado = item.CarreraCursoGrado != null ? item.CarreraCursoGrado.Nombre : "";
-                        <tr>
-                            <td>@item.PId</td>
-                            <td>@item.Año</td>
-                            <td>@item.Mes</td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    @item.persona.Nombre
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    if (@item.persona.matricula != null)
-                                    {
-                                        @item.persona.matricula.Nombre
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    if (@item.persona.programa != null)
-                                    {
-                                        @item.persona.programa.Nombre
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    @if (item.persona.carrera != null)
-                                    {
-                                        @item.persona.carrera.Nombre
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    if (@item.persona.sede != null)
-                                    {
-                                        @item.persona.sede.Nombre
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    @if (@item.persona != null)
-                                    {
-                                        @item.persona.Cohorte
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    @if (@item.persona.sexo != null)
-                                    {
-                                        @item.persona.sexo.Nombre
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    @if (item.persona.socio != null)
-                                    {
-                                        @item.persona.socio.Nombre
-                                    }
-                                }
-                            </td>
-                            <td>@item.SegMotivo</td>
-                            <td>@item.SegEstado</td>
-                            <td>@item.SegMedida</td>
-                            <td>@item.SegAlertaDesercion</td>
-                        </tr>
-                    }
-                }
             </tbody>
         </table>
     </div>
@@ -217,13 +162,164 @@
 @section scripts{
 <script>
     $(function () {
-      $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    const Lsocios = [];
+    const Lzonas = [];
+    const Lprograma = [];
+    const Lsedes = []
+    const Lcarreras = [];
+    const Lsexos =[];
+    const Ltipomatricula = [];
+    const Ldepartament = [];
+    const Lrefiere = [];
+    const Lyear1 = [];
+    const Lmes = [];
+    const LaEstudio = [];
+    const Lcohorte1 = [];
+     $("#example1").DataTable({
+            "processing":true,
+            "responsive": true, "lengthChange": true, "autoWidth": false,
+            "fixedColumns": true,
+            "serverSide":false,
+            "dom": 'Bfrtip',
+            "buttons": [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            "ajax": {
+                "url": "@Url.Action("GetSegPsicosocial","Mantenimientos")",
+                "type":"POST",
+                "dataType": "json",
+                "data":function(d){
+                    return $.extend({},d,{
+                        "socio":Lsocios,
+                        "zonas":Lzonas,
+                        "programa":Lprograma,
+                        "sedes":Lsedes,
+                        "carreras":Lcarreras,
+                        "sexos":Lsexos,
+                        "tipomatricula":Ltipomatricula,
+                        "departament":Ldepartament,
+                        "refiere":Lrefiere,
+                        "year1":Lyear1,
+                        "mes":Lmes,
+                        "aEstudio":LaEstudio,
+                        "cohorte1":Lcohorte1
+                    });
+                }
+            },
+            "columns": [
+                {"data":"id"},
+                {"data":"mes"},
+                {"data":"año"},
+                {"data":"nombre"},
+                {"data":"nombreSocio"},
+                {"data":"nombreSede"},
+                {"data":"nombreCarrera"},
+                {"data":"tipoMatricula"},
+                {"data":"year1"},
+                {"data":"nombreCohorte"},
+                {"data":"segMotivo"},
+                {"data":"segEstado"},
+                {"data":"segMedida"},
+                {"data":"fecha_atencion"},
+                {"data":"segAlertaDesercion"},
+                {"data":"epAlertaDesercion"}
+
+            ]
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
       $('.select2').select2()
 
+       $("#socios").on("change", function(){
+        $("#socios option:selected").each(function() {
+            Lsocios.push($(this).val());
+
+        });
+       }).trigger("change");
+
+       $('#dropzona').on('change', function(){
+           $('#dropzona option:selected').each(function(){
+                Lzonas.push($(this).val());
+           })
+       }).trigger("change");
+
+       $('#idprograma').on('change',function(){
+           $("#idprograma option:selected").each(function(){
+               Lprograma.push($(this).val());
+           })
+       }).trigger("change");
+
+       $('#sedes').on('change',function(){
+           $("#sedes option:selected").each(function(){
+               Lsedes.push($(this).val());
+           })
+       }).trigger("change");
+
+       $('#carreras').on('change',function(){
+           $("#carreras option:selected").each(function(){
+               Lcarreras.push($(this).val());
+           })
+       }).trigger("change");
+
+       $('#sexos').on('change',function(){
+           $("#sexos option:selected").each(function(){
+               Lsexos.push($(this).val());
+           })
+       }).trigger("change");
+
+       $('#tipomatricula').on('change',function(){
+           $("#tipomatricula option:selected").each(function(){
+               Ltipomatricula.push($(this).val());
+           })
+       }).trigger("change");
+
+       $('#departament').on('change',function(){
+           $("#departament option:selected").each(function(){
+               Ldepartament.push($(this).val());
+           })
+       }).trigger("change");
+
+       $('#refiere').on('change',function(){
+           $("#refiere option:selected").each(function(){
+               Ldepartament.push($(this).val());
+           })
+       }).trigger("change");
+
+       $('#year1').on('change',function(){
+           $("#year1 option:selected").each(function(){
+               Lyear1.push($(this).val());
+           })
+       }).trigger("change");
+
+       $('#mes').on('change',function(){
+           $("#mes option:selected").each(function(){
+               Lmes.push($(this).val());
+           })
+       }).trigger("change");
+
+       $('#aEstudio').on('change',function(){
+           $("#aEstudio option:selected").each(function(){
+               LaEstudio.push($(this).val());
+           })
+       }).trigger("change");
+
+       $('#cohorte1').on('change',function(){
+           $("#cohorte1 option:selected").each(function(){
+               Lcohorte1.push($(this).val());
+           })
+       }).trigger("change");
+
+       $("#btnFilters").on("click", function(e) {
+            e.preventDefault();
+            $("#example1").DataTable().ajax.reload();
+            Lsocios.length = 0;
+            Lzonas.length = 0;
+            Lprograma.length = 0;
+            Lsedes.length = 0;
+            Lcarreras.length = 0;
+            if ($('.select2').data('select2')) {
+                $('.select2').select2().val(null).trigger("change");
+            }
+        });
     });
 </script>
 

@@ -92,7 +92,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.116\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.125\\RuntimeIdentifierGraph.json"
         }
       }
     },
@@ -152,6 +152,10 @@
               "target": "Package",
               "version": "[1.4.0, )"
             },
+            "EntityFramework": {
+              "target": "Package",
+              "version": "[6.4.4, )"
+            },
             "ExcelDataReader": {
               "target": "Package",
               "version": "[3.6.0, )"
@@ -180,9 +184,17 @@
               "target": "Package",
               "version": "[6.0.10, )"
             },
+            "Microsoft.Identity.Web": {
+              "target": "Package",
+              "version": "[2.11.0, )"
+            },
+            "Microsoft.Identity.Web.UI": {
+              "target": "Package",
+              "version": "[2.11.0, )"
+            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
-              "version": "[6.0.11, )"
+              "version": "[6.0.13, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -211,7 +223,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.116\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.125\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -3,11 +3,13 @@ using BECASLC;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Azure.Identity;
+using System.Configuration;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
-
-//var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
-//builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 var connectionString = builder.Configuration.GetConnectionString("BecasDatabase");
 builder.Services.AddDbContext<MEOBContext>(options => options.UseSqlServer(connectionString));
@@ -15,6 +17,15 @@ builder.Services.AddScoped<ICatalogos, CatalogosRepository>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddMicrosoftIdentityWebAppAuthentication(builder.Configuration, "AzureAd");
+
+builder.Services.AddMvc(option =>
+{
+    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+    option.Filters.Add(new AuthorizeFilter(policy));
+
+}).AddMicrosoftIdentityUI();
 
 builder.Services.AddDistributedMemoryCache();
 
@@ -42,6 +53,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.UseSession();
 app.MapRazorPages();
