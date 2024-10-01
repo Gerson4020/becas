@@ -1,5 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+@using System.Security.Claims
+
 <!DOCTYPE html>
 <!--
 This is a starter template page. Use this page to start your new project from
@@ -9,8 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@ViewData["Title"] - BECAS</title>
-
+    <title>Organización Internacional para las Migraciones | Repositorio BECAS</title>
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome Icons -->
@@ -23,6 +24,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="~/lib/datatables-buttons/css/buttons.bootstrap4.min.css">
     <link rel="stylesheet" href="~/lib/select2/css/select2.min.css">
     <link rel="stylesheet" href="~/css/adminlte.min.css">
+    <style>
+        .brand-link {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 0; /* 20px arriba y abajo, 0 a los lados */
+            border-bottom: 1px solid #395FA0 !important;
+        }
+
+        .responsive-img {
+            max-width: 80%;
+            height: auto;
+        }
+    </style>
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -35,7 +50,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="@Url.Action("index","Home")" class="nav-link">Home</a>
+                    @*<a href="@Url.Action("index","Home")" class="nav-link">Home</a>*@
                 </li>
             </ul>
 
@@ -46,17 +61,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="navbar-search-block">
                     </div>
                 </li>
-                <li class="nav-item d-none d-sm-inline-block">
-                    <a href="@Url.Action("SingOut","Login")" class="nav-link">Salir</a>
-                </li>
+                @{
+
+                    var userRoleClaim = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+                    var userRole = userRoleClaim?.Value;
+                }
+                @if (userRole == "3")
+                {
+                    <li class="nav-item d-none d-sm-inline-block">
+                        <a href="@Url.Action("Logout","Auth")" class="nav-link">Salir</a>
+                    </li>
+                }
+
+
             </ul>
         </nav>
         <!-- /.navbar -->
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="#" class="brand-link">
-                @*<span class="brand-text font-weight-light">BECAS</span>*@
+            <a href="@Url.Action("index","Home")" class="brand-link">
+                <img src="~/OIM_Logo.png" alt="OIM Logo" class="responsive-img">
             </a>
 
             <!-- Sidebar -->
@@ -111,7 +136,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     <li class="nav-item">
                                         <a href="@Url.Action("pasantias","Mantenimientos")" class="nav-link">
                                             <i class="far fa-circle nav-icon"></i>
-                                            <p>pasantías</p>
+                                            <p>Contrataciones</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -191,6 +216,42 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </li>
 
                             <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Reportes
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Promovidos","Mantenimientos")" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Promovidos</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">
+                                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                                    <p>
+                                        Beneficiarios
+                                        <i class="right fas fa-angle-left"></i>
+                                    </p>
+                                </a>
+                                <ul class="nav nav-treeview">
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("SearchBeneficiary","Mantenimientos")" class="nav-link">
+                                            <i class="far fa-circle nav-icon"></i>
+                                            <p>Buscas beneficiarios</p>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+
+                            <li class="nav-item">
                                 <a href="@Url.Action("Index","CargaDatos")" class="nav-link">
                                     <i class="nav-icon fas fa-th"></i>
                                     <p>
@@ -263,14 +324,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </li>
                                 </ul>
                             </li>
-                            <li class="nav-item">
+                            @*                            <li class="nav-item">
                                 <a href="@Url.Action("Index","CargaDatos")" class="nav-link">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Carga de datos
-                                    </p>
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>
+                                Carga de datos
+                                </p>
                                 </a>
-                            </li>
+                                </li>*@
                         </ul>
                     }
 
@@ -279,67 +340,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                             <!-- Add icons to the links using the .nav-icon class
                                  with font-awesome or any other icon font library -->
-                        <li class="nav-item menu-open">
-                                <a href="#" class="nav-link">
-                                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                                    <p>
-                                        Cargaas
-                                        <i class="right fas fa-angle-left"></i>
-                                    </p>
-                                </a>
-                                <ul class="nav nav-treeview">
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("personas","Mantenimientos")" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Estudiantes</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("EvalucionPsicosocial","Mantenimientos")" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Evaluación Psicosocial</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("SeguimientoAutoempleo","Mantenimientos")" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Emprendimiento</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("SeguimientoPracticasPr","Mantenimientos")" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Practicas</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("pasantias","Mantenimientos")" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>pasantías</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Educacion","Mantenimientos")" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Educación</p>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("SeguimientoPsicosocial","Mantenimientos")" class="nav-link">
-                                            <i class="far fa-circle nav-icon"></i>
-                                            <p>Seguimiento Psicosocial</p>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="nav-item">
-                                <a href="@Url.Action("Index","CargaDatos")" class="nav-link">
-                                    <i class="nav-icon fas fa-th"></i>
-                                    <p>
-                                        Carga de datos
-                                    </p>
-                                </a>
-                            </li>
+                        <li class="nav-item menu-open"></li>
+
                         </ul>
                     }
 
@@ -430,12 +432,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 @*Anything you want*@
             </div>
             <!-- Default to the left -->
-            <strong>Copyright &copy; @DateTime.Now.Year Organización Internacional para las Migraciones </strong> All rights reserved.
+            Derechos de autor &copy; @DateTime.Now.Year Organización Internacional para las Migraciones
         </footer>
     </div>
     <!-- ./wrapper -->
     <!-- REQUIRED SCRIPTS -->
     <!-- jQuery -->
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -451,8 +454,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="~/lib/datatables-buttons/js/buttons.colVis.min.js"></script>
 
     <script src="~/lib/select2/js/select2.full.min.js"></script>
+    <script src="~/lib/jquery.inputmask.min.js"></script>
 
     <script src="~/js/adminlte.js"></script>
+
     <script>
         function alertSession(){
             alert('Su sesión ha expirado, su navegador será recargado')

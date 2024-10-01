@@ -10,7 +10,7 @@
     </div>
     <div class="card-body">
         <div class="row">
-            <form class="form-inline" method="post" asp-controller="Mantenimientos" asp-action="Educacion">
+            <form class="form-inline">
                 <div class="form-group mb-2">
                     <select class="form-control select2" name="socios" id="socios" multiple="multiple" data-placeholder="-- Seleccionar Socio --" style="width:100%">
                         @foreach (var item in Model.Socios)
@@ -56,7 +56,7 @@
                 </div>
                 <hr align="left" noshade="noshade" size="2" width="100%" />
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="sexos" multiple="multiple" data-placeholder="-- Sexo --" style="width:100%">
+                    <select class="form-control select2" name="sexos" id="sexos" multiple="multiple" data-placeholder="-- Sexo --" style="width:100%">
                         @foreach (var item in Model.sexos)
                         {
                             <option value="@item.IdSexo">@item.Nombre</option>
@@ -64,7 +64,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="tipomatricula" multiple="multiple" data-placeholder="-- Tipo Matrícula --" style="width:100%">
+                    <select class="form-control select2" name="tipomatricula" id="tipomatricula" multiple="multiple" data-placeholder="-- Tipo Matrícula --" style="width:100%">
                         @foreach (var item in Model.tipomatricula)
                         {
                             <option value="@item.IdTipoMatricula">@item.Nombre</option>
@@ -72,7 +72,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="departament" multiple="multiple" data-placeholder="-- Departamento de residencia --" style="width:100%">
+                    <select class="form-control select2" name="departament" id="departament" multiple="multiple" data-placeholder="-- Departamento de residencia --" style="width:100%">
                         @foreach (var item in Model.departamentos)
                         {
                             <option value="@item.IdDepartamento">@item.Nombre</option>
@@ -80,7 +80,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="refiere" multiple="multiple" data-placeholder="-- Institución que refiere --" style="width:100%">
+                    <select class="form-control select2" name="refiere" id="refiere" multiple="multiple" data-placeholder="-- Institución que refiere --" style="width:100%">
                         @foreach (var item in Model.dropRefiereCM)
                         {
                             <option value="@item.IdRefiere">@item.Nombre</option>
@@ -88,7 +88,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="year1" multiple="multiple" data-placeholder="-- Año de reporte --" style="width:100%">
+                    <select class="form-control select2" name="year1" id="year1" multiple="multiple" data-placeholder="-- Año de reporte --" style="width:100%">
                         @foreach (var item in Model.catAños)
                         {
                             <option value="@item.Nombre">@item.Nombre</option>
@@ -96,7 +96,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="mes" multiple="multiple" data-placeholder="-- Mes de reporte --" style="width:100%">
+                    <select class="form-control select2" name="mes" id="mes" multiple="multiple" data-placeholder="-- Mes de reporte --" style="width:100%">
                         @foreach (var item in Model.mes)
                         {
                             <option value="@item.Nombre">@item.Nombre</option>
@@ -104,7 +104,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="cohorte1" multiple="multiple" data-placeholder="-- Cohorte de estudios --" style="width:100%">
+                    <select class="form-control select2" name="cohorte1" id="cohorte1" multiple="multiple" data-placeholder="-- Cohorte de estudios --" style="width:100%">
                         @foreach (var item in Model.cohorte)
                         {
                             <option value="@item.IdCohorte">@item.Nombre</option>
@@ -112,7 +112,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="aEstudio" multiple="multiple" data-placeholder="-- Año de Educación --" style="width:100%">
+                    <select class="form-control select2" name="aEstudio" id="aEstudio" multiple="multiple" data-placeholder="-- Año de Educación --" style="width:100%">
                         @foreach (var item in Model.catAños)
                         {
                             <option value="@item.Nombre">@item.Nombre</option>
@@ -122,7 +122,7 @@
                 <div class="form-group mb-2">
                     <select class="form-control select2" name="ePersona" asp-items="ViewBag.EstadoPersona" multiple="multiple" data-placeholder="-- Estado Educación --" style="width:100%"></select>
                 </div>
-                <button type="submit" class="btn btn-primary mb-2">Buscar</button>
+                <button id="btnFilters" type="submit" class="btn btn-primary mb-2">Buscar</button>
             </form>
         </div>
     </div>
@@ -164,37 +164,6 @@
                 </tr>
             </thead>
             <tbody>
-                @{
-                    foreach (var item in Model.EducacionTable)
-                    {
-                        <tr>
-                            <td>@item.PIdOim</td>
-                            <td>@item.RAño</td>
-                            <td>@item.RMes</td>
-                            <td>@item.nombre</td>
-                            <td>@item.socio</td>
-                            <td>@item.sede</td>
-                            <td>@item.programaNombre</td>
-                            <td>@item.year</td>
-                            <td>@item.CohorteNombre</td>
-                            <td>@item.carrera</td>
-                            <td>@item.tipoMatricula</td>
-                            <td>@item.sexoNombre</td>
-                            <td>@item.DFechaReasg</td>
-                            <td>@item.DEstado</td>
-                            <td>@item.DFechades</td>
-                            <td>@item.motivodesercion</td>
-                            <td>@item.IDiasAsistenciaEstablecidos</td>
-                            <td>@item.IDiasAsistenciaEfectivos</td>
-                            <td>@item.pocentajeasistencia</td>
-                            <td>@item.IMotivoInasistencia</td>
-                            <td>@item.IModulosInscritos</td>
-                            <td>@item.IModulosAprobados</td>
-                            <td>@item.IModulosReprobados</td>
-                            <td>@item.ICausaReprobacion</td>
-                        </tr>
-                    }
-                }
             </tbody>
         </table>
     </div>
@@ -203,83 +172,279 @@
 
 @section scripts{
 <script>
-    $(function () {
-      $("#example1").DataTable({
-        "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        $(function () {
+            // Lista de selects y objeto para almacenar los valores seleccionados
+            var selectList = ['socios', 'dropzona', 'idprograma', 'sedes', 'carreras'];
+            var selectedValues = {
+                socios: [],
+                dropzona: [],
+                idprograma: [],
+                sedes: [],
+                carreras: [],
+                sexos: [],
+                tipomatricula: [],
+                departament: [],
+                refiere: [],
+                year1: [],
+                mes: [],
+                aEstudio: [],
+                cohorte: [],
+                proyecto: [],
+                estado: [],
+                retornado: []
+            };
 
-      $('.select2').select2()
+            var updateSelectedValues = function (id, value) {
+                selectedValues[id] = value;
+            };
 
+            const clearSubsequentSelects = function (currentId) {
+                var index = selectList.indexOf(currentId);
+                if (index !== -1) {
+                    for (var i = index + 1; i < selectList.length; i++) {
+                        var selectId = `#${selectList[i]}`;
+                        $(selectId).val(null).trigger('change');
+                        $(selectId).empty().append(`<option value> -- Seleccionar ${selectList[i]} -- </option>`);
+                    }
+                }
+            };
+
+            const populateDropdown = function (url, id, target) {
+                $(id).on('change', function () {
+                    var selectedIds = $(id).val();
+                    updateSelectedValues(id.substring(1), selectedIds);
+
+                    // Clear subsequent selects
+                    clearSubsequentSelects(id.substring(1));
+
+                    var data = {};
+
+                    // Modify the data payload based on the selected values
+                    if (id === '#socios') {
+                        data = { id: selectedIds[0] };
+                    } else if (id === '#dropzona') {
+                        var selectedIds2 = $('#socios').val();
+                        data = { id: selectedIds[0], ids: selectedIds2[0] };
+                    } else if (id === '#idprograma') {
+                        var selectedIds2 = $('#socios').val();
+                        var selectedIds3 = $('#dropzona').val();
+                        data = { id: selectedIds3[0], ids: selectedIds2[0], idp: selectedIds[0] };
+                    } else if (id === '#sedes') {
+                        var selectedIds2 = $('#socios').val();
+                        var selectedIdP = $('#idprograma').val();
+                        data = { id: selectedIds[0], ids: selectedIds2[0], idp: selectedIdP[0] };
+                    }
+
+                    $.get(url, data, function (data) {
+                        $(target).empty();
+                        $(target).append(`<option value> -- Seleccionar ${target.substring(1)} -- </option>`);
+                        $.each(data, function (index, row) {
+                            $(target).append(`<option value="${row.id}">${row.nombre}</option>`);
+                        });
+                    });
+                }).trigger('change');
+            };
+
+            populateDropdown('/Mantenimientos/GetZona', '#socios', '#dropzona');
+            populateDropdown('/Mantenimientos/GetProgramas', '#dropzona', '#idprograma');
+            populateDropdown('/Mantenimientos/GetSedes', '#idprograma', '#sedes');
+            populateDropdown('/Mantenimientos/GetCarreras', '#sedes', '#carreras');
+
+            $("#example1").DataTable({
+                "language": {
+                    "sProcessing": "Procesando...",
+                    "sLengthMenu": "Mostrar _MENU_ registros",
+                    "sZeroRecords": "No se encontraron resultados",
+                    "sEmptyTable": "Ningún dato disponible en esta tabla",
+                    "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sSearch": "Buscar:",
+                    "sUrl": "",
+                    "sInfoThousands": ",",
+                    "sLoadingRecords": "Cargando...",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": "Siguiente",
+                        "sPrevious": "Anterior"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                    }
+                },
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "ajax": {
+                    "url": "/Mantenimientos/Educacion",
+                    "type": "POST",
+                    "dataType": "json",
+                    "data": function (d) {
+                        d.socios = selectedValues.socios;
+                        d.dropzona = selectedValues.dropzona;
+                        d.idprograma = selectedValues.idprograma;
+                        d.sedes = selectedValues.sedes;
+                        d.carreras = selectedValues.carreras;
+                        d.sexos = selectedValues.sexos;
+                        d.tipomatricula = selectedValues.tipomatricula;
+                        d.departament = selectedValues.departament;
+                        d.refiere = selectedValues.refiere;
+                        d.year1 = selectedValues.year1;
+                        d.mes = selectedValues.mes;
+                        d.aEstudio = selectedValues.aEstudio;
+                        d.cohorte = selectedValues.cohorte;
+                        d.proyecto = selectedValues.proyecto;
+                        d.estado = selectedValues.estado;
+                        d.retornado = selectedValues.retornado;
+                        return d;
+                    }
+                },
+                "columns": [
+                    { "data": "pIdOim" },
+                    { "data": "rAño" },
+                    { "data": "rMes" },
+                    { "data": "nombre" },
+                    { "data": "socio" },
+                    { "data": "sede" },
+                    { "data": "programaNombre" },
+                    { "data": "year" },
+                    { "data": "cohorteNombre" },
+                    { "data": "carrera" },
+                    { "data": "tipoMatricula" },
+                    { "data": "sexoNombre" },
+                    { "data": "dFechaReasg" },
+                    { "data": "dEstado" },
+                    { "data": "dFechades" },
+                    { "data": "motivodesercion" },
+                    { "data": "iDiasAsistenciaEstablecidos" },
+                    { "data": "iDiasAsistenciaEfectivos" },
+                    { "data": "pocentajeasistencia" },
+                    { "data": "iMotivoInasistencia" },
+                    { "data": "iModulosInscritos" },
+                    { "data": "iModulosAprobados" },
+                    { "data": "iModulosReprobados" },
+                    { "data": "iCausaReprobacion" }
+                ],
+                "buttons": [
+                    {
+                        extend: 'copy',
+                        text: 'Copiar'
+                    },
+                    {
+                        extend: 'csv',
+                        text: 'CSV'
+                    },
+                    {
+                        extend: 'excel',
+                        text: 'Excel'
+                    },
+                    {
+                        extend: 'pdf',
+                        text: 'PDF'
+                    },
+                    {
+                        extend: 'print',
+                        text: 'Imprimir'
+                    },
+                    {
+                        extend: 'colvis',
+                        text: 'Visibilidad de Columnas'
+                    }
+                ]
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+            // Evento para filtrar los datos
+            $('#btnFilters').on('click', function (e) {
+                e.preventDefault();
+                $("#example1").DataTable().ajax.reload();
+            });
+
+            $('#carreras').on('change', function () {
+                var selectedData = $(this).select2('data');
+                var selectedIds = selectedData.map(function (option) {
+                    return option.id;
+                });
+                selectedValues.carreras = selectedIds;
+            });
+
+             //Descomenta las siguientes líneas si necesitas usar los select2 para otros campos
+             $('#sexos').on('change', function () {
+                 var selectedData = $(this).select2('data');
+                 var selectedIds = selectedData.map(function (option) {
+                     return option.id;
+                 });
+                 selectedValues.sexos = selectedIds;
+             });
+
+             $('#tipomatricula').on('change', function () {
+                 var selectedData = $(this).select2('data');
+                 var selectedIds = selectedData.map(function (option) {
+                     return option.id;
+                 });
+                 selectedValues.tipomatricula = selectedIds;
+             });
+
+
+             $('#departament').on('change', function () {
+                 var selectedData = $(this).select2('data');
+                 var selectedIds = selectedData.map(function (option) {
+                     return option.id;
+                 });
+                 selectedValues.departament = selectedIds;
+             });
+             $('#refiere').on('change', function () {
+                 var selectedData = $(this).select2('data');
+                 var selectedIds = selectedData.map(function (option) {
+                     return option.id;
+                 });
+                 selectedValues.refiere = selectedIds;
+             });
+             $('#year1').on('change', function () {
+                 var selectedData = $(this).select2('data');
+                 var selectedIds = selectedData.map(function (option) {
+                     return option.id;
+                 });
+                 selectedValues.year1 = selectedIds;
+             });
+             $('#aEstudio').on('change', function () {
+                 var selectedData = $(this).select2('data');
+                 var selectedIds = selectedData.map(function (option) {
+                     return option.id;
+                 });
+                 selectedValues.aEstudio = selectedIds;
+             });
+             $('#cohorte').on('change', function () {
+                 var selectedData = $(this).select2('data');
+                 var selectedIds = selectedData.map(function (option) {
+                     return option.id;
+                 });
+                 selectedValues.cohorte = selectedIds;
+             });
+             $('#proyecto').on('change', function () {
+                 var selectedData = $(this).select2('data');
+                 var selectedIds = selectedData.map(function (option) {
+                     return option.id;
+                 });
+                 selectedValues.proyecto = selectedIds;
+             });
+             $('#estado').on('change', function () {
+                 var selectedData = $(this).select2('data');
+                 var selectedIds = selectedData.map(function (option) {
+                     return option.id;
+                 });
+                 selectedValues.estado = selectedIds;
+             });
+             $('#retornado').on('change', function () {
+                 var selectedData = $(this).select2('data');
+                 var selectedIds = selectedData.map(function (option) {
+                     return option.id;
+                 });
+                 selectedValues.retornado = selectedIds;
+             });
+
+        $('.select2').select2();
     });
 </script>
 
-<script>
-
-    $("#socios").change(function () {
-        var idsocio = $("#socios").val();
-        $.get("/Mantenimientos/GetZona", { id: idsocio[0] }, function (data) {
-            // VACIAMOS EL DropDownList
-            $("#dropzona").empty();
-            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-            //$("#dropzona").append("<option value> -- Seleccionar Zona " + $("#dropzona option:selected").text() + " --</option>")
-            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-            $.each(data, function (index, row) {
-                $("#dropzona").append("<option value='" + row.idZona + "'>" + row.nombre + "</option>")
-            });
-        });
-    });
-
-    $("#dropzona").change(function (data) {
-        var idsocio = $("#socios").val();
-        //var idzona = $("#dropzona").val();
-        var idzona = $("#dropzona :selected").map((_, e) => e.value).get();
-        //alert(selected);
-        $.get("/Mantenimientos/GetProgramas", { id: idzona[0] , ids:idsocio[0] }, function (data) {
-            // VACIAMOS EL DropDownList
-            $("#idprograma").empty();
-            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-            $("#idprograma").append("<option value> -- Seleccionar programa " + $("#idprograma option:selected").text() + " --</option>")
-            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-            $.each(data, function (index, row) {
-                $("#idprograma").append("<option value='" + row.idPrograma + "'>" + row.nombre + "</option>")
-                //<option value="undefined" data-select2-id="30">Modalidad Flexible Integrada</option>
-            });
-        });
-    });
-
-    $("#idprograma").change(function (data) {
-        var idsocio = $("#socios").val();
-        var pro = $("#idprograma").val();
-        var idzona = $("#dropzona :selected").map((_, e) => e.value).get();
-        var idprograma = $("#idprograma :selected").map((_, e) => e.value).get();
-        //alert(selected);
-        $.get("/Mantenimientos/GetSedes", { id: idzona[0] , ids:idsocio[0] ,idp:idprograma[0] }, function (data) {
-            // VACIAMOS EL DropDownList
-            $("#sedes").empty();
-            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-            $("#sedes").append("<option value> -- Seleccionar Zona " + $("#sedes option:selected").text() + " --</option>")
-            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-            $.each(data, function (index, row) {
-                $("#sedes").append("<option value='" + row.idSede + "'>" + row.catsede.nombre + "</option>")
-            });
-        });
-    });
-
-    $("#sedes").change(function (data) {
-        var sedes = $("#sedes :selected").map((_, e) => e.value).get();
-        var idsocio = $("#socios").val();
-        //alert(selected);
-        $.get("/Mantenimientos/GetCarreras", { id: sedes[0],ids:idsocio[0] }, function (data) {
-            // VACIAMOS EL DropDownList
-            $("#carreras").empty();
-            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-            $("#carreras").append("<option value> -- Seleccionar carrera " + $("#carreras option:selected").text() + " --</option>")
-            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-            $.each(data, function (index, row) {
-                $("#carreras").append("<option value='" + row.idCarrera + "'>" + row.nombre + "</option>")
-            });
-        });
-    });
-</script>
 }

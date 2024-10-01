@@ -19,6 +19,7 @@
                         }
                     </select>
                 </div>
+
                 <div class="form-group mb-2">
                     <select class="form-control select2" name="dropzona" id="dropzona" multiple="multiple" data-placeholder="-- Seleccionar Zona --" style="width:100%">
                     </select>
@@ -38,17 +39,19 @@
                     <select class="form-control select2" name="carreras" id="carreras" multiple="multiple" data-placeholder="-- Seleccionar Carrera --" style="width:100%">
                     </select>
                 </div>
+
                 <hr align="left" noshade="noshade" size="2" width="100%" />
+
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="sexos" multiple="multiple" data-placeholder="-- Sexo --" style="width:100%">
-                        @foreach (var item in Model.sexos)
+                    <select name="IdSexo" id="IdSexo" class="form-control select2" multiple="multiple" data-placeholder="-- Selecciona un sexo --" style="width:100%">
+                        @foreach (var item in Model.Sexos)
                         {
                             <option value="@item.IdSexo">@item.Nombre</option>
                         }
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="tipomatricula" multiple="multiple" data-placeholder="-- Tipo Matrícula --" style="width:100%">
+                    <select name="IdTipoMatricula" id="IdTipoMatricula" class="form-control select2" multiple="multiple" data-placeholder="-- Selecciona un tipo de matrícula --" style="width:100%">
                         @foreach (var item in Model.tipomatricula)
                         {
                             <option value="@item.IdTipoMatricula">@item.Nombre</option>
@@ -56,7 +59,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="departament" multiple="multiple" data-placeholder="-- Departamento de residencia --" style="width:100%">
+                    <select name="IdDepartamento" id="IdDepartamento" class="form-control select2" multiple="multiple" data-placeholder="-- Departamento de residencia --" style="width:100%">
                         @foreach (var item in Model.departamentos)
                         {
                             <option value="@item.IdDepartamento">@item.Nombre</option>
@@ -64,7 +67,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="refiere" multiple="multiple" data-placeholder="-- Institución que refiere --" style="width:100%">
+                    <select name="IdRefiere" id="IdRefiere" class="form-control select2" multiple="multiple" data-placeholder="-- Institución que refiere --" style="width:100%">
                         @foreach (var item in Model.dropRefiereCM)
                         {
                             <option value="@item.IdRefiere">@item.Nombre</option>
@@ -72,7 +75,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="cohorte" multiple="multiple" data-placeholder="-- Cohorte de estudios --" style="width:100%">
+                    <select name="IdCohorte" id="IdCohorte" class="form-control select2" multiple="multiple" data-placeholder="-- Cohorte de estudios --" style="width:100%">
                         @foreach (var item in Model.cohorte)
                         {
                             <option value="@item.IdCohorte">@item.Nombre</option>
@@ -80,7 +83,7 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="estado" multiple="multiple" data-placeholder="-- Estado de seguimiento --" style="width:100%">
+                    <select name="IdEstadoPersona" id="IdEstadoPersona" class="form-control select2" multiple="multiple" data-placeholder="-- Estado de seguimiento --" style="width:100%">
                         @foreach (var item in Model.estadoPersona)
                         {
                             <option value="@item.IdEstadoPersona">@item.Nombre</option>
@@ -88,13 +91,13 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="retornado" multiple="multiple" data-placeholder="-- Es migrante retornado/a -- " style="width:100%">
+                    <select name="IdRetornado" id="IdRetornado" class="form-control select2" multiple="multiple" data-placeholder="-- Es migrante retornado/a --" style="width:100%">
                         <option value="1">Si</option>
                         <option value="2">No</option>
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    <select class="form-control select2" name="sectores" multiple="multiple" data-placeholder="-- Sectores de estudio --" style="width:100%">
+                    <select name="IdSector" id="IdSector" class="form-control select2" multiple="multiple" data-placeholder="-- Sectores de estudio --" style="width:100%">
                         @foreach (var item in Model.Sectors)
                         {
                             <option value="@item.IdSector">@item.Nombre</option>
@@ -102,11 +105,18 @@
                     </select>
                 </div>
                 <div class="form-group mb-2">
-                    @*<select class="form-control select2" name="aEstudio" asp-items="ViewBag.CatYear" multiple="multiple" data-placeholder="-- Año Educación --" style="width:100%"></select>*@
-                    <select class="form-control select2" name="aEstudio" multiple="multiple" data-placeholder="-- Año Educación --" style="width:100%">
+                    <select name="IdAño" id="IdAño" class="form-control select2" multiple="multiple" data-placeholder="-- Año Educación --" style="width:100%">
                         @foreach (var item in Model.catAños)
                         {
                             <option value="@item.Nombre">@item.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <select name="IdProyecto" id="IdProyecto" class="form-control select2" multiple="multiple" data-placeholder="-- Proyecto --" style="width:100%">
+                        @foreach (var item in Model.proyectos)
+                        {
+                            <option value="@item.IdProyecto">@item.Nombre</option>
                         }
                     </select>
                 </div>
@@ -114,35 +124,37 @@
             </form>
         </div>
     </div>
+
 </div>
 
 <div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Lista de estudiantes</h3>
-    </div>
     <!-- /.card-header -->
     <div class="card-body">
+        <div class="card-header">
+            <button id="btndescarga" class="btn btn-primary">Descargar inscritos </button>
+        </div>
+        <br />
         <table id="example1" class="table table-bordered table-striped">
             <thead>
                 <tr>
                     @*<th>Ver</th>*@
-                    <th>PIdOim</th>
-                    <th>NumeroInscripciones</th>
-                    <th>NombreCompleto</th>
+                    <th>ID</th>
+                    <th>Número de inscripciones</th>
+                    <th>Nombre completo</th>
                     <th>Programa</th>
                     <th>Carrera</th>
-                    <th>Telefono1</th>
-                    <th>Telefono2</th>
+                    <th>Teléfono 1</th>
+                    <th>Teléfono 2</th>
                     <th>Sexo</th>
                     <th>LGBTIQ</th>
-                    <th>FechaNacimiento</th>
+                    <th>Fecha de nacimiento</th>
                     <th>Edad</th>
                     <th>Discapacidad</th>
-                    <th>VictimaViolencia</th>
-                    <th>MigranteRetornado</th>
-                    <th>PiensaMigrar</th>
-                    <th>FamiliaresMigrantes</th>
-                    <th>FamiliaresRetornados</th>
+                    <th>Víctima de violencia</th>
+                    <th>Migrante retornado</th>
+                    <th>Piensa migrar</th>
+                    <th>Familiares migrantes</th>
+                    <th>Familiares retornados</th>
                     <th>Empleo</th>
                     <th>Dui</th>
                     <th>Nie</th>
@@ -150,13 +162,13 @@
                     <th>Refiere</th>
                     <th>Departamento</th>
                     <th>Municipio</th>
-                    <th>Tipo Matrícula</th>
+                    <th>Tipo matrícula</th>
                     <th>Año de estudio</th>
                     <th>Cohorte</th>
                     <th>Socio implementador</th>
                     <th>Sede</th>
                     <th>Último grado aprobado</th>
-                    <th>Nivel Académico</th>
+                    <th>Nivel académico</th>
                     <th>Estado</th>
                 </tr>
             </thead>
@@ -167,252 +179,332 @@
     <!-- /.card-body -->
 </div>
 
-@section scripts{
+<!-- Agrega otros campos ocultos para las demás propiedades de selectedValues -->
+@section scripts {
 <script>
-    $(function () {
-    const Lsocios = [];
-    const Lzonas = [];
-    const Lprograma = [];
-    const Lsedes = []
-    const Lcarreras = [];
-    const Lsexos =[];
-    const Ltipomatricula = [];
-    const Ldepartament = [];
-    const Lrefiere = [];
-    const Lyear1 = [];
-    const Lmes = [];
-    const LaEstudio = [];
-    const Lcohorte1 = [];
-     $("#example1").DataTable({
-            "processing":true,
-            "responsive": true, "lengthChange": true, "autoWidth": false,
-            "fixedColumns": true,
-            "serverSide":false,
-            "dom": 'Bfrtip',
-            "buttons": [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
-            "ajax": {
-                "url": "@Url.Action("Personas","Mantenimientos")",
-                "type":"POST",
-                "dataType": "json",
-                "data":function(d){
-                    return $.extend({},d,{
-                        "socios":Lsocios,
-                        "zonas":Lzonas,
-                        "programa":Lprograma,
-                        "sedes":Lsedes,
-                        "carreras":Lcarreras,
-                        "sexos":Lsexos,
-                        "tipomatricula":Ltipomatricula,
-                        "departament":Ldepartament,
-                        "refiere":Lrefiere,
-                        "year1":Lyear1,
-                        "mes":Lmes,
-                        "aEstudio":LaEstudio,
-                        "cohorte1":Lcohorte1
-                    });
+        $(function () {
+            var selectList = ['socios', 'zonas', 'idprograma', 'sedes', 'carreras', 'sexos', 'tipomatricula', 'departament', 'refiere', 'year1', 'mes', 'aEstudio', 'cohorte', 'proyecto', 'estado', 'retornado'];
+            var selectedValues = {
+                socios: [],
+                dropzona: [],
+                idprograma: [],
+                sedes: [],
+                carreras: [],
+                sexos: [],
+                tipomatricula: [],
+                departament: [],
+                refiere: [],
+                year1: [],
+                aEstudio: [],
+                cohorte: [],
+                proyecto: [],
+                estado: [],
+                retornado: []
+            };
+
+            var updateSelectedValues = function (id, value) {
+                selectedValues[id] = value;
+            };
+
+        const clearSubsequentSelects = function(currentId) {
+            var index = selectList.indexOf(currentId);
+            if (index !== -1) {
+                for (var i = index + 1; i < selectList.length; i++) {
+                    var selectId = `#${selectList[i]}`;
+                    $(selectId).val(null).trigger('change');
+                    $(selectId).empty().append(`<option value> -- Seleccionar ${selectList[i]} -- </option>`);
                 }
-            },
-            "columns": [
-                {"data":"pIdOim"},
-                {"data":"numeroInscripciones"},
-                {"data":"nombreCompleto"},
-                {"data":"programa"},
-                {"data":"carrera"},
-                {"data":"telefono1"},
-                {"data":"telefono2"},
-                {"data":"sexoNombre"},
-                {"data":"lgbtiq"},
-                {"data":"fechaNacimiento"},
-                {"data":"edad"},
-                {"data":"discapacidad"},
-                {"data":"victimaViolencia"},
-                {"data":"migranteRetornado"},
-                {"data":"piensaMigrar"},
-                {"data":"familiaresMigrantes"},
-                {"data":"familiaresRetornados"},
-                {"data":"empleo"},
-                {"data":"dui"},
-                {"data":"nie"},
-                {"data":"correo"},
-                {"data":"refiere"},
-                {"data":"departamentoNombre"},
-                {"data":"municipioNombre"},
-                {"data":"tipomatricula"},
-                {"data":"añoestudio"},
-                {"data":"cohorteNombre"},
-                {"data":"p_socioNombre"},
-                {"data":"p_sedeNombre"},
-                {"data":"ultimoGradoAprobado"},
-                {"data":"nivelAcademico"},
-                {"data":"estado"}
-
-            ]
-      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-
-      $('.select2').select2()
-
-       $("#socios").on("change", function(){
-        $("#socios option:selected").each(function() {
-            Lsocios.push($(this).val());
-            console.log(Lsocios);
-        });
-       }).trigger("change");
-
-       $('#dropzona').on('change', function(){
-           $('#dropzona option:selected').each(function(){
-                Lzonas.push($(this).val());
-           })
-       }).trigger("change");
-
-       $('#idprograma').on('change',function(){
-           $("#idprograma option:selected").each(function(){
-               Lprograma.push($(this).val());
-           })
-       }).trigger("change");
-
-       $('#sedes').on('change',function(){
-           $("#sedes option:selected").each(function(){
-               Lsedes.push($(this).val());
-           })
-       }).trigger("change");
-
-       $('#carreras').on('change',function(){
-           $("#carreras option:selected").each(function(){
-               Lcarreras.push($(this).val());
-           })
-       }).trigger("change");
-
-       $('#sexos').on('change',function(){
-           $("#sexos option:selected").each(function(){
-               Lsexos.push($(this).val());
-           })
-       }).trigger("change");
-
-       $('#tipomatricula').on('change',function(){
-           $("#tipomatricula option:selected").each(function(){
-               Ltipomatricula.push($(this).val());
-           })
-       }).trigger("change");
-
-       $('#departament').on('change',function(){
-           $("#departament option:selected").each(function(){
-               Ldepartament.push($(this).val());
-           })
-       }).trigger("change");
-
-       $('#refiere').on('change',function(){
-           $("#refiere option:selected").each(function(){
-               Ldepartament.push($(this).val());
-           })
-       }).trigger("change");
-
-       $('#year1').on('change',function(){
-           $("#year1 option:selected").each(function(){
-               Lyear1.push($(this).val());
-           })
-       }).trigger("change");
-
-       $('#mes').on('change',function(){
-           $("#mes option:selected").each(function(){
-               Lmes.push($(this).val());
-           })
-       }).trigger("change");
-
-       $('#aEstudio').on('change',function(){
-           $("#aEstudio option:selected").each(function(){
-               LaEstudio.push($(this).val());
-           })
-       }).trigger("change");
-
-       $('#cohorte1').on('change',function(){
-           $("#cohorte1 option:selected").each(function(){
-               Lcohorte1.push($(this).val());
-           })
-       }).trigger("change");
-
-       $("#btnFilters").on("click", function(e) {
-            e.preventDefault();
-            $("#example1").DataTable().ajax.reload();
-            Lsocios.length = 0;
-            Lzonas.length = 0;
-            Lprograma.length = 0;
-            Lsedes.length = 0;
-            Lcarreras.length = 0;
-            if ($('.select2').data('select2')) {
-                $('.select2').select2().val(null).trigger("change");
             }
-        });
-    });
-</script>
+            };
+            const populateDropdown = function (url, id, target) {
+            $(id).on('change', function () {
+                var selectedIds = $(id).val();
+                updateSelectedValues(id.substring(1), selectedIds);
 
-<script>
+                // Clear subsequent selects
+                clearSubsequentSelects(id.substring(1));
 
-    $("#socios").change(function () {
-        var idsocio = $("#socios").val();
-        $.get("/Mantenimientos/GetZona", { id: idsocio[0] }, function (data) {
-            // VACIAMOS EL DropDownList
-            $("#dropzona").empty();
-            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-            //$("#dropzona").append("<option value> -- Seleccionar Zona " + $("#dropzona option:selected").text() + " --</option>")
-            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-            $.each(data, function (index, row) {
-                $("#dropzona").append("<option value='" + row.idZona + "'>" + row.nombre + "</option>")
+                var data = {};
+
+                // Modify the data payload based on the selected values
+                if (id === '#socios') {
+                    data = { id: selectedIds[0] };
+                } else if (id === '#dropzona') {
+                    var selectedIds2 = $('#socios').val();
+                    data = { id: selectedIds[0], ids: selectedIds2[0] };
+                } else if (id === '#idprograma') {
+                    var selectedIds2 = $('#socios').val();
+                    var selectedIds3 = $('#dropzona').val();
+                    data = { id: selectedIds3[0], ids: selectedIds2[0], idp: selectedIds[0] };
+                } else if (id === '#sedes') {
+                    var selectedIds2 = $('#socios').val();
+                    var selectedIdP = $('#idprograma').val();
+                    data = { id: selectedIds[0], ids: selectedIds2[0], idp: selectedIdP[0] };
+                }
+
+                $.get(url, data, function (data) {
+                    $(target).empty();
+                    $(target).append(`<option value> -- Seleccionar ${target.substring(1)} -- </option>`);
+                    $.each(data, function (index, row) {
+                        $(target).append(`<option value="${row.id}">${row.nombre}</option>`);
+                    });
+                });
+            }).trigger('change');
+            };
+
+            populateDropdown('/Mantenimientos/GetZona', '#socios', '#dropzona');
+            populateDropdown('/Mantenimientos/GetProgramas', '#dropzona', '#idprograma');
+            populateDropdown('/Mantenimientos/GetSedes', '#idprograma', '#sedes');
+            populateDropdown('/Mantenimientos/GetCarreras', '#sedes', '#carreras');
+
+            $('.select2').select2();
+
+            $('#carreras').on('change', function () {
+                var selectedData = $(this).select2('data');
+                var selectedIds = selectedData.map(function (option) {
+                    return option.id;
+                });
+                selectedValues.carreras = selectedIds;
             });
-        });
-    });
-
-    $("#dropzona").change(function (data) {
-        var idsocio = $("#socios").val();
-        //var idzona = $("#dropzona").val();
-        var idzona = $("#dropzona :selected").map((_, e) => e.value).get();
-        //alert(selected);
-        $.get("/Mantenimientos/GetProgramas", { id: idzona[0] , ids:idsocio[0] }, function (data) {
-            // VACIAMOS EL DropDownList
-            $("#idprograma").empty();
-            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-            $("#idprograma").append("<option value> -- Seleccionar programa " + $("#idprograma option:selected").text() + " --</option>")
-            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-            $.each(data, function (index, row) {
-                $("#idprograma").append("<option value='" + row.idPrograma + "'>" + row.nombre + "</option>")
-                //<option value="undefined" data-select2-id="30">Modalidad Flexible Integrada</option>
+            $('#IdSexo').on('change', function () {
+                var selectedData = $(this).select2('data');
+                var selectedIds = selectedData.map(function (option) {
+                    return option.id;
+                });
+                selectedValues.sexos = selectedIds;
             });
-        });
-    });
-
-    $("#idprograma").change(function (data) {
-        var idsocio = $("#socios").val();
-        var pro = $("#idprograma").val();
-        var idzona = $("#dropzona :selected").map((_, e) => e.value).get();
-        var idprograma = $("#idprograma :selected").map((_, e) => e.value).get();
-        //alert(selected);
-        $.get("/Mantenimientos/GetSedes", { id: idzona[0] , ids:idsocio[0] ,idp:idprograma[0] }, function (data) {
-            // VACIAMOS EL DropDownList
-            $("#sedes").empty();
-            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-            $("#sedes").append("<option value> -- Seleccionar Zona " + $("#sedes option:selected").text() + " --</option>")
-            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-            $.each(data, function (index, row) {
-                $("#sedes").append("<option value='" + row.idCatSede + "'>" + row.catsede.nombre + "</option>")
+            $('#tipomatricula').on('change', function () {
+                var selectedData = $(this).select2('data');
+                var selectedIds = selectedData.map(function (option) {
+                    return option.id;
+                });
+                selectedValues.tipomatricula = selectedIds;
             });
-        });
-    });
-
-    $("#sedes").change(function (data) {
-        var sedes = $("#sedes :selected").map((_, e) => e.value).get();
-        var idsocio = $("#socios").val();
-        //alert(selected);
-        $.get("/Mantenimientos/GetCarreras", { id: sedes[0],ids:idsocio[0] }, function (data) {
-            // VACIAMOS EL DropDownList
-            $("#carreras").empty();
-            // AÑADIMOS UN NUEVO label CON EL NOMBRE DEL ELEMENTO SELECCIONADO
-            $("#carreras").append("<option value> -- Seleccionar carrera " + $("#carreras option:selected").text() + " --</option>")
-            // CONSTRUIMOS EL DropDownList A PARTIR DEL RESULTADO Json (data)
-            $.each(data, function (index, row) {
-                $("#carreras").append("<option value='" + row.idCarrera + "'>" + row.nombre + "</option>")
+            $('#departament').on('change', function () {
+                var selectedData = $(this).select2('data');
+                var selectedIds = selectedData.map(function (option) {
+                    return option.id;
+                });
+                selectedValues.departament = selectedIds;
             });
+            $('#refiere').on('change', function () {
+                var selectedData = $(this).select2('data');
+                var selectedIds = selectedData.map(function (option) {
+                    return option.id;
+                });
+                selectedValues.refiere = selectedIds;
+            });
+            $('#year1').on('change', function () {
+                var selectedData = $(this).select2('data');
+                var selectedIds = selectedData.map(function (option) {
+                    return option.id;
+                });
+                selectedValues.year1 = selectedIds;
+            });
+            $('#aEstudio').on('change', function () {
+                var selectedData = $(this).select2('data');
+                var selectedIds = selectedData.map(function (option) {
+                    return option.id;
+                });
+                selectedValues.aEstudio = selectedIds;
+            });
+            $('#cohorte').on('change', function () {
+                var selectedData = $(this).select2('data');
+                var selectedIds = selectedData.map(function (option) {
+                    return option.id;
+                });
+                selectedValues.cohorte = selectedIds;
+            });
+            $('#proyecto').on('change', function () {
+                var selectedData = $(this).select2('data');
+                var selectedIds = selectedData.map(function (option) {
+                    return option.id;
+                });
+                selectedValues.proyecto = selectedIds;
+            });
+            $('#estado').on('change', function () {
+                var selectedData = $(this).select2('data');
+                var selectedIds = selectedData.map(function (option) {
+                    return option.id;
+                });
+                selectedValues.estado = selectedIds;
+            });
+            $('#retornado').on('change', function () {
+                var selectedData = $(this).select2('data');
+                var selectedIds = selectedData.map(function (option) {
+                    return option.id;
+                });
+                selectedValues.retornado = selectedIds;
+            });
+
+        $("#example1").DataTable({
+        "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        },
+        "processing": true,
+        "responsive": true,
+        "lengthChange": true,
+        "autoWidth": false,
+        "searching": true,
+        "fixedColumns": true,
+        "serverSide": true,
+        "dom": 'frtip',
+        "ajax": {
+            "url": "/Mantenimientos/Personas",
+            "type": "POST",
+            "dataType": "json",
+            "data": function (d) {
+                d.socios = selectedValues.socios;
+                d.dropzona = selectedValues.dropzona;
+                d.idprograma = selectedValues.idprograma;
+                d.sedes = selectedValues.sedes;
+                d.carreras = selectedValues.carreras;
+                d.sexos = selectedValues.sexos;
+                d.tipomatricula = selectedValues.tipomatricula;
+                d.departament = selectedValues.departament;
+                d.refiere = selectedValues.refiere;
+                d.year1 = selectedValues.year1;
+                d.aEstudio = selectedValues.aEstudio;
+                d.cohorte = selectedValues.cohorte;
+                d.proyecto = selectedValues.proyecto;
+                d.estado = selectedValues.estado;
+                d.retornado = selectedValues.retornado;
+                return d;
+            }
+        },
+        "columns": [
+            { "data": "pIdOim" },
+            { "data": "numeroInscripciones" },
+            { "data": "nombreCompleto" },
+            { "data": "programa" },
+            { "data": "carrera" },
+            { "data": "telefono1" },
+            { "data": "telefono2" },
+            { "data": "sexoNombre" },
+            { "data": "lgbtiq" },
+            { "data": "fechaNacimiento" },
+            { "data": "edad" },
+            { "data": "discapacidad" },
+            { "data": "victimaViolencia" },
+            { "data": "migranteRetornadoNombre" },
+            { "data": "piensaMigrar" },
+            { "data": "familiaresMigrantes" },
+            { "data": "familiaresRetornados" },
+            { "data": "empleo" },
+            { "data": "dui" },
+            { "data": "nie" },
+            { "data": "correo" },
+            { "data": "refiereNombre" },
+            { "data": "departamentoNombre" },
+            { "data": "municipioNombre" },
+            { "data": "tipomatricula" },
+            { "data": "añoestudio" },
+            { "data": "cohorteNombre" },
+            { "data": "p_socioNombre" },
+            { "data": "p_sedeNombre" },
+            { "data": "ultimoGradoAprobado" },
+            { "data": "nivelAcademico" },
+            { "data": "estado" }
+        ]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+            $("#btnFilters").on("click", function (e) {
+                e.preventDefault();
+
+                // Recarga los datos de la tabla usando AJAX
+                $("#example1").DataTable().ajax.reload(function() {
+                    // Limpia los arreglos de valores seleccionados
+                    //selectList.forEach(function (item) {
+                    //    window['L' + item].length = 0;
+                    //});
+                    // Restablece los selectores Select2
+                    //$('.select2').val(null).trigger('change');
+                });
+            });
+
+            $("#btndescarga").on("click", function(e){
+                // Obtén los valores de los elementos ocultos
+                var socios = selectedValues.socios;
+                var dropzona = selectedValues.dropzona;
+                var IdPrograma = selectedValues.idprograma;
+                var Sedes = selectedValues.sedes;
+                var Carreras = selectedValues.carreras;
+                var Sexos = selectedValues.sexos;
+                var TipoMatricula = selectedValues.tipomatricula;
+                var Departamento = selectedValues.departament;
+                var AEstudio = selectedValues.aEstudio;
+                var Cohorte = selectedValues.cohorte;
+                var Estado = selectedValues.estado;
+                var Retornado = selectedValues.retornado;
+                var Refiere = selectedValues.refiere;
+                var Proyecto = selectedValues.proyecto;
+
+                // Construye el objeto de datos a enviar
+                var data = {
+                    socios: socios,
+                    dropzona: dropzona,
+                    IdPrograma: IdPrograma,
+                    Sedes: Sedes,
+                    Carreras: Carreras,
+                    Sexos: Sexos,
+                    TipoMatricula: TipoMatricula,
+                    Departamento: Departamento,
+                    Refiere: Refiere,
+                    AEstudio: AEstudio,
+                    Cohorte: Cohorte,
+                    Estado: Estado,
+                    Retornado: Retornado,
+                    Proyecto: Proyecto
+                };
+
+                // Realizar una solicitud AJAX al servidor para descargar el archivo
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '@Url.Action("DownloadPersonsExcel", "Mantenimientos")', true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+                xhr.responseType = 'blob';
+
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        // Crear un objeto Blob a partir de los datos recibidos
+                        var blob = new Blob([xhr.response], {type: 'application/octet-stream'});
+                        // Crear un enlace de descarga
+                        var downloadLink = document.createElement('a');
+                        downloadLink.href = window.URL.createObjectURL(blob);
+                        downloadLink.setAttribute('download', 'Inscritos.xlsx'); // Especificar el nombre del archivo
+                        // Simular un clic en el enlace para iniciar la descarga
+                        document.body.appendChild(downloadLink);
+                        downloadLink.click();
+                        // Limpiar el enlace de descarga y liberar recursos
+                        document.body.removeChild(downloadLink);
+                    }
+                };
+
+                // Convertir el objeto de datos a JSON y enviarlo
+                xhr.send(JSON.stringify(data));
+            });
+
         });
-    });
 </script>
 }
+

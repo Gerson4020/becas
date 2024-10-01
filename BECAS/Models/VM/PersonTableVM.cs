@@ -16,12 +16,13 @@ namespace BECAS.Models.VM
         public string? Telefono1 { get; set; }
         public string? Telefono2 { get; set; }
         public int? Sexo { get; set; }
-        public bool? LGBTIQ { get; set; }
-        public DateTime? FechaNacimiento { get; set; }
+        public string? LGBTIQ { get; set; }
+        public string? FechaNacimiento { get; set; }
         public int? Edad { get; set; }
         public string? Discapacidad { get; set; }
         public string? VictimaViolencia { get; set; }
         public int? MigranteRetornado { get; set; }
+        public string? MigranteRetornadoNombre { get; set; }
         public string? PiensaMigrar { get; set; }
         public string? FamiliaresMigrantes { get; set; }
         public string? FamiliaresRetornados { get; set; }
@@ -52,12 +53,18 @@ namespace BECAS.Models.VM
         public string? programa { get; set; }
         public string? carrera { get; set; }
         public string? tipomatricula { get; set; }
+        public int? IdTipomatricula { get; set; }
         public int? añoestudio { get; set; }
         public string? CohorteNombre { get; set; }
         public string? p_socioNombre { get; set; }
         public string? p_sedeNombre { get; set; }
         public string? Estado { get; set; }
+        public int? IdEstado { get; set; }
         public string? SexoNombre { get; set; }
+        public int? proyecto { get; set; }
+        public string? proyectoNombre { get; set; }
+
+        public int count { get; set; }
 
         public CargaEducacion? educacion { get; set; }
     }

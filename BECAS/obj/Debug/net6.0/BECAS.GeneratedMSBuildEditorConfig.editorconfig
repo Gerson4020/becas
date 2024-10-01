@@ -35,6 +35,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/galonso/source/repos/GitHub/BECAS/Views/Auth/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQXV0aFxMb2dpbi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/galonso/source/repos/GitHub/BECAS/Views/CargaDatos/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ2FyZ2FEYXRvc1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
@@ -127,10 +131,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/galonso/source/repos/GitHub/BECAS/Views/Login/Index.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cSW5kZXguY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/galonso/source/repos/GitHub/BECAS/Views/Mantenimientos/Educacion.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudGVuaW1pZW50b3NcRWR1Y2FjaW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -159,6 +159,14 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudGVuaW1pZW50b3NcUGVyc29uYXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/galonso/source/repos/GitHub/BECAS/Views/Mantenimientos/Promovidos.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudGVuaW1pZW50b3NcUHJvbW92aWRvcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/galonso/source/repos/GitHub/BECAS/Views/Mantenimientos/SearchBeneficiary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudGVuaW1pZW50b3NcU2VhcmNoQmVuZWZpY2lhcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/galonso/source/repos/GitHub/BECAS/Views/Mantenimientos/SeguimientoAutoempleo.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudGVuaW1pZW50b3NcU2VndWltaWVudG9BdXRvZW1wbGVvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -169,6 +177,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/galonso/source/repos/GitHub/BECAS/Views/Mantenimientos/SeguimientoPsicosocial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWFudGVuaW1pZW50b3NcU2VndWltaWVudG9Qc2ljb3NvY2lhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/galonso/source/repos/GitHub/BECAS/Views/Partners/SearchBeneficiary.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGFydG5lcnNcU2VhcmNoQmVuZWZpY2lhcnkuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/galonso/source/repos/GitHub/BECAS/Views/Programas/Create.cshtml]

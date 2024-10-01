@@ -10,9 +10,12 @@ using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using BECASLC;
 using BECAS.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
+using System.Globalization;
 
 namespace BECAS.Controllers
 {
+    [Authorize(Policy = "ADOnly")]
     public class CargaDatosController : Controller
     {
         private IHostingEnvironment Environment;
@@ -168,7 +171,7 @@ namespace BECAS.Controllers
             if (anexo == 7)
             {
                 //var filePath = Path.Combine(_env.ContentRootPath, "Plantillas", "Seguimiento_en_Autoempleo.xlsx");
-                return File("/Plantillas/Seguimiento_en_Autoempleo.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+                return File("/Plantillas/Emprendimiento.xlsx", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
             }
             if (anexo == 8)
             {
@@ -221,6 +224,10 @@ namespace BECAS.Controllers
                             {
                                 if (loopPer != 0)
                                 {
+                                    if (loopPer == 11)
+                                    {
+                                        var error = "";
+                                    }
                                     Persona p = new Persona();
                                     p = _ctx.Personas.FirstOrDefault(x => x.PIdOim.Equals(item[2].ToString()));
                                     if (p != null)
@@ -250,7 +257,20 @@ namespace BECAS.Controllers
                                             p.LGBTIQ = item[12].ToString() == "Sí" ? true : false;
                                         }
                                         columnaPer++;
-                                        p.FechaNacimiento = string.IsNullOrEmpty(item[13].ToString()) ? null : Convert.ToDateTime(item[13].ToString());
+                                        //p.FechaNacimiento = string.IsNullOrEmpty(item[13].ToString()) ? null : Convert.ToDateTime(item[13].ToString());
+                                        DateTime tempDate;
+                                        p.FechaNacimiento = string.IsNullOrEmpty(item[13].ToString())
+                                            ? (DateTime?)null
+                                            : (DateTime.TryParse(item[13].ToString(), out tempDate)
+                                                ? (DateTime?)tempDate
+                                                : null);
+
+                                        // Si se logró convertir la fecha, se formatea a "YYYY-MM-dd"
+                                        if (p.FechaNacimiento.HasValue)
+                                        {
+                                            p.FechaNacimiento = DateTime.ParseExact(p.FechaNacimiento.Value.ToString("yyyy-MM-dd"), "yyyy-MM-dd", CultureInfo.InvariantCulture);
+                                        }
+
                                         columnaPer++;
                                         p.Edad = string.IsNullOrEmpty(item[14].ToString()) ? 0 : Convert.ToInt32(item[14].ToString().Trim());
                                         columnaPer++;
@@ -552,8 +572,29 @@ namespace BECAS.Controllers
                         try
                         {
                             DataTable tableeducacion = result.Tables[0];
-                            carga.TotalEducacion = tableeducacion.Rows.Count;
 
+                            // Eliminar filas completamente vacías antes de proceder
+                            for (int i = tableeducacion.Rows.Count - 1; i >= 0; i--)
+                            {
+                                bool filaVacia = true;
+                                foreach (var cell in tableeducacion.Rows[i].ItemArray)
+                                {
+                                    if (!string.IsNullOrWhiteSpace(cell?.ToString()))
+                                    {
+                                        filaVacia = false;
+                                        break;
+                                    }
+                                }
+
+                                if (filaVacia)
+                                {
+                                    tableeducacion.Rows.RemoveAt(i); // Remover fila vacía
+                                }
+                            }
+
+                            // Ahora procedemos con la lógica después de limpiar las filas vacías
+
+                            carga.TotalEducacion = tableeducacion.Rows.Count;
                             carga.FechaCarga = DateTime.Today;
                             _ctx.Add(carga);
                             await _ctx.SaveChangesAsync();
@@ -573,6 +614,23 @@ namespace BECAS.Controllers
                             DataTable tableeducacion = result.Tables[0];
                             foreach (DataRow item in tableeducacion.Rows)
                             {
+                                // Verificar si TODAS las celdas de la fila están vacías o contienen solo espacios
+                                bool filaVacia = true;
+                                foreach (var cell in item.ItemArray)
+                                {
+                                    if (cell != null && !string.IsNullOrWhiteSpace(cell.ToString()))
+                                    {
+                                        filaVacia = false;
+                                        break;
+                                    }
+                                }
+
+                                // Si la fila está vacía, se salta
+                                if (filaVacia)
+                                {
+                                    continue;
+                                }
+
                                 if (loopEd != 0)
                                 {
                                     var ed = _ctx.CargaEducacions.FirstOrDefault(x => x.PIdOim.Equals(item[5].ToString()) && x.RAño.Equals(item[0].ToString()) && x.RMes.Equals(item[0].ToString()));
@@ -1086,18 +1144,16 @@ namespace BECAS.Controllers
                                 if (loopsegPasantillas != 0)
                                 {
                                     CargaSeguimientoPasantia e = new CargaSeguimientoPasantia();
-                                    int año = Convert.ToInt32(item[0].ToString());
-                                    string mes = item[1].ToString();
-                                    e.PId = item[5].ToString();
-                                    e.PasEmpresa = item[9].ToString();
-                                    e.PasEntrevista = item[10].ToString();
-                                    e.PasPruebas = item[11].ToString();
-                                    e.PasContratacion = item[12].ToString();
-                                    e.PasCargo = item[13].ToString();
-                                    e.PasFechaContratacion = item[14].ToString();
-                                    e.PasMontoRemuneracion = item[15].ToString();
-                                    e.Año = año;
-                                    e.Mes = mes;
+                                    e.PId = item[0]?.ToString() ?? string.Empty;
+                                    e.PasEmpresa = item[1]?.ToString() ?? string.Empty;
+                                    e.PasEntrevista = item[2]?.ToString() ?? string.Empty;
+                                    e.PasPruebas = item[3]?.ToString() ?? string.Empty;
+                                    e.PasContratacion = item[4]?.ToString() ?? string.Empty;
+                                    e.PasCargo = item[5]?.ToString() ?? string.Empty;
+                                    e.PasFechaContratacion = item[6]?.ToString() ?? string.Empty;
+                                    e.PasMontoRemuneracion = item[7]?.ToString() ?? string.Empty;
+                                    e.pas_periodo = item[8]?.ToString() ?? string.Empty;
+                                    e.pas_tipo_empleo = item[9]?.ToString() ?? string.Empty;
                                     _ctx.Add(e);
                                 }
                                 loopsegPasantillas++;
@@ -1167,23 +1223,19 @@ namespace BECAS.Controllers
                             {
                                 if (loopSegAut != 0)
                                 {
-
                                     CargaSeguimientoAutoempleo ee = new CargaSeguimientoAutoempleo();
-                                    int año = Convert.ToInt32(item[0].ToString());
-                                    string mes = item[1].ToString();
-                                    ee.PId = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
-                                    ee.AutoempEmpresa = string.IsNullOrEmpty(item[9].ToString()) ? "" : item[9].ToString();
-                                    ee.AutoempTipoCapital = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
-                                    ee.AutoempEstado = string.IsNullOrEmpty(item[11].ToString()) ? "" : item[11].ToString();
-                                    ee.AutoempTipoFinanciamiento = string.IsNullOrEmpty(item[12].ToString()) ? "" : item[12].ToString();
-                                    ee.AutoempTipoEmpresa = string.IsNullOrEmpty(item[13].ToString()) ? "" : item[13].ToString();
-                                    ee.AutoempTipoEmpresaOtro = string.IsNullOrEmpty(item[14].ToString()) ? "" : item[14].ToString();
-                                    ee.AutoempPlanNegocios = string.IsNullOrEmpty(item[15].ToString()) ? "" : item[15].ToString();
-                                    ee.AutoempRegistro = string.IsNullOrEmpty(item[16].ToString()) ? "" : item[16].ToString();
-                                    ee.AutoempFechaInicio = string.IsNullOrEmpty(item[17].ToString()) ? null : Convert.ToDateTime(item[17].ToString());
+                                    ee.PId = string.IsNullOrEmpty(item[0].ToString()) ? "" : item[0].ToString();
+                                    ee.AutoempEmpresa = string.IsNullOrEmpty(item[1].ToString()) ? "" : item[1].ToString();
+                                    ee.AutoempTipoCapital = string.IsNullOrEmpty(item[2].ToString()) ? "" : item[2].ToString();
+                                    ee.AutoempEstado = string.IsNullOrEmpty(item[3].ToString()) ? "" : item[3].ToString();
+                                    ee.AutoempTipoFinanciamiento = string.IsNullOrEmpty(item[4].ToString()) ? "" : item[4].ToString();
+                                    ee.AutoempTipoEmpresa = string.IsNullOrEmpty(item[5].ToString()) ? "" : item[5].ToString();
+                                    ee.AutoempTipoEmpresaOtro = string.IsNullOrEmpty(item[6].ToString()) ? "" : item[6].ToString();
+                                    ee.AutoempPlanNegocios = string.IsNullOrEmpty(item[7].ToString()) ? "" : item[7].ToString();
+                                    ee.AutoempRegistro = string.IsNullOrEmpty(item[8].ToString()) ? "" : item[8].ToString();
+                                    ee.AutoempFechaInicio = string.IsNullOrEmpty(item[9].ToString()) ? null : Convert.ToDateTime(item[9].ToString());
+                                    ee.tipo_autoempleo = string.IsNullOrEmpty(item[10].ToString()) ? "" : item[10].ToString();
                                     ee.IdCarga = carga.IdCarga;
-                                    ee.Año = año;
-                                    ee.Mes = mes;
                                     _ctx.Add(ee);
 
                                 }

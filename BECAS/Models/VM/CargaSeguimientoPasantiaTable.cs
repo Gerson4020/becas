@@ -12,6 +12,8 @@ namespace BECAS.Models.VM
         public string? PasCargo { get; set; }
         public string? PasFechaContratacion { get; set; }
         public string? PasMontoRemuneracion { get; set; }
+        public string? pas_periodo { get; set; }
+        public string? pas_tipo_empleo { get; set; }
         public int? IdCarga { get; set; }
         public int? Año { get; set; }
         public string? Mes { get; set; }

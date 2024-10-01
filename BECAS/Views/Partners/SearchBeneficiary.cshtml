@@ -1,0 +1,144 @@
+﻿@{
+    ViewData["Title"] = "Buscar Beneficiario";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Filtros</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <form class="form-inline">
+                <div class="form-group mb-2">
+                    <input type="text" id="texDui" placeholder="DUI" class="form-control" pattern="\d{8}-\d{1}" title="Formato: 12345678-1" />
+                </div>
+
+                <div class="form-group mb-2">
+                    <input type="text" id="texNombre" placeholder="Nombres" class="form-control" />
+                </div>
+
+                <div class="form-group mb-2">
+                    <input type="text" id="texApellido" placeholder="Apellidos" class="form-control" />
+                </div>
+
+                <div class="form-group mb-2">
+                    <input type="text" id="texTelefono1" placeholder="Teléfono 1" class="form-control" />
+                </div>
+
+                <div class="form-group mb-2">
+                    <input type="text" id="texTelefono2" placeholder="teléfono 2" class="form-control" />
+                </div>
+
+                <div class="form-group mb-2">
+                    <input type="text" id="texCorreo" placeholder="Correo Electrónico" class="form-control" />
+                </div>
+                <button id="btnFilters" type="submit" class="btn btn-primary mb-2">Buscar</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div class="card">
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    @*<th>Ver</th>*@
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Nombre completo</th>
+                    <th>DUI</th>
+                    <th>Edad</th>
+                    <th>Sexo</th>
+                    <th>Programa</th>
+                    <th>Carrera</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+
+<!-- Agrega otros campos ocultos para las demás propiedades de selectedValues -->
+@section scripts {
+<script>
+    $(function () {
+        $("#texDui").inputmask("99999999-9");
+        var table = $("#example1").DataTable({
+            "language": {
+                "sProcessing": "Procesando...",
+                "sLengthMenu": "Mostrar _MENU_ registros",
+                "sZeroRecords": "No se encontraron resultados",
+                "sEmptyTable": "Ningún dato disponible en esta tabla",
+                "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sSearch": "Buscar:",
+                "sLoadingRecords": "Cargando...",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "oAria": {
+                    "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                    "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+                }
+            },
+            "processing": true,
+            "responsive": true,
+            "lengthChange": true,
+            "autoWidth": false,
+            "searching": false, // Desactiva la búsqueda automática de DataTables
+            "serverSide": true,
+            "dom": 'frtip',
+            "ajax": {
+                "url": "",
+                "type": "POST",
+                "dataType": "json",
+                "cache": false,
+                "data": function (d) {
+                    // Captura los valores de los inputs para enviarlos en la solicitud AJAX
+                    d.dui = $('#texDui').val();
+                    d.nombre = $('#texNombre').val();
+                    d.aperllido = $('#texApellido').val();
+                    d.telefono1 = $('#texTelefono1').val();
+                    d.telefono2 = $('#texTelefono2').val();
+                    d.correo = $('#texCorreo').val();
+                },
+                "dataSrc": function (json) {
+                    // Solo recargar la tabla si hay resultados
+                    if (json.data.length === 0) {
+                        json.data = [];
+                    }
+                    return json.data;
+                }
+            },
+            "columns": [
+                { "data": "nombre" },
+                { "data": "apellido" },
+                { "data": "nombreCompleto" },
+                { "data": "dui" },
+                { "data": "edad" },
+                { "data": "sexo" },
+                { "data": "programa" },
+                { "data": "carrera" }
+            ]
+        });
+
+        // Evento para el botón de búsqueda
+        $("#btnFilters").on("click", function (e) {
+            e.preventDefault();
+            // Recargar la tabla solo cuando se realiza la búsqueda
+            //table.ajax.reload();
+            table.ajax.url('/Partners/SearchBeneficiary').load();
+        });
+    });
+</script>
+}

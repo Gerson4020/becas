@@ -1,0 +1,154 @@
+﻿@model List<BECAS.Models.VM.PersonTableVM>
+@{
+    ViewData["Title"] = "Promovidos";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Promovidos</h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+        <table id="example1" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Número de inscripciones</th>
+                    <th>Nombre completo</th>
+                    <th>Programa</th>
+                    <th>Carrera</th>
+                    <th>Teléfono 1</th>
+                    <th>Teléfono 2</th>
+                    <th>Sexo</th>
+                    <th>LGBTIQ</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>Edad</th>
+                    <th>Discapacidad</th>
+                    <th>Víctima de violencia</th>
+                    <th>Migrante retornado</th>
+                    <th>Piensa migrar</th>
+                    <th>Familiares migrantes</th>
+                    <th>Familiares retornados</th>
+                    <th>Empleo</th>
+                    <th>Dui</th>
+                    <th>Nie</th>
+                    <th>Correo</th>
+                    <th>Refiere</th>
+                    <th>Departamento</th>
+                    <th>Municipio</th>
+                    <th>Tipo matrícula</th>
+                    <th>Año de estudio</th>
+                    <th>Cohorte</th>
+                    <th>Socio implementador</th>
+                    <th>Sede</th>
+                    <th>Último grado aprobado</th>
+                    <th>Nivel académico</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@item.PIdOim</td>
+                            <td>@item.NumeroInscripciones</td>
+                            <td>@item.NombreCompleto</td>
+                            <td>@item.programa</td>
+                            <td>@item.carrera</td>
+                            <td>@item.Telefono1</td>
+                            <td>@item.Telefono2</td>
+                            <td>@item.SexoNombre</td>
+                            <td>@item.LGBTIQ</td>
+                            <td>@item.FechaNacimiento</td>
+                            <td>@item.Edad</td>
+                            <td>@item.Discapacidad</td>
+                            <td>@item.VictimaViolencia</td>
+                            <td>@item.MigranteRetornadoNombre</td>
+                            <td>@item.PiensaMigrar</td>
+                            <td>@item.FamiliaresMigrantes</td>
+                            <td>@item.FamiliaresRetornados</td>
+                            <td>@item.Empleo</td>
+                            <td>@item.Dui</td>
+                            <td>@item.Nie</td>
+                            <td>@item.Correo</td>
+                            <td>@item.RefiereNombre</td>
+                            <td>@item.DepartamentoNombre</td>
+                            <td>@item.MunicipioNombre</td>
+                            <td>@item.tipomatricula</td>
+                            <td>@item.añoestudio</td>
+                            <td>@item.CohorteNombre</td>
+                            <td>@item.p_socioNombre</td>
+                            <td>@item.p_sedeNombre</td>
+                            <td>@item.UltimoGradoAprobado</td>
+                            <td>@item.NivelAcademico</td>
+                            <td>@item.Estado</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <!-- /.card-body -->
+</div>
+@section scripts{
+<script>
+    $(function () {
+      $("#example1").DataTable({
+          "language": {
+        "sProcessing": "Procesando...",
+        "sLengthMenu": "Mostrar _MENU_ registros",
+        "sZeroRecords": "No se encontraron resultados",
+        "sEmptyTable": "Ningún dato disponible en esta tabla",
+        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+        "sInfoPostFix": "",
+        "sSearch": "Buscar:",
+        "sUrl": "",
+        "sInfoThousands": ",",
+        "sLoadingRecords": "Cargando...",
+        "oPaginate": {
+            "sFirst": "Primero",
+            "sLast": "Último",
+            "sNext": "Siguiente",
+            "sPrevious": "Anterior"
+        },
+        "oAria": {
+            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+        }
+    },
+        "responsive": true, "lengthChange": false, "autoWidth": false,
+        "buttons": [
+        {
+            extend: 'copy',
+            text: 'Copiar'
+        },
+        {
+            extend: 'csv',
+            text: 'CSV'
+        },
+        {
+            extend: 'excel',
+            text: 'Excel'
+        },
+        {
+            extend: 'pdf',
+            text: 'PDF'
+        },
+        {
+            extend: 'print',
+            text: 'Imprimir'
+        },
+        {
+            extend: 'colvis',
+            text: 'Visibilidad de Columnas'
+        }
+    ]
+      }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+
+    });
+</script>
+}

@@ -18,14 +18,14 @@
                     <form id="frmCarga" method="post" enctype="multipart/form-data" asp-controller="CargaDatos" asp-action="Index">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="exampleInputFile">File input</label>
+                                <label for="exampleInputFile">Archivo</label>
                                 <div class="input-group">
                                     <div class="custom-file">
                                         <input type="file" class="custom-file-input" id="exampleInputFile" name="postedFiles" accept=".xls,.xlsx, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel" multiple>
-                                        <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                        <label class="custom-file-label" for="exampleInputFile">Selecciona un archivo</label>
                                     </div>
                                     <div class="input-group-append">
-                                        <span class="input-group-text">Upload</span>
+                                        <span class="input-group-text">Subir</span>
                                     </div>
                                 </div>
                             </div>
@@ -37,15 +37,15 @@
                                     <option value="3">Psocosocial</option>
                                     <option value="4">Seguimiento Psicosocial</option>
                                     <option value="5">Practicas Profecionales</option>
-                                    <option value="6">Seguimiento Pasantillas</option>
-                                    <option value="7">Seguimiento Autoempleo</option>
+                                    <option value="6">Contrataciones</option>
+                                    <option value="7">Emprendimiento</option>
                                     <option value="8">Estipendios</option>
                                 </select>
                             </div>
                         </div>
                         <div class="card-footer">
                             <button id="btnLoad" type="submit" value="Upload" class="btn btn-primary">
-                                Submit
+                                Enviar
                             </button>
                         </div>
                         <br />
@@ -100,7 +100,7 @@
                                     <th>@Html.ActionLink("Descarga","Plantillas",new { @anexo = 6})</th>
                                 </tr>
                                 <tr>
-                                    <th>Seguimiento en Autoempleo</th>
+                                    <th>Emprendimiento</th>
                                     <th>@Html.ActionLink("Descarga","Plantillas",new { @anexo = 7})</th>
                                 </tr>
                                 <tr>

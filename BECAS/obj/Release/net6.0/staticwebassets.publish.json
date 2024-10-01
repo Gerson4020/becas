@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "8P0lU24o8aVJFQ/6dbEfLCmckqtPkUwCenD7VdEonIY=",
+  "Hash": "t6QndVJDmp63QW0CwmpvGdbsT7//XAhUpzU1lCX5b7g=",
   "Source": "BECAS",
   "BasePath": "_content/BECAS",
   "Mode": "Default",
@@ -2091,6 +2091,23 @@
       "OriginalItemSpec": "wwwroot\\lib\\datatables-responsive\\js\\responsive.bootstrap4.min.js"
     },
     {
+      "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\lib\\jquery.inputmask.min.js",
+      "SourceId": "BECAS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\",
+      "BasePath": "_content/BECAS",
+      "RelativePath": "lib/jquery.inputmask.min.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\lib\\jquery.inputmask.min.js"
+    },
+    {
       "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\lib\\jquery\\dist\\jquery.js",
       "SourceId": "BECAS",
       "SourceType": "Discovered",
@@ -3383,6 +3400,23 @@
       "OriginalItemSpec": "wwwroot\\lib\\select2\\js\\select2.min.js"
     },
     {
+      "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\OIM_Logo.png",
+      "SourceId": "BECAS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\",
+      "BasePath": "_content/BECAS",
+      "RelativePath": "OIM_Logo.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\OIM_Logo.png"
+    },
+    {
       "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Plantillas\\Educacion.xlsx",
       "SourceId": "BECAS",
       "SourceType": "Discovered",
@@ -3398,6 +3432,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Plantillas\\Educacion.xlsx"
+    },
+    {
+      "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Plantillas\\Emprendimiento.xlsx",
+      "SourceId": "BECAS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\",
+      "BasePath": "_content/BECAS",
+      "RelativePath": "Plantillas/Emprendimiento.xlsx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Plantillas\\Emprendimiento.xlsx"
     },
     {
       "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Plantillas\\Estipendios.xlsx",
@@ -3451,23 +3502,6 @@
       "OriginalItemSpec": "wwwroot\\Plantillas\\Inscripciones.xlsx"
     },
     {
-      "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Plantillas\\Seguimiento_en_Autoempleo.xlsx",
-      "SourceId": "BECAS",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\",
-      "BasePath": "_content/BECAS",
-      "RelativePath": "Plantillas/Seguimiento_en_Autoempleo.xlsx",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\Plantillas\\Seguimiento_en_Autoempleo.xlsx"
-    },
-    {
       "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Plantillas\\Seguimiento_en_Pasantías.xlsx",
       "SourceId": "BECAS",
       "SourceType": "Discovered",
@@ -3519,6 +3553,40 @@
       "OriginalItemSpec": "wwwroot\\Plantillas\\Seguimiento_Psicosocial.xlsx"
     },
     {
+      "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Uploads\\Autoempleo May24.xlsx",
+      "SourceId": "BECAS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\",
+      "BasePath": "_content/BECAS",
+      "RelativePath": "Uploads/Autoempleo May24.xlsx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\Autoempleo May24.xlsx"
+    },
+    {
+      "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Uploads\\AutoempleoCTCC_ene24.xlsx",
+      "SourceId": "BECAS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\",
+      "BasePath": "_content/BECAS",
+      "RelativePath": "Uploads/AutoempleoCTCC_ene24.xlsx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\AutoempleoCTCC_ene24.xlsx"
+    },
+    {
       "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Uploads\\Cargas con estado 0 set.xlsx",
       "SourceId": "BECAS",
       "SourceType": "Discovered",
@@ -3534,6 +3602,57 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Uploads\\Cargas con estado 0 set.xlsx"
+    },
+    {
+      "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Uploads\\Plantillas Personas 1508 (1).xlsx",
+      "SourceId": "BECAS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\",
+      "BasePath": "_content/BECAS",
+      "RelativePath": "Uploads/Plantillas Personas 1508 (1).xlsx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\Plantillas Personas 1508 (1).xlsx"
+    },
+    {
+      "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Uploads\\Plantillas Personas 1508 (3).xlsx",
+      "SourceId": "BECAS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\",
+      "BasePath": "_content/BECAS",
+      "RelativePath": "Uploads/Plantillas Personas 1508 (3).xlsx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\Plantillas Personas 1508 (3).xlsx"
+    },
+    {
+      "Identity": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\Uploads\\Plantillas Personas 1508 V2.xlsx",
+      "SourceId": "BECAS",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\galonso\\source\\repos\\GitHub\\BECAS\\wwwroot\\",
+      "BasePath": "_content/BECAS",
+      "RelativePath": "Uploads/Plantillas Personas 1508 V2.xlsx",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Uploads\\Plantillas Personas 1508 V2.xlsx"
     }
   ]
 }

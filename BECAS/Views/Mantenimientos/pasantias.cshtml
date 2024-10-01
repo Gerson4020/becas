@@ -4,7 +4,7 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-<div class="card">
+@*<div class="card">
     <div class="card-header">
         <h3 class="card-title">Filtros</h3>
     </div>
@@ -21,37 +21,21 @@
                 </div>
                 <div class="form-group mb-2">
                     <select class="form-control select2" name="dropzona" id="dropzona" multiple="multiple" data-placeholder="-- Seleccionar Zona --" style="width:100%">
-                        @*                        @foreach (var item in Model.LIstaSedes)
-                            {
-                            <option value="@item.IdSede">@item.Nombre</option>
-                            }*@
                     </select>
                 </div>
 
                 <div class="form-group mb-2">
                     <select class="form-control select2" name="idprograma" id="idprograma" multiple="multiple" data-placeholder="-- Seleccionar Programa --" style="width:100%">
-                        @*                        @foreach (var item in Model.Programa)
-                            {
-                            <option value="@item.IdPrograma">@item.Nombre</option>
-                            }*@
                     </select>
                 </div>
 
                 <div class="form-group mb-2">
                     <select class="form-control select2" name="sedes" id="sedes" multiple="multiple" data-placeholder="-- Seleccionar Sede --" style="width:100%">
-                        @*                        @foreach (var item in Model.LIstaSedes)
-                            {
-                            <option value="@item.IdSede">@item.Nombre</option>
-                            }*@
                     </select>
                 </div>
 
                 <div class="form-group mb-2">
                     <select class="form-control select2" name="carreras" id="carreras" multiple="multiple" data-placeholder="-- Seleccionar Carrera --" style="width:100%">
-                        @*                        @foreach (var item in Model.Carreras)
-                            {
-                            <option value="@item.IdCarrera">@item.Nombre</option>
-                            }*@
                     </select>
                 </div>
                 <hr align="left" noshade="noshade" size="2" width="100%" />
@@ -79,23 +63,15 @@
                         }
                     </select>
                 </div>
-                <div class="form-group mb-2">
-                    <select class="form-control select2" name="refiere" multiple="multiple" data-placeholder="-- Seleccionar Referido --" style="width:100%">
-                        @foreach (var item in Model.dropRefiereCM)
-                        {
-                            <option value="@item.IdRefiere">@item.Nombre</option>
-                        }
-                    </select>
-                </div>
                 <button type="submit" class="btn btn-primary mb-2">Buscar</button>
             </form>
         </div>
     </div>
-</div>
+</div>*@
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Pasantillas</h3>
+        <h3 class="card-title">Contrataciones</h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -103,16 +79,7 @@
             <thead>
                 <tr>
                     <th>PId</th>
-                    <th>Año</th>
-                    <th>Mes</th>
                     <th>Nombre</th>
-                    <th>Tipo Matricula</th>
-                    <th>Programa</th>
-                    <th>Carrera/Curso/Grado</th>
-                    <th>Sede</th>
-                    <th>Cohorte</th>
-                    <th>Sexo</th>
-                    <th>Socio implementador</th>
                     <th>Empresa</th>
                     <th>Entrevista</th>
                     <th>Pruebas</th>
@@ -120,88 +87,20 @@
                     <th>Cargo</th>
                     <th>Fecha Contratacion</th>
                     <th>Monto Remuneracion</th>
+                    <th>Periodo</th>
+                    <th>Tipo empleo</th>
                 </tr>
             </thead>
             <tbody>
                 @{
                     foreach (var item in Model.seguimientopasantillas)
                     {
-                        //var año = item.carga != null ? item.carga.RAño : 0;
-                        //var mes = item.carga != null ? item.carga.RMes : "";
-                        //var sexo = item.Sexo != null ? item.Sexo.Nombre : "";
-                        //var Sede = item.Sede != null ? item.Sede.Nombre : "";
-                        //var CarreraCursoGrado = item.CarreraCursoGrado != null ? item.CarreraCursoGrado.Nombre : "";
                         <tr>
                             <td>@item.PId</td>
-                            <td>@item.Año</td>
-                            <td>@item.Mes</td>
                             <td>
                                 @if (item.persona != null)
                                 {
                                     @item.persona.Nombre
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    //if (@item.persona.matricula != null)
-                                    //{
-                                    //    @item.persona.matricula.Nombre
-                                    //}
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    //if (@item.persona.programa != null)
-                                    //{
-                                    //    @item.persona.programa.Nombre
-                                    //}
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    //@if (item.persona.carrera != null)
-                                    //{
-                                    //    @item.persona.carrera.Nombre
-                                    //}
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    //if (@item.persona.sede != null)
-                                    //{
-                                    //    @item.persona.sede.Nombre
-                                    //}
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    //@if (@item.persona != null)
-                                    //{
-                                    //    @item.persona.Cohorte
-                                    //}
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    @if (@item.persona.sexo != null)
-                                    {
-                                        @item.persona.sexo.Nombre
-                                    }
-                                }
-                            </td>
-                            <td>
-                                @if (item.persona != null)
-                                {
-                                    //@if (item.persona.socio != null)
-                                    //{
-                                    //    @item.persona.socio.Nombre
-                                    //}
                                 }
                             </td>
                             <td>@item.PasEmpresa</td>
@@ -211,6 +110,8 @@
                             <td>@item.PasCargo</td>
                             <td>@item.PasFechaContratacion</td>
                             <td>@item.PasMontoRemuneracion</td>
+                            <td>@item.pas_periodo</td>
+                            <td>@item.pas_tipo_empleo</td>
                         </tr>
                     }
                 }
@@ -224,8 +125,57 @@
 <script>
     $(function () {
       $("#example1").DataTable({
+          "language": {
+        "sProcessing": "Procesando...",
+        "sLengthMenu": "Mostrar _MENU_ registros",
+        "sZeroRecords": "No se encontraron resultados",
+        "sEmptyTable": "Ningún dato disponible en esta tabla",
+        "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+        "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+        "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+        "sInfoPostFix": "",
+        "sSearch": "Buscar:",
+        "sUrl": "",
+        "sInfoThousands": ",",
+        "sLoadingRecords": "Cargando...",
+        "oPaginate": {
+            "sFirst": "Primero",
+            "sLast": "Último",
+            "sNext": "Siguiente",
+            "sPrevious": "Anterior"
+        },
+        "oAria": {
+            "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+            "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+        }
+    },
         "responsive": true, "lengthChange": false, "autoWidth": false,
-        "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+        "buttons": [
+        {
+            extend: 'copy',
+            text: 'Copiar'
+        },
+        {
+            extend: 'csv',
+            text: 'CSV'
+        },
+        {
+            extend: 'excel',
+            text: 'Excel'
+        },
+        {
+            extend: 'pdf',
+            text: 'PDF'
+        },
+        {
+            extend: 'print',
+            text: 'Imprimir'
+        },
+        {
+            extend: 'colvis',
+            text: 'Visibilidad de Columnas'
+        }
+    ]
       }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
       $('.select2').select2()

@@ -17,5 +17,7 @@ namespace BECASLC
         public int? IdCarga { get; set; }
         public int? Año { get; set; }
         public string? Mes { get; set; }
+        public string? pas_periodo { get; set; }
+        public string? pas_tipo_empleo { get; set; }
     }
 }

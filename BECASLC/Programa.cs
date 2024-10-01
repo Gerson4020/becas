@@ -8,6 +8,6 @@ namespace BECASLC
         public int IdPrograma { get; set; }
         public string? Nombre { get; set; }
         public bool? Activo { get; set; }
-        public int? IdSede { get; set; }
+        public int? Target { get; set; }
     }
 }

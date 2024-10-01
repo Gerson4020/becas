@@ -7,275 +7,94 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using BECAS.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using BECAS.Interfaces;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using ClosedXML.Excel;
+using System.Data.SqlClient;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BECAS.Controllers
 {
-    [ResponseHeader]
+    //[ResponseHeader]
+    [Authorize(Policy = "ADOnly")]
+    //[Authorize(Policy = "ExternalUsers")]
     public class MantenimientosController : Controller
     {
         private readonly MEOBContext _ctx;
-        public MantenimientosController(MEOBContext ctx)
+        private readonly IPersonas _persona;
+        private readonly IEncryptionService _encryptionService;
+        public MantenimientosController(MEOBContext ctx, IPersonas personas, IEncryptionService encryptionService)
         {
             _ctx = ctx;
+            _persona = personas;
+            _encryptionService = encryptionService;
         }
 
         #region MTTO PERSONAS
         // GET: MantenimientosController
-        public ActionResult Personas()
+        public async Task<ActionResult> Personas()
         {
-            PersonasVM vM = new PersonasVM();
-            List<PersonTableVM> ListPersonas = _ctx.Personas.Include(x => x.refiere).Include(x => x.sexo).Include(x => x.departamento).Include(x => x.municipio).Select(x =>
-                        new PersonTableVM
-                        {
-                            IdPersona = x.IdPersona,
-                            FechaEntrevista = x.FechaEntrevista,
-                            Id = x.Id,
-                            PIdOim = x.PIdOim,
-                            NumeroInscripciones = x.NumeroInscripciones,
-                            Nombre = x.Nombre,
-                            Apellido = x.Apellido,
-                            NombreCompleto = x.NombreCompleto,
-                            UltimoGradoAprobado = x.UltimoGradoAprobado,
-                            NivelAcademico = x.NivelAcademico,
-                            Telefono1 = x.Telefono1,
-                            Telefono2 = x.Telefono2,
-                            Sexo = x.Sexo,
-                            LGBTIQ = x.LGBTIQ,
-                            FechaNacimiento = x.FechaNacimiento,
-                            Edad = x.Edad,
-                            Discapacidad = x.Discapacidad,
-                            VictimaViolencia = x.VictimaViolencia,
-                            MigranteRetornado = x.MigranteRetornado,
-                            PiensaMigrar = x.PiensaMigrar,
-                            FamiliaresMigrantes = x.FamiliaresMigrantes,
-                            FamiliaresRetornados = x.FamiliaresRetornados,
-                            Empleo = x.Empleo,
-                            Dui = x.Dui,
-                            Nie = x.Nie,
-                            Correo = x.Correo,
-                            Refiere = x.Refiere,
-                            RefiereNombre = x.refiere.Nombre,
-                            Departamento = x.Departamento,
-                            DepartamentoNombre = x.departamento.Nombre,
-                            Municipio = x.Municipio,
-                            MunicipioNombre = x.municipio.Nombre,
-                            EstadoInscripcion = x.EstadoInscripcion,
-                            MedioVerificacion = x.MedioVerificacion,
-                            IdCarga = x.IdCarga,
-                            educacion = _ctx.CargaEducacions.Include(x => x.cohorte).Include(b => b.socio).Include(x => x.sede).Include(x => x.programa).Include(x => x.carrera).Include(x => x.tipoMatricula).Include(x => x.estado).OrderByDescending(o => o.r_fechafin).FirstOrDefault(e => e.PIdOim.Equals(x.PIdOim)),
-                        }
-                        ).ToList();
-            foreach (var item in ListPersonas)
+            var vM = new PersonasVM
             {
-                if (item.IdPrograma == 3)
-                {
-                    item.grado = _ctx.Grados.FirstOrDefault(g => g.IdGrado.Equals(item.educacion.CarreraCursoGrado)).Nombre;
-                }
-            }
-            List<SocioImplementador> SocioImple = new List<SocioImplementador>();
-            SocioImple = _ctx.SocioImplementadors.Where(x => x.Activo.Equals(true)).ToList();
+                Sexos = await _ctx.Sexos.Where(x => x.Activo == 1).ToListAsync(),
+                // Restablecer los datos comentados si es necesario:
+                Socios = await _ctx.SocioImplementadors.Where(x => x.Activo == true).ToListAsync(),
+                tipomatricula = await _ctx.TipoMatriculas.Where(x => x.Activo == true).ToListAsync(),
+                departamentos = await _ctx.Departamentos.Where(x => x.Activo == true).ToListAsync(),
+                dropRefiereCM = await _ctx.Refieres.Where(x => x.Activo == true).ToListAsync(),
+                cohorte = await _ctx.Cohortes.Where(x => x.Activo == true).ToListAsync(),
+                Sectors = await _ctx.Sectors.Where(x => x.Activo == true).ToListAsync(),
+                estadoPersona = await _ctx.EstadoPersonas.Where(x => x.Activo == true).ToListAsync(),
+                catAños = await _ctx.CatAños.Where(x => x.Activo == true).ToListAsync(),
+                proyectos = await _ctx.Proyectos.Where(x => x.Activo == true).ToListAsync()
+            };
 
-            List<Sexo> sexos = new List<Sexo>();
-            sexos = _ctx.Sexos.ToList();
-
-            List<Departamento> departamentos = new List<Departamento>();
-            departamentos = _ctx.Departamentos.Where(x => x.Activo == true).ToList();
-
-            List<TipoMatricula> ttipomatricula = new List<TipoMatricula>();
-            ttipomatricula = _ctx.TipoMatriculas.Where(x => x.Activo.Equals(true)).ToList();
-
-            List<Refiere> refiereCMs = new List<Refiere>();
-            refiereCMs = _ctx.Refieres.Where(x => x.Activo == true).ToList();
-
-            List<Cohorte> cohortes = new List<Cohorte>();
-            cohortes = _ctx.Cohortes.Where(x => x.Activo.Equals(true)).ToList();
-
-            List<Sector> sectors = new List<Sector>();
-            sectors = _ctx.Sectors.Where(x => x.Activo == true).ToList();
-
-            List<EstadoPersona> estadoPersonas = new List<EstadoPersona>();
-            estadoPersonas = _ctx.EstadoPersonas.Where(x => x.Activo == true).ToList();
-
-            List<CatAño> years = _ctx.CatAños.Where(x => x.Activo == true).ToList();
-
-            vM.Personas = ListPersonas;
-            vM.Socios = SocioImple;
-            vM.sexos = sexos;
-            vM.tipomatricula = ttipomatricula;
-            vM.departamentos = departamentos;
-            vM.dropRefiereCM = refiereCMs;
-            vM.cohorte = cohortes;
-            vM.Sectors = sectors;
-            vM.estadoPersona = estadoPersonas;
-            vM.catAños = years;
             return View(vM);
         }
+
+
         [HttpPost]
-        public ActionResult Personas(List<int> idprograma, List<int> socios, List<int> sedes, List<int> carreras, List<int> sexos, List<int> tipomatricula, List<int> departament, List<int> refiere, List<int> dropzona, List<int> cohorte, List<int> retornado, List<int> sectores, List<int> estado, List<int> aEstudio)
+        public ActionResult Personas(DTParameters param)
         {
-            List<PersonTableVM> ListPersonas = (from x in _ctx.Personas.Include(x => x.sexo).Include(x => x.refiere)
-                                                join educacion in _ctx.CargaEducacions.Include(x => x.socio).Include(x => x.sede).Include(x => x.carrera).Include(x => x.programa).Include(x => x.cohorte).Include(x => x.estado) on x.PIdOim equals educacion.PIdOim
-                                                orderby educacion.r_fechaini descending
-                                                select new PersonTableVM
-                                                {
-                                                    IdPersona = x.IdPersona,
-                                                    FechaEntrevista = x.FechaEntrevista,
-                                                    Id = x.Id,
-                                                    PIdOim = x.PIdOim,
-                                                    NumeroInscripciones = x.NumeroInscripciones,
-                                                    NombreCompleto = x.NombreCompleto,
-                                                    programa = educacion.programa.Nombre,
-                                                    carrera = educacion.carrera.Nombre,
-                                                    NivelAcademico = x.NivelAcademico,
-                                                    Telefono1 = x.Telefono1,
-                                                    Telefono2 = x.Telefono2,
-                                                    Sexo = x.sexo.IdSexo,
-                                                    SexoNombre = x.sexo.Nombre,
-                                                    LGBTIQ = x.LGBTIQ,
-                                                    FechaNacimiento = x.FechaNacimiento,
-                                                    Edad = x.Edad,
-                                                    Discapacidad = x.Discapacidad,
-                                                    VictimaViolencia = x.VictimaViolencia,
-                                                    MigranteRetornado = x.MigranteRetornado,
-                                                    PiensaMigrar = x.PiensaMigrar,
-                                                    FamiliaresMigrantes = x.FamiliaresMigrantes,
-                                                    FamiliaresRetornados = x.FamiliaresRetornados,
-                                                    Empleo = x.Empleo,
-                                                    Dui = x.Dui,
-                                                    Nie = x.Nie,
-                                                    Correo = x.Correo,
-                                                    Refiere = x.Refiere,
-                                                    Departamento = x.Departamento,
-                                                    DepartamentoNombre = x.departamento.Nombre,
-                                                    Municipio = x.Municipio,
-                                                    MunicipioNombre = x.municipio.Nombre,
-                                                    tipomatricula = educacion.tipoMatricula.Nombre,
-                                                    añoestudio = educacion.Year,
-                                                    Cohorte = educacion.cohorte.IdCohorte,
-                                                    CohorteNombre = educacion.cohorte.Nombre,
-                                                    p_socio = educacion.p_socio,
-                                                    p_socioNombre = educacion.socio.Nombre,
-                                                    p_sede = educacion.p_sede,
-                                                    p_sedeNombre = educacion.sede.Nombre,
-                                                    UltimoGradoAprobado = x.UltimoGradoAprobado,
-                                                    EstadoInscripcion = x.EstadoInscripcion,
-                                                    MedioVerificacion = x.MedioVerificacion,
-                                                    IdCarga = x.IdCarga,
-                                                    IdPrograma = x.IdPrograma,
-                                                    Year = x.Year,
-                                                    IdZona = x.IdZona,
-                                                    EstadoMF = x.EstadoMF,
-                                                    CarreraCursoGrado = educacion.CarreraCursoGrado,
-                                                    Sector = x.Sector,
-                                                    Estado = educacion.estado.Nombre
-                                                }).ToList();
-            foreach (var item in ListPersonas)
+            List<PersonTableVM> ListPersonas = _persona.GetPersonas(param);
+
+            string searchValue = param.Search?.Value;
+
+            // Aplicar filtro de búsqueda si se proporcionó un término de búsqueda
+            if (!string.IsNullOrWhiteSpace(searchValue))
             {
-                if ((item.IdPrograma == 3 || item.IdPrograma == 2) && item.CarreraCursoGrado != null)
+                ListPersonas = ListPersonas.Where(item =>
+                    item.NombreCompleto.Contains(searchValue) ||
+                    item.Telefono1.Contains(searchValue)
+                // Agrega más condiciones de filtrado si es necesario
+                ).ToList();
+
+                // Verifica si hay alguna coincidencia en al menos uno de los campos
+                if (ListPersonas.Count == 0)
                 {
-                    item.carrera = _ctx.Grados.FirstOrDefault(g => g.IdGrado.Equals(item.CarreraCursoGrado)).Nombre;
+                    ListPersonas = ListPersonas.Where(item =>
+                        item.NombreCompleto.Contains(searchValue) ||
+                        item.Telefono1.Contains(searchValue)
+                    // Agrega más condiciones de filtrado si es necesario
+                    ).ToList();
                 }
             }
-            ListPersonas = ListPersonas.DistinctBy(x => x.PIdOim).ToList();
-            if (retornado.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.MigranteRetornado != null).ToList();
-                ListPersonas = ListPersonas.Where(m => retornado.Contains((int)m.MigranteRetornado)).ToList();
-            }
-            if (idprograma.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.IdPrograma != null).ToList();
-                ListPersonas = ListPersonas.Where(x => idprograma.Contains((int)x.IdPrograma)).ToList();
-            }
-            if (departament.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.Departamento != null).ToList();
-                ListPersonas = ListPersonas.Where(m => departament.Contains((int)m.Departamento)).ToList();
-            }
-            if (socios.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.p_socio != null).ToList();
-                ListPersonas = ListPersonas.Where(x => socios.Contains((int)x.p_socio)).ToList();
-            }
-            if (sedes.Count() != 0)
-            {
-                for (int i = 0; i < sedes.Count; i++)
-                {
-                    var IdCatSede = (int)_ctx.Sedes.FirstOrDefault(x => x.IdSede.Equals(sedes.First())).IdCatSede;
-                    sedes[i] = IdCatSede;
-                }
 
-                if (sedes != null)
-                {
-                    ListPersonas = ListPersonas.Where(m => m.p_sede != null).ToList();
-                    ListPersonas = ListPersonas.Where(x => sedes.Contains((int)x.p_sede)).ToList();
-                }
-
-            }
-            if (carreras.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.CarreraCursoGrado != null).ToList();
-                ListPersonas = ListPersonas.Where(x => carreras.Contains((int)x.CarreraCursoGrado)).ToList();
-            }
-            if (sexos.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.Sexo != null).ToList();
-                ListPersonas = ListPersonas.Where(m => sexos.Contains((int)m.Sexo)).ToList();
-            }
-            if (tipomatricula.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.educacion != null).ToList();
-                ListPersonas = ListPersonas.Where(m => m.educacion.tipoMatricula != null).ToList();
-                ListPersonas = ListPersonas.Where(x => tipomatricula.Contains((int)x.educacion.tipoMatricula.IdTipoMatricula)).ToList();
-            }
-
-            if (estado.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.educacion != null).ToList();
-                ListPersonas = ListPersonas.Where(m => m.educacion.DEstado != null).ToList();
-                ListPersonas = ListPersonas.Where(x => estado.Contains((int)x.educacion.DEstado)).ToList();
-            }
-
-            if (refiere.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.Refiere != null).ToList();
-                ListPersonas = ListPersonas.Where(m => refiere.Contains((int)m.Refiere)).ToList();
-            }
-
-            if (dropzona.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.IdZona != null).ToList();
-                ListPersonas = ListPersonas.Where(m => dropzona.Contains((int)m.IdZona)).ToList();
-            }
-
-            if (cohorte.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.Cohorte != null).ToList();
-                ListPersonas = ListPersonas.Where(x => cohorte.Contains((int)x.Cohorte)).ToList();
-            }
-
-            if (sectores.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.Sector != null).ToList();
-                ListPersonas = ListPersonas.Where(x => sectores.Contains((int)x.Sector)).ToList();
-            }
-
-            if (sectores.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.Sector != null).ToList();
-                ListPersonas = ListPersonas.Where(x => sectores.Contains((int)x.Sector)).ToList();
-            }
-
-            if (aEstudio.Count() != 0)
-            {
-                ListPersonas = ListPersonas.Where(m => m.educacion != null).ToList();
-                ListPersonas = ListPersonas.Where(m => m.educacion.Year != null).ToList();
-                ListPersonas = ListPersonas.Where(x => aEstudio.Contains((int)x.Year)).ToList();
-            }
+            // Realiza una consulta para contar el número total de registros
+            var totalRegistros = param.count;
 
 
 
-            return Json(new { data = ListPersonas });
+            // Devolver los datos en formato JSON con información adicional necesaria para DataTables
+            return Json(new DTResult<PersonTableVM>
+            {
+                draw = param.Draw,
+                recordsTotal = (int)totalRegistros, // Total de registros sin paginar
+                recordsFiltered = (int)totalRegistros, // Total de registros después de aplicar filtros (si los hay)
+                data = ListPersonas // Registros para la página actual
+            });
         }
 
         public ActionResult PersonaDetalle(string id)
@@ -320,12 +139,15 @@ namespace BECAS.Controllers
             }
         }
 
-        public async Task<JsonResult> GetZona(int id)
+        public async Task<JsonResult> GetZona(string id)
         {
             try
             {
-                var socio = _ctx.Sedes.Include(x => x.catsede).Include(i => i.zona).Where(x => x.IdSocio == id).Select(z => z.zona).Distinct().ToList();
-                var sedes = socio;
+                List<int> ids = string.IsNullOrEmpty(id) ? new List<int>() : id.Split(',').Select(int.Parse).ToList();
+
+                var socio = _ctx.Sedes.Include(x => x.catsede).Include(i => i.zona).Where(x => ids.Contains((int)x.IdSocio)).Select(z => z.zona).Distinct().ToList();
+                var sedes = socio.Select(x => new { id = x.IdZona, nombre = x.Nombre });
+
                 return Json(sedes);
             }
             catch (Exception)
@@ -341,7 +163,8 @@ namespace BECAS.Controllers
             try
             {
                 var sedes = _ctx.Sedes.Include(x => x.catsede).Where(x => x.IdZona == id && x.IdSocio == ids && x.IdPrograma == idp && x.Activo == true).Distinct().ToList();
-                return Json(sedes);
+                var cascade = sedes.Select(x => new { id = x.IdSede, nombre = x.catsede.Nombre });
+                return Json(cascade);
             }
             catch (Exception)
             {
@@ -356,7 +179,8 @@ namespace BECAS.Controllers
             try
             {
                 var sedes = _ctx.Sedes.Include(x => x.programa).Where(x => x.IdZona == id && x.IdSocio == ids && x.Activo == true).Select(p => p.programa).Distinct().ToList();
-                return Json(sedes);
+                var programas = sedes.Select(x => new { id = x.IdPrograma, nombre = x.Nombre });
+                return Json(programas);
             }
             catch (Exception)
             {
@@ -381,7 +205,7 @@ namespace BECAS.Controllers
 
         }
 
-        public async Task<JsonResult> GetCarreras(int id, int ids)
+        public async Task<JsonResult> GetCarreras(int id, int ids, int idp)
         {
             try
             {
@@ -400,7 +224,8 @@ namespace BECAS.Controllers
                         cm.cohorte = c.Cohorte;
                         carreras.Add(cm);
                     }
-                    return Json(carreras);
+                    var Cat = carreras.Select(x => new { id = x.idCarrera, nombre = x.nombre, IsCarrera = x.IsCarrera, idSede = x.idSede, activo = x.activo, cohorte = x.cohorte });
+                    return Json(Cat);
                 }
                 else
                 {
@@ -417,7 +242,8 @@ namespace BECAS.Controllers
                         cm.cohorte = 0;
                         grados.Add(cm);
                     }
-                    return Json(grados);
+                    var gra = grados.Select(x => new { id = x.idCarrera, nombre = x.nombre, IsCarrera = x.IsCarrera, idSede = x.idSede, activo = x.activo, cohorte = x.cohorte });
+                    return Json(gra);
                 }
             }
             catch (Exception)
@@ -426,6 +252,100 @@ namespace BECAS.Controllers
                 throw;
             }
 
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DownloadPersonsExcel([FromBody] DTParameters filter)
+        {
+
+            List<PersonTableVM> ListPersonas = _persona.GetPersonasD(filter);
+
+            // Crear un nuevo libro de Excel
+            var workbook = new XLWorkbook();
+            var worksheet = workbook.Worksheets.Add("Inscritos");
+
+            // Agregar encabezados
+            worksheet.Cell(1, 1).Value = "PIdOim";
+            worksheet.Cell(1, 2).Value = "NumeroInscripciones";
+            worksheet.Cell(1, 3).Value = "NombreCompleto";
+            worksheet.Cell(1, 4).Value = "NombreSocio";
+            worksheet.Cell(1, 5).Value = "NombreSede";
+            worksheet.Cell(1, 6).Value = "Matricula";
+            worksheet.Cell(1, 7).Value = "Programa";
+            worksheet.Cell(1, 8).Value = "Carrera";
+            worksheet.Cell(1, 9).Value = "Telefono1";
+            worksheet.Cell(1, 10).Value = "Telefono2";
+            worksheet.Cell(1, 11).Value = "Sexo";
+            worksheet.Cell(1, 12).Value = "LGBTIQ";
+            worksheet.Cell(1, 13).Value = "FechaNacimiento";
+            worksheet.Cell(1, 14).Value = "Edad";
+            worksheet.Cell(1, 15).Value = "Discapacidad";
+            worksheet.Cell(1, 16).Value = "VictimaViolencia";
+            worksheet.Cell(1, 17).Value = "MigranteRetornado";
+            worksheet.Cell(1, 18).Value = "PiensaMigrar";
+            worksheet.Cell(1, 19).Value = "FamiliaresMigrantes";
+            worksheet.Cell(1, 20).Value = "FamiliaresRetornados";
+            worksheet.Cell(1, 21).Value = "Empleo";
+            worksheet.Cell(1, 22).Value = "Dui";
+            worksheet.Cell(1, 23).Value = "Nie";
+            worksheet.Cell(1, 24).Value = "Correo";
+            worksheet.Cell(1, 25).Value = "Refiere";
+            worksheet.Cell(1, 26).Value = "Departamento";
+            worksheet.Cell(1, 27).Value = "Municipio";
+            worksheet.Cell(1, 28).Value = "UltimoGradoAprobado";
+            worksheet.Cell(1, 29).Value = "NivelAcademico";
+            worksheet.Cell(1, 30).Value = "AñoEstudio";
+            worksheet.Cell(1, 31).Value = "NombreEstado";
+
+            // Agregar más encabezados según tus necesidades
+
+            // Llenar datos
+            for (int i = 0; i < ListPersonas.Count; i++)
+            {
+                var person = ListPersonas[i];
+                worksheet.Cell(i + 2, 1).Value = person.PIdOim;
+                worksheet.Cell(i + 2, 2).Value = person.NumeroInscripciones;
+                worksheet.Cell(i + 2, 3).Value = person.NombreCompleto;
+                worksheet.Cell(i + 2, 4).Value = person.p_socioNombre;
+                worksheet.Cell(i + 2, 5).Value = person.p_sedeNombre;
+                worksheet.Cell(i + 2, 6).Value = person.tipomatricula;
+                worksheet.Cell(i + 2, 7).Value = person.programa;
+                worksheet.Cell(i + 2, 8).Value = person.carrera;
+                worksheet.Cell(i + 2, 9).Value = person.Telefono1;
+                worksheet.Cell(i + 2, 10).Value = person.Telefono2;
+                worksheet.Cell(i + 2, 11).Value = person.SexoNombre;
+                worksheet.Cell(i + 2, 12).Value = person.LGBTIQ;
+                worksheet.Cell(i + 2, 13).Value = person.FechaNacimiento;
+                worksheet.Cell(i + 2, 14).Value = person.Edad;
+                worksheet.Cell(i + 2, 15).Value = person.Discapacidad;
+                worksheet.Cell(i + 2, 16).Value = person.VictimaViolencia;
+                worksheet.Cell(i + 2, 17).Value = person.MigranteRetornadoNombre;
+                worksheet.Cell(i + 2, 18).Value = person.PiensaMigrar;
+                worksheet.Cell(i + 2, 19).Value = person.FamiliaresMigrantes;
+                worksheet.Cell(i + 2, 20).Value = person.FamiliaresRetornados;
+                worksheet.Cell(i + 2, 21).Value = person.Empleo;
+                worksheet.Cell(i + 2, 22).Value = person.Dui;
+                worksheet.Cell(i + 2, 23).Value = person.Nie;
+                worksheet.Cell(i + 2, 24).Value = person.Correo;
+                worksheet.Cell(i + 2, 25).Value = person.Refiere;
+                worksheet.Cell(i + 2, 26).Value = person.DepartamentoNombre;
+                worksheet.Cell(i + 2, 27).Value = person.MunicipioNombre;
+                worksheet.Cell(i + 2, 28).Value = person.UltimoGradoAprobado;
+                worksheet.Cell(i + 2, 29).Value = person.NivelAcademico;
+                worksheet.Cell(i + 2, 30).Value = person.añoestudio;
+                worksheet.Cell(i + 2, 31).Value = person.Estado;
+                // Agregar más datos según tus necesidades
+            }
+
+            // Guardar el libro de Excel en un flujo de memoria
+            using (var stream = new MemoryStream())
+            {
+                workbook.SaveAs(stream);
+                var content = stream.ToArray();
+
+                // Devolver el archivo Excel como una descarga al navegador
+                return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Inscritos.xlsx");
+            }
         }
 
         #endregion
@@ -600,7 +520,7 @@ namespace BECAS.Controllers
 
         #endregion
 
-        #region SeguimientoAutoempleo
+        #region SeguimientoAutoempleo(Emprendimiento)
         public async Task<IActionResult> SeguimientoAutoempleo()
         {
             try
@@ -1106,54 +1026,173 @@ namespace BECAS.Controllers
         {
             try
             {
-                EducacionVM vM = new EducacionVM();
+                List<EducacionTable> consulta = new List<EducacionTable>();
                 // Consulta base de datos para cargar los datos relevantes
-                var consulta = (from educacion in _ctx.CargaEducacions.Include(x => x.socio).Include(x => x.sede).Include(x => x.carrera).Include(x => x.programa).Include(x => x.cohorte).Include(x => x.estado)
-                                join persona in _ctx.Personas.Include(x => x.sexo).Include(x => x.refiere) on educacion.PIdOim equals persona.PIdOim
-                                orderby educacion.r_fechaini descending
-                                select new EducacionTable
-                                {
-                                    PIdOim = educacion.PIdOim,
-                                    nombre = persona.NombreCompleto,
-                                    DFechades = educacion.DFechades,
-                                    DFechaReasg = educacion.DFechaReasg,
-                                    DEstado = educacion.estado.Nombre,
-                                    IDiasAsistenciaEfectivos = educacion.IDiasAsistenciaEfectivos,
-                                    IDiasAsistenciaEstablecidos = educacion.IDiasAsistenciaEstablecidos,
-                                    IMotivoInasistencia = educacion.IMotivoInasistencia,
-                                    IModulosInscritos = educacion.IModulosInscritos,
-                                    IModulosAprobados = educacion.IModulosAprobados,
-                                    IModulosReprobados = educacion.IModulosReprobados,
-                                    ICausaReprobacion = educacion.ICausaReprobacion,
-                                    p_socio = educacion.p_socio,
-                                    socio = educacion.socio.Nombre,
-                                    p_sede = educacion.p_sede,
-                                    sede = educacion.sede.Nombre,
-                                    CarreraCursoGrado = (educacion.p_tipobeca == 3 || educacion.p_tipobeca == 4) ? _ctx.Grados.FirstOrDefault(x => x.IdGrado.Equals(educacion.p_tipobeca)).IdGrado : educacion.CarreraCursoGrado,
-                                    carrera = (educacion.p_tipobeca == 3 || educacion.p_tipobeca == 4) ? _ctx.Grados.FirstOrDefault(x => x.IdGrado.Equals(educacion.p_tipobeca)).Nombre : educacion.carrera.Nombre,
-                                    sexoID = persona.sexo.IdSexo,
-                                    sexoNombre = persona.sexo.Nombre,
-                                    departamento = persona.Departamento,
-                                    refiere = persona.Refiere,
-                                    refiereNombre = persona.refiere.Nombre,
-                                    programa = educacion.p_tipobeca,
-                                    programaNombre = educacion.programa.Nombre,
-                                    RAño = educacion.RAño,
-                                    RMes = educacion.RMes,
-                                    Cohorte = educacion.Cohorte,
-                                    CohorteNombre = educacion.cohorte.Nombre,
-                                    year = educacion.Year,
-                                    tipoMatricula = educacion.tipoMatricula.Nombre,
-                                    motivodesercion = educacion.DMotivodesercion,
-                                    pocentajeasistencia = educacion.i_proc_asistencia,
-                                    fechainicio = educacion.r_fechaini,
-                                    zona = educacion.IdZona,
-                                    EstadoPersona = educacion.DEstado
-                                }).ToList();
+                string query = @"WITH EducacionConDetalles AS (
+                                    SELECT 
+                                        e.p_id_oim,
+                                        p.NombreCompleto AS nombre,
+                                		e.r_fechaini,
+                                        e.d_fechades,
+                                        e.d_fecha_reasg,
+                                        es.Nombre AS DEstado,
+                                        e.i_dias_asistencia_efectivos,
+                                        e.i_dias_asistencia_establecidos,
+                                        e.i_motivo_inasistencia,
+                                        e.i_modulos_inscritos,
+                                        e.i_modulos_aprobados,
+                                        e.i_modulos_reprobados,
+                                        e.i_causa_reprobacion,
+                                        e.p_socio,
+                                        s.Nombre AS socio,
+                                        e.p_sede,
+                                        se.Nombre AS sede,
+                                        e.CarreraCursoGrado,
+                                        CASE 
+                                            WHEN e.p_tipobeca IN (3,4,6) THEN (SELECT g.Nombre FROM [dbo].[Grados] g WHERE g.IdGrado = e.CarreraCursoGrado)
+                                            ELSE c.Nombre
+                                        END AS carrera,
+                                        p.Sexo AS sexoID,
+                                        sx.Nombre AS sexoNombre,
+                                        p.Departamento AS departamento,
+                                        p.Refiere AS refiere,
+                                        r.Nombre AS refiereNombre,
+                                        e.p_tipobeca AS programa,
+                                        pr.Nombre AS programaNombre,
+                                        e.r_año,
+                                        e.r_mes,
+                                        e.Cohorte,
+                                        co.Nombre AS CohorteNombre,
+                                        e.Year AS year,
+                                        tm.Nombre AS tipoMatricula,
+                                        e.d_motivodesercion AS motivodesercion,
+                                        e.i_proc_asistencia AS pocentajeasistencia,
+                                        e.r_fechaini AS fechainicio,
+                                        e.IdZona AS zona,
+                                        e.d_estado AS EstadoPersona,
+                                        ROW_NUMBER() OVER(PARTITION BY e.p_id_oim ORDER BY e.r_fechaini DESC) AS row_num
+                                    FROM
+                                        [dbo].[CargaEducacion] e
+                                    JOIN
+                                        [dbo].[Persona] p ON e.p_id_oim = p.PIdOim
+                                    LEFT JOIN
+                                        [dbo].[SocioImplementador] s ON e.p_socio = s.IdImplementador
+                                    LEFT JOIN
+                                        [dbo].[CatSede] se ON e.p_sede = se.IdCatSede
+                                    LEFT JOIN
+                                        [dbo].[CatCarrera] c ON e.CarreraCursoGrado = c.IdCatCarrera
+                                    LEFT JOIN
+                                        [dbo].[Programa] pr ON e.p_tipobeca = pr.IdPrograma
+                                    LEFT JOIN
+                                        [dbo].[Cohorte] co ON e.Cohorte = co.IdCohorte
+                                    LEFT JOIN
+                                        [dbo].[EstadoPersona] es ON e.d_estado = es.IdEstadoPersona
+                                    LEFT JOIN
+                                        [dbo].[TipoMatricula] tm ON e.p_matricula = tm.IdTipoMatricula
+                                    LEFT JOIN
+                                        [dbo].[Grados] g ON e.p_tipobeca = g.IdGrado
+                                    LEFT JOIN
+                                        [dbo].[Sexo] sx ON p.Sexo = sx.IdSexo
+                                    LEFT JOIN
+                                        [dbo].[Refiere] r ON p.refiere = r.IdRefiere
+                                )
+                                SELECT 
+                                    p_id_oim,
+                                    nombre,
+                                	r_fechaini,
+                                    d_fechades,
+                                    d_fecha_reasg,
+                                    DEstado,
+                                    i_dias_asistencia_efectivos,
+                                    i_dias_asistencia_establecidos,
+                                    i_motivo_inasistencia,
+                                    i_modulos_inscritos,
+                                    i_modulos_aprobados,
+                                    i_modulos_reprobados,
+                                    i_causa_reprobacion,
+                                    p_socio,
+                                    socio,
+                                    p_sede,
+                                    sede,
+                                    CarreraCursoGrado,
+                                    carrera,
+                                    sexoID,
+                                    sexoNombre,
+                                    departamento,
+                                    refiere,
+                                    refiereNombre,
+                                    programa,
+                                    programaNombre,
+                                    r_año,
+                                    r_mes,
+                                    Cohorte,
+                                    CohorteNombre,
+                                    year,
+                                    tipoMatricula,
+                                    motivodesercion,
+                                    pocentajeasistencia,
+                                    fechainicio,
+                                    zona,
+                                    EstadoPersona
+                                FROM 
+                                    EducacionConDetalles
+                                WHERE 
+                                    row_num = 1
+                                ORDER BY 
+                                    fechainicio DESC;";
+                // Crea la conexión y ejecuta la consulta
+                using (SqlConnection connection = new SqlConnection(_ctx.Database.GetConnectionString()))
+                {
+                    SqlCommand command = new SqlCommand(query, connection);
+                    connection.Open();
 
-                consulta = consulta.GroupBy(x => x.PIdOim)
-                                   .Select(x => x.First())
-                                   .ToList();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            EducacionTable model = new EducacionTable
+                            {
+                                PIdOim = reader["p_id_oim"] != DBNull.Value ? Convert.ToString(reader["p_id_oim"]) : string.Empty,
+                                nombre = reader["nombre"] != DBNull.Value ? Convert.ToString(reader["nombre"]) : string.Empty,
+                                fechainicio = reader["r_fechaini"] != DBNull.Value ? Convert.ToDateTime(reader["r_fechaini"]) : DateTime.MinValue,
+                                DFechades = reader["d_fechades"] != DBNull.Value ? Convert.ToDateTime(reader["d_fechades"]) : DateTime.MinValue,
+                                DFechaReasg = reader["d_fecha_reasg"] != DBNull.Value ? Convert.ToDateTime(reader["d_fecha_reasg"]) : DateTime.MinValue,
+                                IDiasAsistenciaEfectivos = reader["i_dias_asistencia_efectivos"] != DBNull.Value ? Convert.ToInt32(reader["i_dias_asistencia_efectivos"]) : 0,
+                                IDiasAsistenciaEstablecidos = reader["i_dias_asistencia_establecidos"] != DBNull.Value ? Convert.ToInt32(reader["i_dias_asistencia_establecidos"]) : 0,
+                                IMotivoInasistencia = reader["i_motivo_inasistencia"] != DBNull.Value ? Convert.ToString(reader["i_motivo_inasistencia"]) : string.Empty,
+                                IModulosInscritos = reader["i_modulos_inscritos"] != DBNull.Value ? Convert.ToInt32(reader["i_modulos_inscritos"]) : 0,
+                                IModulosAprobados = reader["i_modulos_aprobados"] != DBNull.Value ? Convert.ToInt32(reader["i_modulos_aprobados"]) : 0,
+                                IModulosReprobados = reader["i_modulos_reprobados"] != DBNull.Value ? Convert.ToInt32(reader["i_modulos_reprobados"]) : 0,
+                                ICausaReprobacion = reader["i_causa_reprobacion"] != DBNull.Value ? Convert.ToString(reader["i_causa_reprobacion"]) : string.Empty,
+                                p_socio = reader["p_socio"] != DBNull.Value ? Convert.ToInt32(reader["p_socio"]) : 0,
+                                socio = reader["socio"] != DBNull.Value ? Convert.ToString(reader["socio"]) : string.Empty,
+                                p_sede = reader["p_sede"] != DBNull.Value ? Convert.ToInt32(reader["p_sede"]) : 0,
+                                sede = reader["sede"] != DBNull.Value ? Convert.ToString(reader["sede"]) : string.Empty,
+                                CarreraCursoGrado = reader["CarreraCursoGrado"] != DBNull.Value ? Convert.ToInt32(reader["CarreraCursoGrado"]) : 0,
+                                carrera = reader["carrera"] != DBNull.Value ? Convert.ToString(reader["carrera"]) : string.Empty,
+                                sexoID = reader["sexoID"] != DBNull.Value ? Convert.ToInt32(reader["sexoID"]) : 0,
+                                sexoNombre = reader["sexoNombre"] != DBNull.Value ? Convert.ToString(reader["sexoNombre"]) : string.Empty,
+                                departamento = reader["departamento"] != DBNull.Value ? Convert.ToInt32(reader["departamento"]) : 0,
+                                refiere = reader["refiere"] != DBNull.Value ? Convert.ToInt32(reader["refiere"]) : 0,
+                                refiereNombre = reader["refiereNombre"] != DBNull.Value ? Convert.ToString(reader["refiereNombre"]) : string.Empty,
+                                programa = reader["programa"] != DBNull.Value ? Convert.ToInt32(reader["programa"]) : 0,
+                                programaNombre = reader["programaNombre"] != DBNull.Value ? Convert.ToString(reader["programaNombre"]) : string.Empty,
+                                RAño = reader["r_año"] != DBNull.Value ? Convert.ToInt32(reader["r_año"]) : 0,
+                                RMes = reader["r_mes"] != DBNull.Value ? Convert.ToString(reader["r_mes"]) : string.Empty,
+                                CohorteNombre = reader["CohorteNombre"] != DBNull.Value ? Convert.ToString(reader["CohorteNombre"]) : string.Empty,
+                                year = reader["year"] != DBNull.Value ? Convert.ToInt32(reader["year"]) : 0,
+                                tipoMatricula = reader["tipoMatricula"] != DBNull.Value ? Convert.ToString(reader["tipoMatricula"]) : string.Empty,
+                                motivodesercion = reader["motivodesercion"] != DBNull.Value ? Convert.ToString(reader["motivodesercion"]) : string.Empty,
+                                pocentajeasistencia = reader["pocentajeasistencia"] != DBNull.Value ? Convert.ToString(reader["pocentajeasistencia"]) : string.Empty,
+                                zona = reader["zona"] != DBNull.Value ? Convert.ToInt32(reader["zona"]) : 0,
+                                EstadoPersona = reader["EstadoPersona"] != DBNull.Value ? Convert.ToInt32(reader["EstadoPersona"]) : 0,
+                                DEstado = reader["DEstado"] != DBNull.Value ? Convert.ToString(reader["DEstado"]) : string.Empty
+
+                            };
+                            consulta.Add(model);
+                        }
+                    }
+                }
 
                 // Filtrado
                 if (socios.Count > 0)
@@ -1163,8 +1202,15 @@ namespace BECAS.Controllers
                 }
                 if (sedes.Count > 0)
                 {
-                    consulta = consulta.Where(m => m.p_sede != null).ToList();
-                    consulta = consulta.Where(x => sedes.Contains((int)x.p_sede)).ToList();
+                    // Obtener las sedes de la base de datos que coinciden con los IDs filtrados
+                    var catSedes = _ctx.Sedes
+                        .Where(sede => sedes.Contains(sede.IdSede))
+                        .ToList();
+
+                    // Filtrar personas que tienen una sede válida y que están en la lista de sedes filtradas
+                    consulta = consulta
+                        .Where(x => x.p_sede.HasValue && catSedes.Any(sede => sede.IdCatSede == x.p_sede.Value))
+                        .ToList();
                 }
 
                 if (idprograma.Count > 0)
@@ -1239,44 +1285,7 @@ namespace BECAS.Controllers
                     consulta = consulta.Where(x => ePersona.Contains((int)x.EstadoPersona)).ToList();
                 }
 
-
-                List<SocioImplementador> SocioImple = new List<SocioImplementador>();
-                SocioImple = _ctx.SocioImplementadors.ToList();
-
-                List<Sexo> ssexos = new List<Sexo>();
-                ssexos = _ctx.Sexos.ToList();
-
-                List<Departamento> departamentos = new List<Departamento>();
-                departamentos = _ctx.Departamentos.ToList();
-
-                List<TipoMatricula> ttipomatricula = new List<TipoMatricula>();
-                ttipomatricula = _ctx.TipoMatriculas.ToList();
-
-                List<Refiere> refiereCMs = new List<Refiere>();
-                refiereCMs = _ctx.Refieres.Where(x => x.Activo == true).ToList();
-
-                List<CatAño> year = new List<CatAño>();
-                year = _ctx.CatAños.Where(x => x.Activo == true).ToList();
-
-                List<CatMe> mont = new List<CatMe>();
-                mont = _ctx.CatMes.Where(x => x.Activo == true).ToList();
-
-                List<Cohorte> cohortes = new List<Cohorte>();
-                cohortes = _ctx.Cohortes.Where(x => x.Activo == true).ToList();
-
-                ViewData["EstadoPersona"] = new SelectList(_ctx.EstadoPersonas, "IdEstadoPersona", "Nombre");
-
-                vM.Socios = SocioImple;
-                vM.sexos = ssexos;
-                vM.tipomatricula = ttipomatricula;
-                vM.departamentos = departamentos;
-                vM.dropRefiereCM = refiereCMs;
-                vM.catAños = year;
-                vM.mes = mont;
-                vM.cohorte = cohortes;
-
-                vM.EducacionTable = consulta;
-                return View(vM);
+                return Json(new { data = consulta });
             }
             catch (Exception ex)
             {
@@ -1319,7 +1328,7 @@ namespace BECAS.Controllers
 
         #endregion
 
-        #region Seguimiento pasantias
+        #region Seguimiento pasantias(Contrataciones)
         public async Task<ActionResult> pasantias()
         {
             try
@@ -1339,6 +1348,8 @@ namespace BECAS.Controllers
                         PasCargo = x.PasCargo,
                         PasFechaContratacion = x.PasFechaContratacion,
                         PasMontoRemuneracion = x.PasMontoRemuneracion,
+                        pas_periodo = x.pas_periodo,
+                        pas_tipo_empleo = x.pas_tipo_empleo,
                         IdCarga = x.IdCarga,
                         persona = _ctx.Personas.Include(x => x.refiere).FirstOrDefault(n => n.PIdOim == x.PId)
 
@@ -1569,11 +1580,11 @@ namespace BECAS.Controllers
                                  cohorte = educacion.Cohorte,
                                  nombreCohorte = educacion.cohorte.Nombre
                              }).ToList();
-                DateTime date = DateTime.Now;
-                DateTime oPrimerDiaDelMes = new DateTime(date.Year, date.Month, 1);
-                DateTime MesAnt = oPrimerDiaDelMes.AddMonths(-3);
-                var f = evpsi.Where(x => x.fechainicio > MesAnt).ToList();
-                var ED = f.OrderByDescending(x => x.fechainicio).DistinctBy(x => x.Id).ToList();
+                //DateTime date = DateTime.Now;
+                //DateTime oPrimerDiaDelMes = new DateTime(date.Year, date.Month, 1);
+                //DateTime MesAnt = oPrimerDiaDelMes.AddMonths(-3);
+                //var f = evpsi.Where(x => x.fechainicio > MesAnt).ToList();
+                var ED = evpsi.OrderByDescending(x => x.fechainicio).DistinctBy(x => x.Id).ToList();
 
                 if (socio.Count() != 0)
                 {
@@ -1713,5 +1724,70 @@ namespace BECAS.Controllers
             }
         }
         #endregion
+
+        #region Reportes
+        public ActionResult Promovidos()
+        {
+            try
+            {
+                List<PersonTableVM> ListPersonas = _persona.RepPromovidos();
+                return View(ListPersonas);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        #endregion
+
+        #region BuscarBeneficiarios
+        public ActionResult SearchBeneficiary()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult SearchBeneficiary(DTSearchBeneficiary param)
+        {
+            // Inicializa la lista de personas
+            List<SearchBeneficiaryTable> ListPersonas = new List<SearchBeneficiaryTable>();
+
+            // Verifica si se proporcionaron parámetros de búsqueda
+
+
+            if (param.dui != null || param.nombre != null || param.aperllido != null || param.telefono1 != null || param.telefono2 != null || param.correo != null)
+            {
+                // Obtiene la lista de personas basada en los parámetros proporcionados
+                ListPersonas = _persona.GetSearchBeneficiaries(param);
+
+                // Obtiene el valor de búsqueda
+                string searchValue = param.Search?.Value;
+
+                // Aplica filtro de búsqueda si se proporciona un término de búsqueda
+                if (!string.IsNullOrWhiteSpace(searchValue))
+                {
+                    ListPersonas = ListPersonas.Where(item =>
+                        item.NombreCompleto.Contains(searchValue, StringComparison.OrdinalIgnoreCase) ||
+                        item.Nombre.Contains(searchValue, StringComparison.OrdinalIgnoreCase)
+                    // Agrega más condiciones de filtrado si es necesario
+                    ).ToList();
+                }
+            }
+
+            // Realiza una consulta para contar el número total de registros
+            var totalRegistros = param.count != null ? (int)param.count : 0;
+
+            // Devolver los datos en formato JSON con información adicional necesaria para DataTables
+            return Json(new DTResult<SearchBeneficiaryTable>
+            {
+                draw = param.Draw,
+                recordsTotal = totalRegistros, // Total de registros sin paginar
+                recordsFiltered = ListPersonas.Count, // Total de registros después de aplicar filtros
+                data = ListPersonas // Registros para la página actual
+            });
+        }
+        #endregion
+
+        
     }
 }

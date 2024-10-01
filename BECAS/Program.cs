@@ -3,27 +3,61 @@ using BECASLC;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Azure.Identity;
-using System.Configuration;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using BECAS.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("BecasDatabase");
 builder.Services.AddDbContext<MEOBContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddScoped<ICatalogos, CatalogosRepository>();
-
+builder.Services.AddScoped<IPersonas, PersonasRepository>();
+builder.Services.Configure<EncryptionSettings>(builder.Configuration.GetSection("EncryptionSettings"));
+builder.Services.AddScoped<IEncryptionService, EncryptionService>();
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-builder.Services.AddMicrosoftIdentityWebAppAuthentication(builder.Configuration, "AzureAd");
+// Configure multiple authentication schemes
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultScheme = "ApplicationScheme"; // Login personalizado como default
+    options.DefaultChallengeScheme = "AzureADScheme"; // AD como fallback
+})
+.AddCookie("ApplicationScheme", options =>
+{
+    options.LoginPath = "/Auth/Login"; // Ruta para login personalizado
+})
+.AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAd"), "AzureADScheme");
 
+// Configurar políticas de autorización
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("ADOnly", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.AddAuthenticationSchemes("AzureADScheme");
+    });
+
+    options.AddPolicy("ExternalUsers", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.AddAuthenticationSchemes("ApplicationScheme");
+    });
+});
+
+// Configurar MVC y aplicar la política de AD por defecto
 builder.Services.AddMvc(option =>
 {
-    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-    option.Filters.Add(new AuthorizeFilter(policy));
+    var adPolicy = new AuthorizationPolicyBuilder("AzureADScheme")
+                    .RequireAuthenticatedUser()
+                    .Build();
+
+    // Aplicar la política por defecto a todas las rutas, pero puedes usar otros
+    // atributos [Authorize] en controladores o acciones específicas para otra política
+    option.Filters.Add(new AuthorizeFilter(adPolicy));
 
 }).AddMicrosoftIdentityUI();
 
@@ -43,7 +77,6 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 app.UseDeveloperExceptionPage();

@@ -35,7 +35,7 @@ namespace BECAS.Interfaces
             try
             {
                 CatCarrera carrera = new CatCarrera();
-                if (idprograma == 3 || idprograma == 2)
+                if (idprograma == 3 || idprograma == 4 || idprograma ==6)
                 {
                     var grado = _context.Grados.SingleOrDefault(x => x.Nombre.Equals(nombre));
                     if (grado != null)
